@@ -124,7 +124,7 @@ export default function Hero() {
   </defs>
   <rect width="1024" height="1536" fill="url(#pattern_2)" fill-rule="evenodd" />
 </svg> */}
-<img src="/freepik__adjust__68767.jpeg" alt="" srcset="" className="animate-[fadeUp_0.6s_0.35s] cover-fit object-cover asperct-[16/9] w-[300px]"/>
+<img src="/freepik__adjust__68767.jpeg" alt=""  className="animate-[fadeUp_0.6s_0.35s] cover-fit object-cover asperct-[16/9] w-[300px]"/>
         </div>
       </div>
       
