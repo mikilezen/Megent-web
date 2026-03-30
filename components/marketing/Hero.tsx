@@ -66,7 +66,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full py-20 ml-[70px] lg:py-28">
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full py-20 ml-0 lg:ml-[70px] lg:py-28">
         <div className="grid mt-[-100px] lg:grid-cols-2 gap-12 xl:gap-20 items-center">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--indigo-border)] bg-[var(--indigo-light)] mb-7 animate-[fadeUp_0.5s_0.1s_ease_both]">
@@ -127,7 +127,7 @@ export default function Hero() {
 <img
               src="/freepik__adjust__68767.jpeg"
               alt=""
-              className="animate-[fadeUp_0.6s_0.35s_ease_both] w-[300px] ml-4 aspect-[ object-cover rounded-2xl transition-transform duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] hover:scale-[1.04] hover:rotate-[-1deg] motion-reduce:transform-none motion-reduce:transition-none"
+              className="animate-[fadeUp_0.6s_0.35s_ease_both] w-[300px] ml-0 lg:ml-4 aspect-[ object-cover rounded-2xl transition-transform duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] hover:scale-[1.04] hover:rotate-[-1deg] motion-reduce:transform-none motion-reduce:transition-none"
             />
         </div>
       </div>
