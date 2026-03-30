@@ -10,18 +10,18 @@ const FRAMEWORKS = [
   ["Langchain", "/images (2).png"],
   ["AutoGen", "/images (2).jfif"],
   ["LlamaIndex", "/images (3).jfif"],
-  ["Mistral", badgeIcon("M")],
-  ["LlamaIndex", badgeIcon("LI")],
+  // ["Mistral", badgeIcon("M")],
+  ["Openclaw", "/openclaw.png"],
   ["CrewAI", "/crew-ai.6eff1255.png"],
-  ["Vercel AI SDK", "https://cdn.simpleicons.org/vercel/000000"],
+  // ["Vercel AI SDK", "https://cdn.simpleicons.org/vercel/000000"],
 ];
 
 export default function Compat() {
   const doubled = [...FRAMEWORKS, ...FRAMEWORKS];
   return (
-    <section className="justify-between flex flex-wrap border-y border-[var(--border)] bg-[var(--bg1)] py-5 overflow-hidden">
-        <span className="pl-1 shrink-0 font-mono text-[11px] text-[var(--text3)] uppercase tracking-[0.14em] whitespace-nowrap">
-          Works with
+    <section className="justify-between flex flex-wrap  py-5 overflow-hidden">
+        <span className="pl-1 m-auto h-6 shrink-0 font-mono text-[11px] text-[var(--text3)] uppercase tracking-[0.14em] whitespace-nowrap">
+          Works with all your favorite frameworks
         </span>
       <div className="max-w-7xl mx-auto flex items-center gap-4 px-5 sm:px-8">
         <div

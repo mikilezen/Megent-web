@@ -47,8 +47,9 @@
   --radius-4xl: calc(var(--radius) + 16px);
 }
 
+
 :root {
-  --background: #ffffff;
+  --background: #e5ddd0;
   --foreground: #0f172a;
   --card: #ffffff;
   --card-foreground: #0f172a;
@@ -92,7 +93,7 @@
 
 .dark {
   --background: #0b1021;
-  --foreground: #e2e8f0;
+  --foreground: #d8d7c2;
   --card: #0f172a;
   --card-foreground: #e2e8f0;
   --popover: #0f172a;
@@ -433,16 +434,16 @@
 .green { background: #27c93f; }
 
 button {
-  background: #3a3a3a;
+  /* background: #3a3a3a;
   border: none;
   color: #eee;
   padding: 4px 10px;
   border-radius: 6px;
-  cursor: pointer;
+  cursor: pointer; */
 }
 
 button:hover {
-  background: #555;
+  /* background: #555; */
 }
 
 pre {

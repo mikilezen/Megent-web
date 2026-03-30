@@ -3,16 +3,40 @@
 import { useEffect, useState } from "react";
 
 const LINKS = [
-  { label: "How it works", href: "#how" },
   { label: "Features", href: "#features" },
   { label: "Use cases", href: "#usecases" },
-  { label: "Open source", href: "#oss" },
-  { label: "FAQ", href: "#faq" },
+  { label: "FAQ", href: "#oss" },
+  { label: "Enterprise", href: "/soon" },
+];
+
+const DROPDOWN_ITEMS = [
+  { label: "Docs", href: "https://docs.megent.dev", external: true },
+  { label: "GitHub", href: "https://github.com/getmegent", external: true },
+  { label: "Join waitlist", href: "#waitlist" },
 ];
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [resourcesOpen, setResourcesOpen] = useState(false);
+
+  const scrollToHash = (hash: string) => {
+    if (typeof window === "undefined" || !hash.startsWith("#")) return;
+    const target = document.querySelector(hash) as HTMLElement | null;
+    if (!target) return;
+    const headerOffset = 72; // account for fixed header height
+    const y = target.getBoundingClientRect().top + window.scrollY - headerOffset;
+    window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+  };
+
+  const handleAnchorNav = (href: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (href.startsWith("#")) {
+      event.preventDefault();
+      scrollToHash(href);
+    }
+    setMenuOpen(false);
+    setResourcesOpen(false);
+  };
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 12);
@@ -34,8 +58,8 @@ export default function Nav() {
       <header
         className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
           scrolled
-            ? "bg-white/95 backdrop-blur-xl border-[var(--border)] shadow-sm"
-            : "bg-white/80 backdrop-blur-md border-transparent"
+            ? "bg-white/95 backdrop-blur-xl border-[var(--border)] shadow-[0_10px_40px_-24px_rgba(0,0,0,0.35)]"
+            : "bg-white/85 backdrop-blur-md border-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between h-16">
@@ -44,7 +68,7 @@ export default function Nav() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-50" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--indigo)]" />
             </span> */}
-            <img src="/ll.png" alt="" className='w-4'/>
+            <img src="/ll.png" alt="" className='w-7'/>
             <span className="font-bold text-[17px] tracking-[-0.4px] text-[var(--text)] group-hover:text-[var(--indigo)] transition-colors">
               megent
             </span>
@@ -55,11 +79,66 @@ export default function Nav() {
               <a
                 key={link.href}
                 href={link.href}
-                className="px-3 py-2 text-[13px] font-medium text-[var(--text2)] rounded-md hover:text-[var(--text)] hover:bg-[var(--bg1)] transition-colors"
+                onClick={handleAnchorNav(link.href)}
+                className="px-3 py-2 text-[13px] font-semibold text-[var(--text2)] rounded-lg hover:text-[var(--text)] hover:bg-[var(--bg1)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--indigo)]/40"
               >
                 {link.label}
               </a>
             ))}
+            <div
+              className="relative"
+              onMouseEnter={() => setResourcesOpen(true)}
+              onMouseLeave={() => setResourcesOpen(false)}
+              onFocus={() => setResourcesOpen(true)}
+              onBlur={(event) => {
+                if (!event.currentTarget.contains(event.relatedTarget as Node)) {
+                  setResourcesOpen(false);
+                }
+              }}
+            >
+              <button
+                type="button"
+                className="flex items-center gap-1 px-3 py-2 text-[13px] font-semibold text-[var(--text2)] rounded-lg hover:text-[var(--text)] hover:bg-[var(--bg1)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--indigo)]/40"
+                aria-haspopup="true"
+                aria-expanded={resourcesOpen}
+                onClick={() => setResourcesOpen((open) => !open)}
+                onKeyDown={(event) => {
+                  if (event.key === "Escape") {
+                    setResourcesOpen(false);
+                  }
+                }}
+              >
+                Resources
+                <ChevronDownIcon />
+              </button>
+              <div
+                className={`absolute left-0 top-full w-52 rounded-xl border border-[var(--border)] bg-white shadow-xl transition-opacity duration-150 ${
+                  resourcesOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+                }`}
+              >
+                <div className="pt-2 pb-2">
+                  {DROPDOWN_ITEMS.map((item) => (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      target={item.external ? "_blank" : undefined}
+                      rel={item.external ? "noopener noreferrer" : undefined}
+                      className="flex items-center justify-between px-4 py-2 text-[13px] font-semibold text-[var(--text2)] hover:text-[var(--text)] hover:bg-[var(--bg1)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--indigo)]/30"
+                      onClick={(event) => {
+                        if (!item.external) {
+                          handleAnchorNav(item.href)(event);
+                        } else {
+                          setResourcesOpen(false);
+                        }
+                      }}
+                    >
+                      {item.label}
+                      {item.external ? <ExternalIcon /> : <ArrowRight />}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
           </nav>
 
           <div className="hidden lg:flex items-center gap-3">
@@ -67,30 +146,37 @@ export default function Nav() {
               href="https://docs.megent.dev"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 py-2 text-[13px] font-semibold text-[var(--text2)] rounded-md border border-[var(--border)] hover:border-[var(--border2)] hover:text-[var(--text)] transition-colors"
-            >
-              Docs
-            </a>
-            <a
-              href="#waitlist"
-              className="px-3.5 py-2 text-[13px] font-semibold text-white bg-[var(--indigo)] rounded-md hover:bg-indigo-600 transition-colors flex items-center gap-1.5"
-            >
-              Join waitlist
-              <ArrowRight />
-            </a>
-            <a
-              href="https://github.com/getmegent"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-3 py-2 text-[13px] font-semibold text-[var(--text2)] rounded-md border border-[var(--border)] hover:border-[var(--border2)] hover:text-[var(--text)] transition-colors flex items-center gap-1.5"
+              className="px-3 flex gap-2 items-center py-2 text-[13px] font-semibold text-[var(--text2)] rounded-full border border-[var(--border)] hover:border-[var(--border2)] hover:text-[var(--text)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--indigo)]/40"
             >
               <GithubIcon />
-              GitHub
+              Github
             </a>
+            {/* <a
+              href="/docs"
+              className="px-3.5 py-2 text-[13px] font-semibold text-white bg-[var(--indigo)] rounded-full hover:bg-indigo-600 transition-all flex items-center gap-1.5 shadow-[0_10px_30px_-18px_rgba(79,70,229,0.8)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--indigo)]/50"
+            >
+              Docs
+              {/* <ArrowRight /> 
+            </a> */}
+            <a href="/login">
+              <button className="px-3.5 py-2 text-[13px] font-semibold text-white bg-[var(--indigo)] rounded-full hover:bg-indigo-600 transition-all flex items-center gap-2 shadow-[0_10px_30px_-18px_rgba(79,70,229,0.8)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--indigo)]/50">
+                <img src="/ll.png" alt="Megent logo" className="h-4 w-4" />
+                Login
+              </button>
+            </a>
+            {/* <a
+              // href="https://github.com/getmegent"
+            //   target="_blank"
+            //   rel="noopener noreferrer"
+            //   className="px-3 py-2 text-[13px] font-semibold text-[var(--text2)] rounded-lg border border-[var(--border)] hover:border-[var(--border2)] hover:text-[var(--text)] transition-colors flex items-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--indigo)]/40"
+            // >
+            //   <GithubIcon />
+            //   GitHub
+            // </a> */}
           </div>
 
           <button
-            className="lg:hidden p-2 rounded-md text-[var(--text2)] hover:bg-[var(--bg1)] transition-colors"
+            className="lg:hidden p-2 rounded-lg text-[var(--text2)] hover:bg-[var(--bg1)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--indigo)]/40"
             onClick={() => setMenuOpen((open) => !open)}
             aria-label="Toggle menu"
             aria-expanded={menuOpen}
@@ -107,7 +193,7 @@ export default function Nav() {
               <a
                 key={link.href}
                 href={link.href}
-                onClick={close}
+                onClick={handleAnchorNav(link.href)}
                 className="px-3 py-3 rounded-lg text-[15px] font-semibold text-[var(--text)] hover:bg-[var(--bg1)]"
               >
                 {link.label}
@@ -124,7 +210,7 @@ export default function Nav() {
               </a>
               <a
                 href="#waitlist"
-                onClick={close}
+                onClick={handleAnchorNav("#waitlist")}
                 className="px-3 py-3 rounded-lg text-[14px] font-semibold text-white bg-[var(--indigo)] text-center"
               >
                 Join waitlist
@@ -158,6 +244,24 @@ function ArrowRight() {
   return (
     <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
       <path d="M2.5 6.5h8M8 3.5l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function ChevronDownIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+      <path d="M5 7.5l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function ExternalIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+      <path d="M14 4h6v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M10 14l10-10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M20 14v4.5c0 1.93-1.57 3.5-3.5 3.5H6.5A3.5 3.5 0 013 18.5V7.5A3.5 3.5 0 016.5 4H11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

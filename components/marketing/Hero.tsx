@@ -44,15 +44,16 @@ export default function Hero() {
   }, [started, shownLines]);
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden pt-20 lg:pt-24 bg-white">
+    <section className="relative min-h-screen flex items-center overflow-hidden pt-20 lg:pt-24 bg-">
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 900px 700px at 15% -5%, rgba(79,70,229,0.07) 0%, transparent 60%)," +
-              "radial-gradient(ellipse 700px 500px at 85% 10%, rgba(99,102,241,0.05) 0%, transparent 55%)," +
-              "radial-gradient(ellipse 600px 400px at 50% 105%, rgba(79,70,229,0.04) 0%, transparent 55%)",
+              "radial-gradient(ellipse 900px 700px at 15% -5%, rgba(79,70,229,0.07) 0%, transparent 60%)," 
+              // +
+              // "radial-gradient(ellipse 700px 500px at 85% 10%, rgba(99,102,241,0.05) 0%, transparent 55%)," +
+              // "radial-gradient(ellipse 600px 400px at 50% 105%, rgba(79,70,229,0.04) 0%, transparent 55%)",
           }}
         />
         <div
@@ -65,7 +66,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full py-20 lg:py-28">
+      <div className="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 w-full py-20 ml-[70px] lg:py-28">
         <div className="grid mt-[-100px] lg:grid-cols-2 gap-12 xl:gap-20 items-center">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--indigo-border)] bg-[var(--indigo-light)] mb-7 animate-[fadeUp_0.5s_0.1s_ease_both]">
@@ -74,7 +75,7 @@ export default function Hero() {
             </div>
 
             <h1 className="text-[clamp(44px,5.5vw,72px)] font-extrabold tracking-[-3px] leading-[1.0] text-[var(--text)] mb-6 animate-[fadeUp_0.5s_0.2s_ease_both]">
-              Stop trusting
+              A policy runtime for AI agents.
               {/* <br />
               your agents.
               <br />
@@ -82,8 +83,7 @@ export default function Hero() {
             </h1>
 
             <p className="text-[17px] text-[var(--text2)] leading-[1.75] max-w-lg mb-8 animate-[fadeUp_0.5s_0.3s_ease_both]">
-              Megent is the policy language and runtime that sits between your app and your AI agents.
-              Every tool call gets checked. Every PII field gets masked. Every violation gets logged.
+              Define what your agents can do. <br /> Block what they can't. Enforced at every tool call, before it executes.
             </p>
 
             <div className="flex flex-wrap gap-3 mb-8 animate-[fadeUp_0.5s_0.4s_ease_both]">
@@ -97,7 +97,7 @@ export default function Hero() {
               <button
                 type="button"
                 onClick={handleCopy}
-                className="inline-flex items-center gap-2 px-5 py-3 text-[14px] font-semibold text-[var(--indigo)] border border-[var(--indigo-border)] rounded-[30px] hover:bg-[var(--indigo-light)] transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-3 text-[14px] font-semibold text-slate-900 rounded-[30px] transition-colors border border-slate-300 bg-transparent"
                 aria-live="polite"
               >
                 <CodeIcon />
@@ -124,7 +124,11 @@ export default function Hero() {
   </defs>
   <rect width="1024" height="1536" fill="url(#pattern_2)" fill-rule="evenodd" />
 </svg> */}
-<img src="/freepik__adjust__68767.jpeg" alt=""  className="animate-[fadeUp_0.6s_0.35s] cover-fit object-cover asperct-[16/9] w-[300px]"/>
+<img
+              src="/freepik__adjust__68767.jpeg"
+              alt=""
+              className="animate-[fadeUp_0.6s_0.35s_ease_both] w-[300px] ml-4 aspect-[ object-cover rounded-2xl transition-transform duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] hover:scale-[1.04] hover:rotate-[-1deg] motion-reduce:transform-none motion-reduce:transition-none"
+            />
         </div>
       </div>
       

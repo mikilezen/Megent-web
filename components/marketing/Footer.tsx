@@ -26,15 +26,16 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-14 pb-8">
         <div className="grid sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] gap-10 mb-12">
           <div>
-            <a href="/" className="flex items-center gap-2.5 mb-4" aria-label="Megent home">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-40" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--indigo)]" />
-              </span>
+            <a href="" className="flex items-center gap-2.5 mb-4" aria-label="Megent home">
+              {/* <span className="relative flex h-2.5 w-2.5"> */}
+                {/* <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-40" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--indigo)]" /> */}
+              {/* </span> */}
+              <img src="ll.png" alt="Megent" className="p-4 scale-115 h-15" />
               <span className="font-bold text-[17px] tracking-[-0.4px] text-[var(--text)]">megent</span>
             </a>
             <p className="font-mono text-[12px] text-[var(--text3)] leading-[1.8] max-w-[240px]">
-              Policy language and runtime security for AI agents. Built by developers who got tired of hoping agents would behave.
+              Policy language and runtime security for AI agents. .
             </p>
             <div className="flex items-center gap-3 mt-5">
               <a
@@ -78,7 +79,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-6 border-t border-[var(--border)]">
-          <p className="font-mono text-[11px] text-[var(--text3)]">© 2025 Megent. MIT licensed. Built with care.</p>
+          <p className="font-mono text-[11px] text-[var(--text3)]">© 2025 Megent. MIT licensed. Built</p>
           <div className="flex items-center gap-2.5">
             <span className="font-mono text-[10px] border border-[var(--border)] bg-white rounded px-2.5 py-1 text-[var(--text3)]">MIT</span>
             <span className="font-mono text-[10px] border border-[var(--border)] bg-white rounded px-2.5 py-1 text-[var(--text3)]">Python 3.9+</span>

@@ -55,7 +55,7 @@ export default function Waitlist() {
         </h2>
         <p className="reveal reveal-d2 text-[17px] text-indigo-200 leading-[1.75] max-w-lg mx-auto mb-10">
           We're onboarding early teams now — especially in fintech and healthcare.
-          Drop your email and we'll reach out directly. No newsletter, no drip campaigns.
+          Drop your email and we'll reach out directly
         </p>
 
         {state !== "done" ? (
@@ -98,7 +98,7 @@ export default function Waitlist() {
         )}
 
         <p className="reveal reveal-d4 font-mono text-[11px] text-indigo-300">
-          No spam. A real message from the founders when it's time. Unsubscribe any time.
+          {/* No spam. A real message from the founders when it's time. Unsubscribe any time. */}
         </p>
       </div>
     </section>
