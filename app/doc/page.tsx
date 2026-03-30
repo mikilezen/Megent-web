@@ -1,5 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
+
+type FrameworkId = "python" | "ts" | "langchain" | "crewai" | "openai";
+type CalloutType = "info" | "tip" | "warning";
 
 const NAV_SECTIONS = [
   { group: "Getting Started", items: [
@@ -25,7 +28,7 @@ const NAV_SECTIONS = [
   ]},
 ];
 
-const FRAMEWORKS = [
+const FRAMEWORKS: Array<{ id: FrameworkId; label: string; icon: string; lang: string; file: string }> = [
   { id: "python",    label: "Python",            icon: "🐍", lang: "python", file: "agent.py" },
   { id: "ts",        label: "TypeScript",         icon: "TS", lang: "typescript", file: "agent.ts" },
   { id: "langchain", label: "LangChain",          icon: "🔗", lang: "python", file: "agent.py" },
@@ -33,7 +36,7 @@ const FRAMEWORKS = [
   { id: "openai",    label: "OpenAI Agents SDK",  icon: "✦", lang: "python", file: "agent.py" },
 ];
 
-const INSTALLS = {
+const INSTALLS: Record<FrameworkId, string> = {
   python:    "pip install megent",
   ts:        "npm install @megent/sdk",
   langchain: "pip install megent langchain langchain-openai",
@@ -41,7 +44,7 @@ const INSTALLS = {
   openai:    "pip install megent openai openai-agents",
 };
 
-const DEMOS = {
+const DEMOS: Record<FrameworkId, string> = {
   python: `import megent
 
 mgnt = megent.init(policy="policy.yaml")
@@ -306,8 +309,8 @@ rules:
     action: allow`;
 
 // Lightweight syntax highlighter
-function hl(code, lang) {
-  const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function hl(code: string, lang: string): string {
+  const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   let s = esc(code);
   if (lang === "yaml") {
     s = s
@@ -325,13 +328,19 @@ function hl(code, lang) {
       .replace(/("""[\s\S]*?"""|"[^"\n]*"|'[^'\n]*')/g,'<i class="sv">$1</i>')
       .replace(/\b(True|False|None|true|false|null|undefined)\b/g,'<b class="lt">$1</b>')
       .replace(/\b(\d+\.?\d*)\b/g,'<b class="nm">$1</b>')
-      .replace(/# [✓✗].*$/gm, m => m.includes("✓") ? `<i class="ok">${m}</i>` : `<i class="no">${m}</i>`)
-      .replace(/\/\/ [✓✗].*$/gm, m => m.includes("✓") ? `<i class="ok">${m}</i>` : `<i class="no">${m}</i>`);
+      .replace(/# [✓✗].*$/gm, (m: string) => (m.includes("✓") ? `<i class="ok">${m}</i>` : `<i class="no">${m}</i>`))
+      .replace(/\/\/ [✓✗].*$/gm, (m: string) => (m.includes("✓") ? `<i class="ok">${m}</i>` : `<i class="no">${m}</i>`));
   }
   return s;
 }
 
-function CodeBlock({ code, lang = "python", filename }) {
+type CodeBlockProps = {
+  code: string;
+  lang?: string;
+  filename?: string;
+};
+
+function CodeBlock({ code, lang = "python", filename }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
   return (
     <div style={{ borderRadius: 10, overflow: "hidden", border: "1px solid #161d2b", marginBottom: 20 }}>
@@ -359,8 +368,8 @@ function CodeBlock({ code, lang = "python", filename }) {
 }
 
 function FrameworkDemos() {
-  const [active, setActive] = useState("python");
-  const fw = FRAMEWORKS.find(f => f.id === active);
+  const [active, setActive] = useState<FrameworkId>("python");
+  const fw = FRAMEWORKS.find((f) => f.id === active) ?? FRAMEWORKS[0];
   return (
     <div>
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 24 }}>
@@ -393,7 +402,15 @@ function FrameworkDemos() {
   );
 }
 
-function Section({ id, title, badge, badgeColor = "#6366f1", children }) {
+type SectionProps = {
+  id: string;
+  title: string;
+  badge?: string;
+  badgeColor?: string;
+  children: ReactNode;
+};
+
+function Section({ id, title, badge, badgeColor = "#6366f1", children }: SectionProps) {
   return (
     <section id={id} style={{ marginBottom: 72, scrollMarginTop: 72 }}>
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 6 }}>
@@ -406,8 +423,14 @@ function Section({ id, title, badge, badgeColor = "#6366f1", children }) {
   );
 }
 
-function Callout({ type = "info", title, children }) {
-  const m = {
+type CalloutProps = {
+  type?: CalloutType;
+  title?: string;
+  children: ReactNode;
+};
+
+function Callout({ type = "info", title, children }: CalloutProps) {
+  const m: Record<CalloutType, { bg: string; border: string; icon: string; color: string }> = {
     info:    { bg: "#0a1525", border: "#1d4ed8", icon: "ℹ", color: "#3b82f6" },
     tip:     { bg: "#071510", border: "#15803d", icon: "✦", color: "#22c55e" },
     warning: { bg: "#150e03", border: "#b45309", icon: "⚠", color: "#f59e0b" },
@@ -424,7 +447,14 @@ function Callout({ type = "info", title, children }) {
   );
 }
 
-function PropRow({ name, type, req, desc }) {
+type PropRowProps = {
+  name: string;
+  type: string;
+  req?: boolean;
+  desc: string;
+};
+
+function PropRow({ name, type, req, desc }: PropRowProps) {
   return (
     <div style={{ display: "grid", gridTemplateColumns: "150px 90px 1fr", gap: 16, padding: "13px 20px", borderBottom: "1px solid #0c1118", alignItems: "start" }}>
       <code style={{ color: "#a5b4fc", fontSize: 12, fontFamily: "JetBrains Mono,monospace" }}>{name}{req && <span style={{ color: "#f87171" }}> *</span>}</code>
@@ -437,7 +467,7 @@ function PropRow({ name, type, req, desc }) {
 export default function MegentDocs() {
   const [active, setActive] = useState("overview");
 
-  const go = id => {
+  const go = (id: string) => {
     setActive(id);
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
@@ -590,7 +620,7 @@ export default function MegentDocs() {
           {/* QUICKSTART */}
           <Section id="quickstart" title="Quick Start">
             <p style={{ fontSize: 14.5, color: "#3d5473", lineHeight: 1.8, marginBottom: 20 }}>
-              Two lines to initialize, one decorator to enforce. Here's everything you need to get running:
+              Two lines to initialize, one decorator to enforce. Here&apos;s everything you need to get running:
             </p>
             <CodeBlock lang="python" filename="main.py" code={`import megent
 
@@ -690,7 +720,7 @@ result = get_user("u_001")
 #     "billing": {"credit_card": "***", "plan": "enterprise"}
 #   }`} />
             <Callout type="info" title="Recursive masking">
-              Megent walks nested dicts and lists to any depth. You don't need to specify the path — just the field name.
+              Megent walks nested dicts and lists to any depth. You don&apos;t need to specify the path — just the field name.
             </Callout>
           </Section>
 
@@ -705,7 +735,7 @@ result = get_user("u_001")
           {/* AUDIT LOGS */}
           <Section id="audit-logs" title="Audit Logs" badge="auto-generated">
             <p style={{ fontSize: 14.5, color: "#3d5473", lineHeight: 1.8, marginBottom: 20 }}>
-              Every intercepted tool call is appended to <code style={{ color: "#a5b4fc", fontSize: 12.5 }}>audit.log</code> as newline-delimited JSON. No configuration required — it's on by default.
+              Every intercepted tool call is appended to <code style={{ color: "#a5b4fc", fontSize: 12.5 }}>audit.log</code> as newline-delimited JSON. No configuration required — it&apos;s on by default.
             </p>
             <CodeBlock lang="json" filename="audit.log" code={`{"ts":"2026-03-30T09:00:01Z","agent":"production-agent","tool":"get_user","action":"allow","rule":"allow-reads","masked_fields":["email","phone","ssn"],"duration_ms":4}
 {"ts":"2026-03-30T09:00:02Z","agent":"production-agent","tool":"delete_user","action":"deny","rule":"block-delete","reason":"No agent may delete any resource","duration_ms":0}
