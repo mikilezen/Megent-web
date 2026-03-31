@@ -126,7 +126,7 @@ export default function Hero() {
 </svg> */}
 <img
               src="/freepik__adjust__68767.png"
-              draggable={false}
+              // dragable={}
               alt=""
               className="animate-[fadeUp_0.6s_0.35s_ease_both] w-[300px] ml-0 lg:ml-4 aspect-[ object-cover rounded-2xl transition-transform duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)] hover:scale-[1.04] hover:rotate-[-1deg] motion-reduce:transform-none motion-reduce:transition-none"
             />
