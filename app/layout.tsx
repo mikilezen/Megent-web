@@ -7,7 +7,7 @@ const siteUrl = "https://megent.dev";
 const siteName = "Megent";
 const defaultTitle = "Megent | AI Control Center";
 const defaultDescription = "Operations, routing, and governance for AI agents in production.";
-const ogImage = "/ll.png";
+const ogImage = "/freepik__adjust__68767.jpg";
 
 const outfit = Outfit({subsets:['latin'],variable:'--font-sans'});
 
