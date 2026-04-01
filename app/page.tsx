@@ -8,6 +8,7 @@ import Hero from "@/components/marketing/Hero";
 import HowItWorks from "@/components/marketing/HowItWorks";
 import Nav from "@/components/marketing/Nav";
 import Problem from "@/components/marketing/Problem";
+import PythonPreview from "@/components/marketing/PythonPreview";
 import UseCases from "@/components/marketing/UseCases";
 import Waitlist from "@/components/marketing/Waitlist";
 
@@ -17,6 +18,7 @@ export default function Page() {
       <Nav />
       <div className="pt-1">
         <Hero />
+        <PythonPreview />
         <Compat />
         
         <Problem />
