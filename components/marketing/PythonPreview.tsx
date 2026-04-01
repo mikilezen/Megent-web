@@ -3,10 +3,18 @@
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 
-export default function PythonPreview() {
-  const [copied, setCopied] = useState(false);
+const PANEL_BASE = "relative overflow-hidden flex flex-col rounded-3xl border border-white/5 bg-gradient-to-br from-slate-950 via-slate-950/90 to-black shadow-[0_30px_60px_-35px_rgba(15,23,42,0.75)] w-full";
+const HEADER_CLASSES = "flex items-center justify-between px-4 py-2.5 border-b border-white/5 bg-black/60";
+const CODE_SURFACE =
+  "flex-1 overflow-x-auto bg-black/60 px-5 py-6 text-[13px] leading-7 font-mono text-slate-200 min-h-[320px]";
+const COPY_BUTTON =
+  "inline-flex h-8 w-8 items-center justify-center rounded-md border border-white/10 text-white transition hover:bg-white/10";
 
-  const code = `import megent
+export default function PythonPreview() {
+  const [copiedPython, setCopiedPython] = useState(false);
+  const [copiedPolicy, setCopiedPolicy] = useState(false);
+
+  const pythonSnippet = `import megent
 
 mgnt = megent.init(policy="policy.yaml")
 
@@ -19,20 +27,34 @@ def get_user(user_id: str):
 
 print(get_user("u_001"))`;
 
-  const handleCopy = async () => {
+  const policySnippet = `name: Financial_Policy
+description: Redact PII fields
+
+rules:
+  - resource: "user_data"
+    actions: ["read"]
+    effect: "mask"
+    fields:
+      - phone
+      - email`;
+
+  const handleCopy = async (
+    snippet: string,
+    toggleState: React.Dispatch<React.SetStateAction<boolean>>
+  ) => {
     try {
-      await navigator.clipboard.writeText(code);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1400);
+      await navigator.clipboard.writeText(snippet);
+      toggleState(true);
+      setTimeout(() => toggleState(false), 1400);
     } catch {
-      setCopied(false);
+      toggleState(false);
     }
   };
 
   return (
-    <section className="mx-auto wl gap-4 flex max-w-5xl px-5 sm:px-8 pb-10 items-stretch">
-      <div className="overflow-hidden flex flex-col rounded-2xl bg-black shadow-[0_30px_60px_-35px_rgba(15,23,42,0.55)] w-full">
-        <div className="flex items-center justify-between bordere-200 bg-black px-4 py-2.5">
+    <section className="mx-auto wl gap-5 flex max-w-6xl px-5 sm:px-10 pb-12 items-stretch flex-col lg:flex-row">
+      <div className={PANEL_BASE}>
+        <div className={HEADER_CLASSES}>
           <div className="flex items-center gap-2">
             <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
             <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
@@ -42,16 +64,16 @@ print(get_user("u_001"))`;
 
           <button
             type="button"
-            onClick={handleCopy}
-            className="inline-flex h-7 w-7 items-center justify-center rounded-md -300 text-white transition hover:bg-grey-100"
-            aria-label={copied ? "Code copied" : "Copy code"}
-            title={copied ? "Copied" : "Copy"}
+            onClick={() => handleCopy(pythonSnippet, setCopiedPython)}
+            className={COPY_BUTTON}
+            aria-label={copiedPython ? "Code copied" : "Copy code"}
+            title={copiedPython ? "Copied" : "Copy"}
           >
-            {copied ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5" />}
+            {copiedPython ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5" />}
           </button>
         </div>
 
-        <pre className="flex-1 overflow-x-auto bg-black px-5 py-5 text-[13px] leading-7 font-mono text-slate-200">
+        <pre className={CODE_SURFACE}>
           <code>
             <span className="text-indigo-300">import</span> <span className="text-cyan-300">megent</span>
             {"\n\n"}
@@ -73,8 +95,8 @@ print(get_user("u_001"))`;
           </code>
         </pre>
       </div>
-      <div className="overflow-hidden flex flex-col rounded-2xl bg-black shadow-[0_30px_60px_-35px_rgba(15,23,42,0.55)] w-full">
-        <div className="flex items-center justify-between bordere-200 bg-black px-4 py-2.5">
+      <div className={PANEL_BASE}>
+        <div className={HEADER_CLASSES}>
           <div className="flex items-center gap-2">
             <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
             <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
@@ -84,16 +106,16 @@ print(get_user("u_001"))`;
 
           <button
             type="button"
-            onClick={handleCopy}
-            className="inline-flex h-7 w-7 items-center justify-center rounded-md -300 text-white transition hover:bg-grey-100"
-            aria-label={copied ? "Code copied" : "Copy code"}
-            title={copied ? "Copied" : "Copy"}
+            onClick={() => handleCopy(policySnippet, setCopiedPolicy)}
+            className={COPY_BUTTON}
+            aria-label={copiedPolicy ? "Code copied" : "Copy code"}
+            title={copiedPolicy ? "Copied" : "Copy"}
           >
-            {copied ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5" />}
+            {copiedPolicy ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5" />}
           </button>
         </div>
 
-        <pre className="flex-1 overflow-x-auto bg-black px-5 py-5 text-[13px] leading-7 font-mono text-slate-200">
+        <pre className={CODE_SURFACE}>
           <code>
             <span className="text-indigo-300">name:</span> <span className="text-cyan-300">Financial_Policy</span>
             {"\n"}
