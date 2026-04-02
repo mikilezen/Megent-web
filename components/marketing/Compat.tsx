@@ -7,7 +7,7 @@ const badgeIcon = (text: string, bg = "#e5e7eb", fg = "#111827") =>
 
 const FRAMEWORKS = [
   ["OpenAI Agents SDK", "/images (3).png"],
-  ["Google ADK", "image-1774682381860.png"],
+  ["Google ADK", "/image-1774682381860.png"],
   ["Anthropic Claude", "https://img.icons8.com/?size=100&id=kDfpmWz6OSCQ&format=png&color=000000"],
   ["Langchain", "/images (2).png"],
   ["AutoGen", "/images (2).jfif"],
@@ -46,7 +46,7 @@ export default function Compat() {
                 >
                   {icon ? (
                     <span className="relative h-5 w-5 shrink-0 overflow-hidden rounded-full bg-[var(--bg2)]">
-                      <Image src={icon} alt={label} fill sizes="20px" className="h-full w-full object-contain spin-slow" />
+                      <Image src={icon} alt={label} fill sizes="20px" className="h-full w-full object-contain spin-slow" loading="lazy" />
                     </span>
                   ) : null}
                   <span>{label}</span>
