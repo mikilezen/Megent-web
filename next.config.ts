@@ -1,13 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "img.icons8.com",
-      },
-    ],
+  poweredByHeader: false,
+  compress: true,
+  reactStrictMode: true,
+  experimental: {
+    optimizePackageImports: ["lucide-react"],
   },
 };
 
