@@ -15,7 +15,7 @@ import Waitlist from "@/components/marketing/Waitlist";
 
 export default function Page() {
   return (
-    <main className="b text-[var(--text)]">
+    <main className="text-[var(--text)]">
       <Nav />
       <div className="pt-1">
         <Hero />
