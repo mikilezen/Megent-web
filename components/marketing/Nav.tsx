@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 const LINKS = [
   { label: "Features", href: "#features" },
@@ -68,7 +69,7 @@ export default function Nav() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-50" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--indigo)]" />
             </span> */}
-            <img src="/ll.png" alt="" className='w-7'/>
+            <Image src="/ll.png" alt="Megent logo" width={28} height={28} priority className="w-7 h-7" />
             <span className="font-bold text-[17px] tracking-[-0.4px] text-[var(--text)] group-hover:text-[var(--indigo)] transition-colors">
               Megent
             </span>
@@ -160,7 +161,7 @@ export default function Nav() {
             </a> */}
             <a href="/login">
               <button className="px-3.5 py-2 text-[13px] font-semibold text-white bg-[var(--indigo)] rounded-full hover:bg-indigo-600 transition-all flex items-center gap-2 shadow-[0_10px_30px_-18px_rgba(79,70,229,0.8)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--indigo)]/50">
-                <img src="/ll.png" alt="Megent logo" className="h-4 w-4" />
+                <Image src="/ll.png" alt="Megent logo" width={16} height={16} className="h-4 w-4" />
                 Login
               </button>
             </a>

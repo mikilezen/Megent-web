@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const LINKS = {
   Product: [
     { label: "Documentation", href: "https://docs.megent.dev" },
@@ -31,7 +33,7 @@ export default function Footer() {
                 {/* <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-40" />
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--indigo)]" /> */}
               {/* </span> */}
-              <img src="ll.png" alt="Megent" className="p-4 scale-115 h-15" />
+              <Image src="/ll.png" alt="Megent" width={60} height={60} className="p-4 scale-115 h-15 w-auto" />
               <span className="font-bold text-[17px] tracking-[-0.4px] text-[var(--text)]">megent</span>
             </a>
             <p className="font-mono text-[12px] text-[var(--text3)] leading-[1.8] max-w-[240px]">

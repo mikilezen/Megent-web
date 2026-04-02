@@ -1,10 +1,5 @@
 import Image from "next/image";
 
-const badgeIcon = (text: string, bg = "#e5e7eb", fg = "#111827") =>
-  `data:image/svg+xml;utf8,${encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="${bg}"/><text x="50%" y="55%" font-family="Inter, Arial, sans-serif" font-size="24" text-anchor="middle" fill="${fg}" dominant-baseline="middle">${text}</text></svg>`
-  )}`;
-
 const FRAMEWORKS = [
   ["OpenAI Agents SDK", "/images (3).png"],
   ["Google ADK", "/image-1774682381860.png"],
