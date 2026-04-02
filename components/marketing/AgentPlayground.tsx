@@ -40,7 +40,7 @@ const MODES = ["delete_data", "read_data", "send_email"] as const;
 type DemoReply = (typeof DEMO_REPLIES)[number];
 
 export default function AgentPlayground() {
-  const [mode, setMode] = useState<(typeof MODES)[number]>("Policy Guard");
+  const [mode, setMode] = useState<(typeof MODES)[number]>("read_data");
   const [voice, setVoice] = useState<(typeof VOICES)[number]>("Nova");
   const [input, setInput] = useState("How do we share the latest payout info with Alice without leaking PII?");
   const [response, setResponse] = useState<DemoReply>(DEMO_REPLIES[0]);
