@@ -11,6 +11,16 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#ffffff",
     icons: [
       {
+        src: "/openclaw.png",
+        sizes: "640x640",
+        type: "image/png",
+      },
+      {
+        src: "/images (3).png",
+        sizes: "224x224",
+        type: "image/png",
+      },
+      {
         src: "/favicon.ico",
         sizes: "any",
         type: "image/x-icon",
