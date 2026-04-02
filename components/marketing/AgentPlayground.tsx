@@ -78,172 +78,18 @@ const formatSeconds = (value: number) => {
 };
 
 export default function AgentPlayground() {
-  const maskedFields = RUNTIME_POLICY.maskFields;
-  const [tools, setTools] = useState<ToolState[]>(() =>
-    VISA_LIBRARY.map((tool) => ({
-      ...tool,
-      active: tool.name === "read_db",
-      remaining: tool.name === "read_db" ? tool.defaultDuration : 0
-    }))
-  );
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "assistant-welcome",
-      role: "assistant",
-      content: "Megent runtime policy loaded. Request a visa if you need extra capabilities.",
-      timestamp: "just now"
-    }
-  ]);
-  const [isReplying, setIsReplying] = useState(false);
-  const [copiedYaml, setCopiedYaml] = useState(false);
-  const [viewMode, setViewMode] = useState<ViewMode>("preview");
+  const [mode, setMode] = useState<(typeof MODES)[number]>("read_data");
+  const [voice, setVoice] = useState<(typeof VOICES)[number]>("Nova");
+  const [input, setInput] = useState("How do we share the latest payout info with Alice without leaking PII?");
+  const [response, setResponse] = useState<DemoReply>(DEMO_REPLIES[0]);
+  const [isGenerating, setIsGenerating] = useState(false);
 
-  const maskSummary = useMemo(() => (maskedFields.length ? maskedFields.join(", ") : "none"), [maskedFields]);
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!input.trim() || isGenerating) return;
 
-  const lastUserMessage = useMemo(() => {
-    for (let index = messages.length - 1; index >= 0; index -= 1) {
-      if (messages[index]?.role === "user") {
-        return messages[index];
-      }
-    }
-    return null;
-  }, [messages]);
-
-  const lastAssistantMessage = useMemo(() => {
-    for (let index = messages.length - 1; index >= 0; index -= 1) {
-      if (messages[index]?.role === "assistant") {
-        return messages[index];
-      }
-    }
-    return null;
-  }, [messages]);
-
-  const requestedTask = lastUserMessage?.content ?? "Compile monthly ARR snapshot";
-  const hasUserRequest = Boolean(lastUserMessage);
-  const hasActiveVisas = tools.some((tool) => tool.active);
-
-  const activeToolSummary = useMemo(() => {
-    const active = tools.filter((tool) => tool.active);
-    if (!active.length) return "No visas currently issued";
-    return active
-      .map((tool) => `${tool.label} (${formatSeconds(tool.remaining)})`)
-      .join(" · ");
-  }, [tools]);
-
-  const previewFlow = useMemo(
-    () => [
-      {
-        title: "Input received",
-        detail: requestedTask,
-        state: hasUserRequest ? "done" : "active"
-      },
-      {
-        title: "Policy checks",
-        detail: `Masks: ${maskSummary}`,
-        state: "done"
-      },
-      {
-        title: "Visa grant",
-        detail: activeToolSummary,
-        state: hasActiveVisas ? "active" : "queued"
-      },
-      {
-        title: "Tool execution",
-        detail: hasActiveVisas ? "Running with valid visas" : "Waiting for visa issue",
-        state: isReplying ? "active" : hasUserRequest ? "done" : "queued"
-      },
-      {
-        title: "Response output",
-        detail: isReplying ? "Streaming result..." : "Output ready in chat",
-        state: isReplying ? "active" : hasUserRequest ? "done" : "queued"
-      }
-    ],
-    [requestedTask, hasUserRequest, maskSummary, activeToolSummary, hasActiveVisas, isReplying]
-  );
-
-  const policyYaml = useMemo(() => {
-    const lines: string[] = [
-      `version: "${RUNTIME_POLICY.version}"`,
-      `default_action: ${RUNTIME_POLICY.defaultAction}`,
-      "",
-      "pii_mask:"
-    ];
-
-    maskedFields.forEach((field) => {
-      lines.push(`  - ${field}`);
-    });
-
-    lines.push("", "visas:");
-    tools.forEach((tool) => {
-      const status = tool.active ? formatSeconds(tool.remaining) : "inactive";
-      lines.push(`  - ${tool.name}: ${status}`);
-    });
-
-    return lines.join("\n");
-  }, [maskedFields, tools]);
-
-  const handleCopyYaml = async () => {
-    try {
-      await navigator.clipboard.writeText(policyYaml);
-      setCopiedYaml(true);
-      setTimeout(() => setCopiedYaml(false), 1200);
-    } catch {
-      setCopiedYaml(false);
-    }
-  };
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTools((prev) =>
-        prev.map((tool) => {
-          if (!tool.active) return tool;
-          const remaining = Math.max(tool.remaining - 1, 0);
-          return {
-            ...tool,
-            remaining,
-            active: remaining > 0
-          };
-        })
-      );
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const toggleTool = (name: VisaTool["name"]) => {
-    setTools((prev) =>
-      prev.map((tool) =>
-        tool.name === name
-          ? {
-              ...tool,
-              active: !tool.active || tool.remaining === 0,
-              remaining: tool.active ? 0 : tool.defaultDuration
-            }
-          : tool
-      )
-    );
-  };
-
-  const handleRunDemo = () => {
-    if (isReplying) return;
-    const demoPrompt = "Get latest revenue summary and email finance";
-
-    const timestamp = new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-    const userMessage: Message = {
-      id: `user-${randomId()}`,
-      role: "user",
-      content: demoPrompt,
-      timestamp
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
-    setIsReplying(true);
-
-    const activeTools = tools.filter((tool) => tool.active);
-    const toolSummary = activeTools.length
-      ? activeTools.map((tool) => `${tool.label} ${formatSeconds(tool.remaining)}`).join(" · ")
-      : "none";
-    const maskSummary = maskedFields.length ? maskedFields.join(", ") : "none";
+    setIsGenerating(true);
+    const next = DEMO_REPLIES[Math.floor(Math.random() * DEMO_REPLIES.length)];
 
     setTimeout(() => {
       const assistantMessage: Message = {

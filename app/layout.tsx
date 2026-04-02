@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Outfit } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
 
@@ -7,19 +8,7 @@ const siteUrl = "https://megent.dev";
 const siteName = "Megent";
 const defaultTitle = "Megent | AI Control Center";
 const defaultDescription = "Operations, routing, and governance for AI agents in production.";
-const ogImage = "/freepik__adjust__68767.jpg";
-
-const outfit = Outfit({subsets:['latin'],variable:'--font-sans'});
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const ogImage = "/freepik__adjust__68767.png";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -85,10 +74,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={outfit.variable} suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="en" suppressHydrationWarning>
+      <body className="antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
@@ -98,6 +85,8 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
