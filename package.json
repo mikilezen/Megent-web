@@ -11,10 +11,7 @@
   "dependencies": {
     "@base-ui/react": "^1.2.0",
     "@vercel/analytics": "^2.0.1",
-<<<<<<< HEAD
-=======
     "@vercel/speed-insights": "^2.0.0",
->>>>>>> c2cfc6be5b2ce22b1bb4e692a354913c0154aec9
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "gsap": "^3.14.2",

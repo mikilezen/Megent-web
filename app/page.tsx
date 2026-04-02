@@ -1,6 +1,6 @@
 "use client";
 
-import AgentPlayground from "@/components/marketing/AgentPlayground";
+// import AgentPlayground from "@/components/marketing/AgentPlayground";
 import Compat from "@/components/marketing/Compat";
 import FAQ from "@/components/marketing/FAQ";
 import Features from "@/components/marketing/Features";
@@ -19,7 +19,7 @@ export default function Page() {
       <Nav />
       <div className="pt-1">
         <Hero />
-        <AgentPlayground />
+        {/* <AgentPlayground /> */}
         <Compat />
         
         <Problem />
