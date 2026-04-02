@@ -1,203 +1,447 @@
 "use client";
 
-import { Loader2, Mic, Sparkles, Volume2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import {
+  Clock3,
+  Copy,
+  Database,
+  Edit3,
+  Loader2,
+  Mail,
+  RefreshCw
+} from "lucide-react";
 
-const DEMO_REPLIES = [
+type VisaTool = {
+  name: "read_db" | "write_db" | "edit_db" | "send_email";
+  label: string;
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  defaultDuration: number;
+  effects: string[];
+};
+
+type ToolState = VisaTool & {
+  active: boolean;
+  remaining: number;
+};
+
+type ViewMode = "preview" | "code";
+
+type Message = {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  timestamp: string;
+};
+
+const VISA_LIBRARY: VisaTool[] = [
   {
-    summary: "Masked contact info and returned safe payload.",
-    details: [
-      "Detected phone + email and applied reversible masks.",
-      "Logged policy match with low latency (142 ms).",
-      "Forwarded sanitized object to analytics bus."
-    ],
-    confidence: 0.92
+    name: "read_db",
+    label: "Read DB",
+    icon: Database,
+    defaultDuration: 120,
+    effects: ["audit", "mask"]
   },
   {
-    summary: "Policy guard denied request and suggested fallback.",
-    details: [
-      "User intent flagged as unsupported for public channel.",
-      "Recommended sending billing portal link instead.",
-      "Escalation route opened for human review."
-    ],
-    confidence: 0.81
+    name: "write_db",
+    label: "Write DB",
+    icon: RefreshCw,
+    defaultDuration: 90,
+    effects: ["transaction", "mask"]
   },
   {
-    summary: "Summarized account status with inline redactions.",
-    details: [
-      "Kept loyalty tier + usage metrics intact.",
-      "Blurred PII fields per SOC2 profile.",
-      "Attached synthetic voice note for CS team."
-    ],
-    confidence: 0.88
+    name: "edit_db",
+    label: "Edit DB",
+    icon: Edit3,
+    defaultDuration: 75,
+    effects: ["update", "approval"]
+  },
+  {
+    name: "send_email",
+    label: "Send Email",
+    icon: Mail,
+    defaultDuration: 60,
+    effects: ["pii_mask", "outbound"]
   }
 ];
 
-const VOICES = ["Nova", "Flow", "Pulse"] as const;
-const VOICES_ = ["Nova", "Flow", "Pulse"] as const;
-const MODES = ["delete_data", "read_data", "send_email"] as const;
+const RUNTIME_POLICY = {
+  version: "1",
+  defaultAction: "deny",
+  maskFields: ["email", "phone", "ssn"]
+};
 
-type DemoReply = (typeof DEMO_REPLIES)[number];
+const randomId = () => Math.random().toString(36).slice(2, 9);
+const formatSeconds = (value: number) => {
+  const minutes = Math.floor(value / 60);
+  const seconds = value % 60;
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+};
 
 export default function AgentPlayground() {
-  const [mode, setMode] = useState<(typeof MODES)[number]>("Policy Guard");
-  const [voice, setVoice] = useState<(typeof VOICES)[number]>("Nova");
-  const [input, setInput] = useState("How do we share the latest payout info with Alice without leaking PII?");
-  const [response, setResponse] = useState<DemoReply>(DEMO_REPLIES[0]);
-  const [isGenerating, setIsGenerating] = useState(false);
+  const maskedFields = RUNTIME_POLICY.maskFields;
+  const [tools, setTools] = useState<ToolState[]>(() =>
+    VISA_LIBRARY.map((tool) => ({
+      ...tool,
+      active: tool.name === "read_db",
+      remaining: tool.name === "read_db" ? tool.defaultDuration : 0
+    }))
+  );
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: "assistant-welcome",
+      role: "assistant",
+      content: "Megent runtime policy loaded. Request a visa if you need extra capabilities.",
+      timestamp: "just now"
+    }
+  ]);
+  const [isReplying, setIsReplying] = useState(false);
+  const [copiedYaml, setCopiedYaml] = useState(false);
+  const [viewMode, setViewMode] = useState<ViewMode>("preview");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!input.trim() || isGenerating) return;
+  const maskSummary = useMemo(() => (maskedFields.length ? maskedFields.join(", ") : "none"), [maskedFields]);
 
-    setIsGenerating(true);
-    const next = DEMO_REPLIES[Math.floor(Math.random() * DEMO_REPLIES.length)];
+  const lastUserMessage = useMemo(() => {
+    for (let index = messages.length - 1; index >= 0; index -= 1) {
+      if (messages[index]?.role === "user") {
+        return messages[index];
+      }
+    }
+    return null;
+  }, [messages]);
+
+  const lastAssistantMessage = useMemo(() => {
+    for (let index = messages.length - 1; index >= 0; index -= 1) {
+      if (messages[index]?.role === "assistant") {
+        return messages[index];
+      }
+    }
+    return null;
+  }, [messages]);
+
+  const requestedTask = lastUserMessage?.content ?? "Compile monthly ARR snapshot";
+  const hasUserRequest = Boolean(lastUserMessage);
+  const hasActiveVisas = tools.some((tool) => tool.active);
+
+  const activeToolSummary = useMemo(() => {
+    const active = tools.filter((tool) => tool.active);
+    if (!active.length) return "No visas currently issued";
+    return active
+      .map((tool) => `${tool.label} (${formatSeconds(tool.remaining)})`)
+      .join(" · ");
+  }, [tools]);
+
+  const previewFlow = useMemo(
+    () => [
+      {
+        title: "Input received",
+        detail: requestedTask,
+        state: hasUserRequest ? "done" : "active"
+      },
+      {
+        title: "Policy checks",
+        detail: `Masks: ${maskSummary}`,
+        state: "done"
+      },
+      {
+        title: "Visa grant",
+        detail: activeToolSummary,
+        state: hasActiveVisas ? "active" : "queued"
+      },
+      {
+        title: "Tool execution",
+        detail: hasActiveVisas ? "Running with valid visas" : "Waiting for visa issue",
+        state: isReplying ? "active" : hasUserRequest ? "done" : "queued"
+      },
+      {
+        title: "Response output",
+        detail: isReplying ? "Streaming result..." : "Output ready in chat",
+        state: isReplying ? "active" : hasUserRequest ? "done" : "queued"
+      }
+    ],
+    [requestedTask, hasUserRequest, maskSummary, activeToolSummary, hasActiveVisas, isReplying]
+  );
+
+  const policyYaml = useMemo(() => {
+    const lines: string[] = [
+      `version: "${RUNTIME_POLICY.version}"`,
+      `default_action: ${RUNTIME_POLICY.defaultAction}`,
+      "",
+      "pii_mask:"
+    ];
+
+    maskedFields.forEach((field) => {
+      lines.push(`  - ${field}`);
+    });
+
+    lines.push("", "visas:");
+    tools.forEach((tool) => {
+      const status = tool.active ? formatSeconds(tool.remaining) : "inactive";
+      lines.push(`  - ${tool.name}: ${status}`);
+    });
+
+    return lines.join("\n");
+  }, [maskedFields, tools]);
+
+  const handleCopyYaml = async () => {
+    try {
+      await navigator.clipboard.writeText(policyYaml);
+      setCopiedYaml(true);
+      setTimeout(() => setCopiedYaml(false), 1200);
+    } catch {
+      setCopiedYaml(false);
+    }
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTools((prev) =>
+        prev.map((tool) => {
+          if (!tool.active) return tool;
+          const remaining = Math.max(tool.remaining - 1, 0);
+          return {
+            ...tool,
+            remaining,
+            active: remaining > 0
+          };
+        })
+      );
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const toggleTool = (name: VisaTool["name"]) => {
+    setTools((prev) =>
+      prev.map((tool) =>
+        tool.name === name
+          ? {
+              ...tool,
+              active: !tool.active || tool.remaining === 0,
+              remaining: tool.active ? 0 : tool.defaultDuration
+            }
+          : tool
+      )
+    );
+  };
+
+  const handleRunDemo = () => {
+    if (isReplying) return;
+    const demoPrompt = "Get latest revenue summary and email finance";
+
+    const timestamp = new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+    const userMessage: Message = {
+      id: `user-${randomId()}`,
+      role: "user",
+      content: demoPrompt,
+      timestamp
+    };
+
+    setMessages((prev) => [...prev, userMessage]);
+    setIsReplying(true);
+
+    const activeTools = tools.filter((tool) => tool.active);
+    const toolSummary = activeTools.length
+      ? activeTools.map((tool) => `${tool.label} ${formatSeconds(tool.remaining)}`).join(" · ")
+      : "none";
+    const maskSummary = maskedFields.length ? maskedFields.join(", ") : "none";
 
     setTimeout(() => {
-      setResponse(next);
-      setIsGenerating(false);
+      const assistantMessage: Message = {
+        id: `assistant-${randomId()}`,
+        role: "assistant",
+        content: `visas ${toolSummary} · masks ${maskSummary} · task "${demoPrompt}"`,
+        timestamp: new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
+      };
+      setMessages((prev) => [...prev, assistantMessage]);
+      setIsReplying(false);
     }, 900);
   };
 
-  const handleReset = () => {
-    setInput("");
-    setResponse(DEMO_REPLIES[0]);
-    setIsGenerating(false);
-  };
-
   return (
-    <section className="mx-auto w-full max-w-6xl px-5 sm:px-10 pt8 pb-16">
-      <div className="rounded-[34px] border border-white/5 bg-white from-slate-950 via-slate-950/80 to-black/70 p-8 lg:p-10 shadow-[0_40px_80px_-45px_rgba(15,23,42,0.85)]">
-        <div className="flex flex-col gap-10 lg:flex-row">
-          <form onSubmit={handleSubmit} className="flex flex-1 flex-col gap-6">
+    <section className="mx-auto w-full max-w-6xl px-5 pb-16 sm:px-10">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1.5fr)_minmax(280px,1fr)]">
+        <div className="relative overflow-hidden rounded-[36px] bg-white p-6 text-slate-900 shadow-[0_45px_90px_-60px_rgba(15,23,42,0.85)] sm:p-8">
+          <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-sm uppercase tracking-[0.1em] text-indigo-300">Try the agent with megent</p>
-              {/* Craft a prompt, pick a mode, and preview the sanitized response + synthetic voice payload. Backend hookup optional. */}
-              {/* </p> */}
+              <p className="text-base font-semibold text-slate-700">Chat with Agent</p>
+              <p className="text-xs text-slate-400">Simple demo flow</p>
             </div>
-
-            <div className="space-y-3">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400">Tools</p>
-              <div className="flex flex-wrap gap-3">
-                {MODES.map((item) => (
-                  <button
-                    key={item}
-                    type="button"
-                    onClick={() => setMode(item)}
-                    className={`rounded-full border px-4 py-2 text-sm transition ${
-                      mode === item
-                        ? "border-emerald-400/80 bg-emerald-400/10 text-black"
-                        : "border-white/10 text-slate-300 hover:border-white"
-                    }`}
-                  >
-                    {item}
-                  </button>
-                ))}
-              </div>
+            <div className="text-xs text-slate-500">
+              <span className="rounded-full bg-slate-100 px-3 py-1">Demo mode</span>
             </div>
-
-            
-
-            <label className="flex flex-1 flex-col gap-3">
-              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400">Prompt</span>
-              <div className="relative flex-1">
-                <textarea
-                  value={input}
-                  onChange={(event) => setInput(event.target.value)}
-                  placeholder="Ask anything you want the agent to transform."
-                  className="min-h-[160px] w-full resize-none rounded-3xl border border-black bg-grey-200 px-5 py-4 text-sm text-black placeholder:text-slate-500 focus:border-emerald-00/70 focus:outline-none"
-                />
-                <span className="pointer-events-none absolute bottom-4 right-5 text-xs text-slate-500">
-                  {input.length}/320
-                </span>
-              </div>
-            </label>
-
-            <div className="flex flex-wrap gap-3">
-              <button
-                type="submit"
-                disabled={!input.trim() || isGenerating}
-                className="inline-flex items-center gap-2 rounded-2xl bg-emerald-500/90 px-5 py-3 text-sm font-semibold text-black transition hover:bg-emerald-400 disabled:opacity-60"
-              >
-                {isGenerating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Mic className="h-4 w-4" />}
-                {isGenerating ? "Sending" : "Send to agent"}
-              </button>
-              <button
-                type="button"
-                onClick={handleReset}
-                className="rounded-2xl border border-white/15 px-5 py-3 text-sm text-slate-200 transition hover:border-white/40"
-              >
-                Reset
-              </button>
-              <span className="inline-flex items-center rounded-2xl border border-dashed border-white/15 px-4 py-3 text-xs uppercase tracking-[0.3em] text-slate-500">
-                Live preview only
-              </span>
-            </div>
-          </form>
-
-          <div className="flex flex-1 flex-col gap-5 rounded-[28px] border border-white/5 bg-white/5 p-6 backdrop-blur-xl">
-          <div className="flex flex-wrap gap-3">
-                
-                  <button
-                    
-                    className='rounded-full border px-4 py-2 text-sm transition'
-                      >Preview
-                  </button>
-                  <button
-                    
-                    className='rounded-full border px-4 py-2 text-sm transition'
-                      >Code
-                  </button>
-              </div>
-            <div className="flex items-center justify-between">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400">Output</p>
-              {/* <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-300">
-                {mode} · {voice} 
-              </span> */}
-            </div>
-
-            <div className="rounded-3xl border border-black bg-white p-6 shadow-inner">
-              <p className="text- text-black">{response.summary}</p>
-              {/* <ul className="mt-4 space-y-3 text-sm text-slate-300">
-                {response.details.map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <span className="mt-1 h-2 w-2 rounded-full bg-emerald-400" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul> */}
-            </div>
-            {/* <div className="flex flex-1 flex-col gap-5 rounded-[28px] border border-white/5 bg-white/5 p-6 backdrop-blur-xl"> */}
-            <div className="flex items-center justify-between">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400">Policy</p>
-              {/* <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-300">
-                {mode} · {voice} 
-              </span> */}
-            </div>
-            <div className="rounded-3xl border border-black bg-white p-6 shadow-inner">
-              <p className="text- text-black">{response.summary}</p>
-              {/* <ul className="mt-4 space-y-3 text-sm text-slate-300">
-                {response.details.map((item) => (
-                  <li key={item} className="flex items-start gap-3">
-                    <span className="mt-1 h-2 w-2 rounded-full bg-emerald-400" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul> */}
-            </div>
-
-            {/* <div className="rounded-3xl border border-white/10 bg-black/50 p-5">
-              <div className="flex items-center justify-between text-xs text-slate-400">
-                <span>Confidence</span>
-                <span>{Math.round(response.confidence * 100)}%</span>
-              </div>
-              <div className="mt-2 h-2 rounded-full bg-white/10">
-                <div
-                  className="h-2 rounded-full bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-400"
-                  style={{ width: `${Math.round(response.confidence * 100)}%` }}
-                />
-              </div> */}
           </div>
+
+          <div className="mt-4 max-h-60 space-y-3 overflow-y-auto pr-1">
+            {messages.map((message) => (
+              <div
+                key={message.id}
+                className={`flex gap-3 ${message.role === "assistant" ? "" : "flex-row-reverse"}`}
+              >
+                <div
+                  className={`flex h-9 w-9 items-center justify-center rounded-2xl text-xs font-semibold ${
+                    message.role === "assistant" ? "bg-slate-900 text-white" : "bg-slate-100 text-slate-600"
+                  }`}
+                >
+                  {message.role === "assistant" ? "M" : "You"}
+                </div>
+                <div
+                  className={`flex-1 rounded-3xl border px-4 py-3 text-sm leading-relaxed shadow-[0_20px_45px_-35px_rgba(15,23,42,0.9)] ${
+                    message.role === "assistant"
+                      ? "border-slate-900/30 bg-slate-900 text-white"
+                      : "border-slate-200 bg-slate-50"
+                  }`}
+                >
+                  <p>{message.content}</p>
+                  <div className="mt-2 flex items-center gap-2 text-[11px] text-slate-400">
+                    <Clock3 className="h-3 w-3" />
+                    {message.timestamp}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 flex items-center justify-between rounded-3xl border border-slate-200 bg-slate-50 px-5 py-4">
+            <p className="text-sm text-slate-600">Demo mode uses a fixed prompt like a real chatbot workflow.</p>
+            <button
+              type="button"
+              onClick={handleRunDemo}
+              disabled={isReplying}
+              className="rounded-2xl bg-slate-900 px-4 py-2 text-xs font-semibold text-white transition hover:bg-slate-800 disabled:opacity-60"
+            >
+              {isReplying ? (
+                <span className="inline-flex items-center gap-2">
+                  <Loader2 className="h-4 w-4 animate-spin" /> Waiting response
+                </span>
+              ) : (
+                "Run demo"
+              )}
+            </button>
+          </div>
+
+          <div className="mt-6">
+            <div className="flex items-center justify-between text-[11px] uppercase tracking-widest text-slate-400">
+              <span>Visa tools</span>
+              <span>- 2 min +</span>
+            </div>
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              {tools.map((tool) => (
+                <button
+                  key={tool.name}
+                  type="button"
+                  onClick={() => toggleTool(tool.name)}
+                  className={`flex items-center justify-between rounded-2xl border px-4 py-3 text-left text-sm transition ${
+                    tool.active ? "border-emerald-400/50 bg-emerald-50" : "border-slate-200 bg-white"
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <tool.icon className={`h-5 w-5 ${tool.active ? "text-emerald-500" : "text-slate-400"}`} />
+                    <div>
+                      <p className="font-medium text-slate-800">{tool.label}</p>
+                      <p className="text-xs text-slate-500">
+                        {tool.active ? formatSeconds(tool.remaining) : "issue visa"}
+                      </p>
+                    </div>
+                  </div>
+                  <span className="rounded-full bg-slate-900 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-white">
+                    {tool.active ? "Stop" : "Issue"}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-[36px] border border-white/5 bg-slate-950 p-6 text-slate-100 shadow-[0_45px_90px_-60px_rgba(15,23,42,0.9)] sm:p-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-slate-400">policy.yaml</p>
+              <p className="text-xs text-slate-500">Megent AI runtime policy</p>
+            </div>
+            <div className="inline-flex rounded-full border border-white/10 p-1 text-xs">
+              {(["preview", "code"] as ViewMode[]).map((mode) => (
+                <button
+                  key={mode}
+                  type="button"
+                  onClick={() => setViewMode(mode)}
+                  className={`rounded-full px-3 py-1 transition ${
+                    viewMode === mode ? "bg-white text-slate-900" : "text-slate-400"
+                  }`}
+                >
+                  {mode}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {viewMode === "code" ? (
+            <div className="mt-4">
+              <div className="flex items-center justify-between text-xs text-slate-500">
+                <span>runtime yaml</span>
+                <button
+                  type="button"
+                  onClick={handleCopyYaml}
+                  className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1 text-[11px] uppercase tracking-wider text-slate-300"
+                >
+                  <Copy className="h-3.5 w-3.5" /> {copiedYaml ? "copied" : "copy"}
+                </button>
+              </div>
+              <pre className="mt-3 rounded-3xl border border-white/10 bg-black/60 p-4 text-[12px] leading-relaxed text-slate-200">
+                <code>{policyYaml}</code>
+              </pre>
+            </div>
+          ) : (
+            <div className="mt-6 space-y-4 text-sm text-slate-300">
+              <div className="rounded-3xl border border-white/10 bg-slate-900/50 p-5">
+                <p className="text-xs uppercase tracking-[0.35em] text-slate-500">Flow tracker</p>
+                <p className="mt-1 text-sm text-white/70">Exact order for this run.</p>
+                <div className="mt-4 space-y-3">
+                  {previewFlow.map((step, index) => (
+                    <div key={step.title} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
+                      <span className="text-[12px] font-medium text-white">{index + 1}. {step.title}</span>
+                      <span
+                        className={`rounded-full px-2 py-0.5 text-[10px] uppercase tracking-wider ${
+                          step.state === "done"
+                            ? "bg-emerald-500/20 text-emerald-300"
+                            : step.state === "active"
+                              ? "bg-sky-500/20 text-sky-300"
+                              : "bg-white/10 text-white/50"
+                        }`}
+                      >
+                        {step.state}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-3xl border border-white/10 bg-slate-900/40 p-5">
+                <p className="text-xs uppercase tracking-[0.35em] text-slate-500">Request summary</p>
+                <div className="mt-3 space-y-2 text-[13px] text-slate-100">
+                  <div>
+                    <span className="text-white/50">Task:</span> {requestedTask}
+                  </div>
+                  <div>
+                    <span className="text-white/50">Visas:</span> {activeToolSummary}
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-3xl border border-amber-300/20 bg-amber-300/5 p-5">
+                <div className="flex items-center justify-between">
+                  <p className="text-xs uppercase tracking-[0.35em] text-amber-200">Demo response</p>
+                  <span className="rounded-full border border-amber-200/40 px-2 py-0.5 text-[10px] uppercase tracking-wider text-amber-200">
+                    Demo
+                  </span>
+                </div>
+                <div className="mt-3 rounded-2xl border border-amber-100/20 bg-black/20 px-3 py-2 text-sm text-amber-50">
+                  {isReplying
+                    ? "Waiting response from assistant..."
+                    : lastAssistantMessage?.content || "Press Run demo to simulate assistant response."}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>
