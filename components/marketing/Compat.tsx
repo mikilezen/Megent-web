@@ -41,7 +41,7 @@ export default function Compat() {
                 >
                   {icon ? (
                     <span className="relative h-5 w-5 shrink-0 overflow-hidden rounded-full bg-[var(--bg2)]">
-                      <Image src={icon} alt={label} fill sizes="20px" className="h-full w-full object-contain spin-slow" loading="lazy" />
+                      <Image src={icon} alt={label} fill sizes="20px" className="object-contain spin-slow" loading="lazy" />
                     </span>
                   ) : null}
                   <span>{label}</span>
