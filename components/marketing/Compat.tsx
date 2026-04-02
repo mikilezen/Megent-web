@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 const FRAMEWORKS = [
-  ["OpenAI Agents SDK", "/images (3).png"],
+  ["OpenAI Agents SDK", "/icon-224x224.png"],
   ["Google ADK", "/image-1774682381860.png"],
   ["Anthropic Claude", "https://img.icons8.com/?size=100&id=kDfpmWz6OSCQ&format=png&color=000000"],
   ["Langchain", "/images (2).png"],
