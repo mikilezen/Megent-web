@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
 
@@ -6,7 +8,7 @@ const siteUrl = "https://megent.dev";
 const siteName = "Megent";
 const defaultTitle = "Megent | AI Control Center";
 const defaultDescription = "Operations, routing, and governance for AI agents in production.";
-const ogImage = "/freepik__adjust__68767.jpg";
+const ogImage = "/freepik__adjust__68767.png";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -83,6 +85,8 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
