@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const badgeIcon = (text: string, bg = "#e5e7eb", fg = "#111827") =>
   `data:image/svg+xml;utf8,${encodeURIComponent(
     `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="${bg}"/><text x="50%" y="55%" font-family="Inter, Arial, sans-serif" font-size="24" text-anchor="middle" fill="${fg}" dominant-baseline="middle">${text}</text></svg>`
@@ -44,7 +46,7 @@ export default function Compat() {
                 >
                   {icon ? (
                     <span className="relative h-5 w-5 shrink-0 overflow-hidden rounded-full bg-[var(--bg2)]">
-                      <img src={icon} alt={label} className="h-full w-full object-contain spin-slow" />
+                      <Image src={icon} alt={label} fill sizes="20px" className="h-full w-full object-contain spin-slow" />
                     </span>
                   ) : null}
                   <span>{label}</span>
