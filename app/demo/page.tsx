@@ -211,9 +211,11 @@ export default function EnterpriseDashboard() {
       )}>
         <div className="flex items-center gap-3 px-6 py-6">
           <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black">
-            <Zap size={18} className="fill-current" />
+            {/* <Zap size={18} className="fill-current" /> */}
+            <img src="/ll.png" alt="" />
           </div>
           <span className="text-xl font-bold tracking-tight text-gray-900">Megent</span>
+          <p className='bg-white/20'>demo</p>
         </div>
 
         <nav className="flex-1 overflow-y-auto px-3 py-2 space-y-1">
@@ -321,7 +323,7 @@ export default function EnterpriseDashboard() {
               className={cn(
                 "flex items-center gap-2 px-3 py-1.5 rounded text-xs font-bold border transition-all duration-300",
                 isLockdown 
-                  ? "bg-red-500 text-gray-900 border-red-400 shadow-[0_0_15px_rgba(239,68,68,0.5)] animate-pulse" 
+                  ? "bg-red-500 text-white border-red-400 shadow-[0_0_15px_rgba(239,68,68,0.5)] animate-pulse" 
                   : "bg-transparent text-red-500 border-red-500/30 hover:bg-red-500/10"
               )}
             >
@@ -383,7 +385,7 @@ export default function EnterpriseDashboard() {
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
                 className="flex items-center gap-2 p-1 pr-3 hover:bg-gray-100 rounded-lg transition-colors"
               >
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-gray-900 font-bold text-xs">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xs">
                   ML
                 </div>
                 <div className="text-left hidden sm:block">
@@ -921,7 +923,7 @@ export default function EnterpriseDashboard() {
                       key={log.id}
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
-                      className="mb-2 pb-2 border-b border-[#111] last:border-0"
+                      className="mb-2 pb-2 border-b border-[#d1d5db] last:border-0"
                     >
                       <span className="text-gray-600">[{log.time}]</span>{' '}
                       <span className="text-blue-400">{log.agent}</span>{' '}
@@ -952,7 +954,7 @@ export default function EnterpriseDashboard() {
             >
               <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-semibold text-gray-900 tracking-tight">Agent Passport Registry</h1>
-                <button className="flex items-center gap-2 bg-blue-600 text-gray-900 px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-700 transition-colors">
+                <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-700 transition-colors">
                   <Plus size={16} /> Issue New Passport
                 </button>
               </div>
@@ -1000,8 +1002,8 @@ export default function EnterpriseDashboard() {
                           className={cn(
                             "px-4 py-1.5 rounded-lg text-xs font-bold transition-all",
                             agent.status === 'active' 
-                              ? "bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-gray-900" 
-                              : "bg-green-500/10 text-green-500 hover:bg-green-500 hover:text-gray-900"
+                              ? "bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white" 
+                              : "bg-green-500/10 text-green-500 hover:bg-green-500 hover:text-white"
                           )}
                         >
                           {agent.status === 'active' ? 'Revoke Access' : 'Restore Access'}
@@ -1015,7 +1017,7 @@ export default function EnterpriseDashboard() {
                   <div className="bg-[#ffffff] border border-[#d1d5db] rounded-xl p-5">
                     <h3 className="text-sm font-semibold text-gray-900 mb-4">JWT Passport Chain</h3>
                     <div className="space-y-4 relative">
-                      <div className="absolute left-3 top-4 bottom-4 w-[1px] bg-[#1f2937]" />
+                      <div className="absolute left-3 top-4 bottom-4 w-[1px] bg-[#d1d5db]" />
                       {[
                         { label: "Okta Issuer", desc: "Identity Provider", icon: Lock, color: "text-blue-400" },
                         { label: "App: Fin-Service", desc: "Application Context", icon: Grid, color: "text-purple-400" },
@@ -1075,20 +1077,20 @@ export default function EnterpriseDashboard() {
                   <div className="bg-[#f8fafc] border border-[#d1d5db] rounded-md p-1 flex text-sm">
                     <button 
                       onClick={() => setReportTimeRange("24h")}
-                      className={cn("px-3 py-1 rounded", reportTimeRange === "24h" ? "bg-[#2a2a2a] text-gray-900" : "text-gray-600 hover:text-gray-900")}
+                      className={cn("px-3 py-1 rounded", reportTimeRange === "24h" ? "bg-[#e5e7eb] text-gray-900" : "text-gray-600 hover:text-gray-900")}
                     >
                       24h
                     </button>
                     <button 
                       onClick={() => setReportTimeRange("7d")}
-                      className={cn("px-3 py-1 rounded", reportTimeRange === "7d" ? "bg-[#2a2a2a] text-gray-900" : "text-gray-600 hover:text-gray-900")}
+                      className={cn("px-3 py-1 rounded", reportTimeRange === "7d" ? "bg-[#e5e7eb] text-gray-900" : "text-gray-600 hover:text-gray-900")}
                     >
                       7d
                     </button>
                   </div>
                   <button 
                     onClick={handleExport}
-                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-gray-900 px-4 py-2 rounded-md text-sm font-semibold transition-colors"
+                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors"
                   >
                     <Download size={16} /> Export CSV
                   </button>
@@ -1128,7 +1130,7 @@ export default function EnterpriseDashboard() {
                           <span className="text-gray-700">{item.reason}</span>
                           <span className="text-gray-500">{item.count}</span>
                         </div>
-                        <div className="w-full bg-[#1f2937] rounded-full h-2">
+                        <div className="w-full bg-[#e5e7eb] rounded-full h-2">
                           <div className="bg-red-500 h-2 rounded-full" style={{ width: `${item.percent}%` }} />
                         </div>
                       </div>
@@ -1267,7 +1269,7 @@ export default function EnterpriseDashboard() {
                       description: "The new policy is now being propagated to the edge."
                     });
                   }}
-                  className="flex-1 px-4 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-sm font-semibold text-gray-900 transition-colors"
+                  className="flex-1 px-4 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-sm font-semibold text-white transition-colors"
                 >
                   Deploy Policy
                 </button>

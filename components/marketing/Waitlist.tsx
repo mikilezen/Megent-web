@@ -94,7 +94,7 @@ export default function Waitlist() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@company.com"
                 required
-                className="flex-1 px-4 py-3 text-[14px] font-mono text-[var(--text)] placeholder:text-[var(--text3)] bg-white border border-indigo-300/30 rounded-lg outline-none focus:ring-2 focus:ring-white/50 transition-all"
+                className="flex-1 px-4 py-3 text-[14px] font-mono text-[var(--text)] placeholder:text-[var(--text3)] bg-white border border-black rounded-lg outline-none focus:ring-2 focus:ring-white/50 transition-all"
               />
               <button
                 type="submit"

@@ -65,7 +65,7 @@ export default function Problem() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-5">
+        {/* <div className="grid md:grid-cols-3 gap-5">
           {PROBLEMS.map((problem, i) => (
             <div
               key={problem.tag}
@@ -85,7 +85,7 @@ export default function Problem() {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
 
         <div className="reveal mt-14 bg-[var(--indigo)] rounded-2xl p-8 md:p-10 text-white relative overflow-hidden">
           <div

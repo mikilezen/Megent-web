@@ -25,7 +25,7 @@ export default function HowItWorks() {
 
   return (
     <section id="how" className="py-20 sm:py-24 bg-white">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8">
+      {/* <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="max-w-2xl mb-8 sm:mb-10">
           <span className="inline-block font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--indigo)] mb-3">
             How it works
@@ -77,7 +77,7 @@ export default function HowItWorks() {
             />
           ))}
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }

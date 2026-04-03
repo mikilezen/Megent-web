@@ -2,17 +2,17 @@ import Image from "next/image";
 
 const LINKS = {
   Product: [
-    { label: "Documentation", href: "https://docs.megent.dev" },
-    { label: "GitHub", href: "https://github.com/getmegent" },
+    { label: "Documentation", href: "https://megent.dev/doc" },
+    { label: "GitHub", href: "https://github.com/megents" },
     { label: "How it works", href: "#how" },
     { label: "Features", href: "#features" },
     { label: "Changelog", href: "https://megent.dev/changelog" },
   ],
   Community: [
-    { label: "GitHub Discussions", href: "https://github.com/getmegent/megent/discussions" },
-    { label: "Twitter / X", href: "https://twitter.com/magentlabs" },
-    { label: "Report a bug", href: "https://github.com/getmegent/megent/issues" },
-    { label: "Contributing", href: "https://github.com/getmegent/megent/blob/main/CONTRIBUTING.md" },
+    { label: "GitHub Discussions", href: "https://github.com/megents/megent/discussions" },
+    { label: "Twitter / X", href: "https://twitter.com/magents_" },
+    { label: "Report a bug", href: "https://github.com/megents/megent/issues" },
+    { label: "Contributing", href: "https://github.com/megents/megent/blob/main/CONTRIBUTING.md" },
   ],
   Company: [
     { label: "Contact us", href: "mailto:hello@megent.dev" },
@@ -50,13 +50,13 @@ export default function Footer() {
                 GitHub
               </a>
               <a
-                href="https://twitter.com/magentlabs"
+                href="https://twitter.com/magenzs"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 px-3 py-1.5 font-mono text-[11px] text-[var(--text2)] border border-[var(--border)] rounded-md hover:border-[var(--border2)] hover:text-[var(--text)] transition-all"
               >
                 <TwitterIcon />
-                Twitter
+                X
               </a>
             </div>
           </div>

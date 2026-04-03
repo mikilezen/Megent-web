@@ -35,15 +35,15 @@ export default function UseCases() {
           <p className="text-[15px] text-[var(--text2)] leading-[1.7]">Choose a case to preview the default guard behavior.</p>
         </div>
 
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div className="flex flex-wrap gap-p2 mb-">
           {USE_CASES.map((useCase, i) => (
             <button
               key={useCase.title}
               type="button"
               onClick={() => setActiveIndex(i)}
-              className={`px-4 py-2 rounded-full border text-[13px] font-medium transition-colors ${
+              className={`px-4 py-2 rounded-0 border text-[13px] font-medium transition-colors ${
                 activeIndex === i
-                  ? "border-[var(--indigo-border)] bg-indigo-50 text-[var(--indigo)]"
+                  ? "border-[var(--black)] bg-black text-white"
                   : "border-[var(--border)] bg-white text-[var(--text2)] hover:border-[var(--indigo-border)]"
               }`}
             >
@@ -52,7 +52,7 @@ export default function UseCases() {
           ))}
         </div>
 
-        <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg1)] p-5 sm:p-6">
+        <div className="rounded-2oxl border border-[var(--border)] bg-[var(--bg10)] p-5 sm:p-6">
           <span className="inline-flex px-3 py-1 rounded-full text-[12px] font-mono text-[var(--text3)] border border-[var(--border)] bg-white mb-4">
             {activeCase.label}
           </span>
