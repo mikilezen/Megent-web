@@ -5,7 +5,7 @@ import "./globals.css";
 
 const siteUrl = "https://megent.dev";
 const siteName = "Megent";
-const defaultTitle = "Megent | AI Control Center";
+const defaultTitle = "Megent | A runtime policy";
 const defaultDescription = "Operations, routing, and governance for AI agents in production.";
 const ogImage = "/freepik__adjust__68767.png";
 
