@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 export default function Waitlist() {
   const [email, setEmail] = useState("");
   const [state, setState] = useState<"idle" | "loading" | "done" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -27,10 +28,36 @@ export default function Waitlist() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!email || !email.includes("@")) return;
+    if (!email || !email.includes("@")) {
+      setState("error");
+      setErrorMessage("Please enter a valid email.");
+      return;
+    }
+
     setState("loading");
-    await new Promise((resolve) => setTimeout(resolve, 900));
-    setState("done");
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = (await response.json().catch(() => ({}))) as { message?: string };
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to join waitlist.");
+      }
+
+      setState("done");
+      setEmail("");
+    } catch (error) {
+      setState("error");
+      setErrorMessage(error instanceof Error ? error.message : "Something went wrong. Try again.");
+    }
   };
 
   return (
@@ -54,35 +81,41 @@ export default function Waitlist() {
           when we ship.
         </h2>
         <p className="reveal reveal-d2 text-[17px] text-indigo-200 leading-[1.75] max-w-lg mx-auto mb-10">
-          We're onboarding early teams now — especially in fintech and healthcare.
-          Drop your email and we'll reach out directly
+          We&apos;re onboarding early teams now — especially in fintech and healthcare.
+          Drop your email and we&apos;ll reach out directly
         </p>
 
         {state !== "done" ? (
-          <form onSubmit={handleSubmit} className="reveal reveal-d3 flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-5">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@company.com"
-              required
-              className="flex-1 px-4 py-3 text-[14px] font-mono text-[var(--text)] placeholder:text-[var(--text3)] bg-white border border-indigo-300/30 rounded-lg outline-none focus:ring-2 focus:ring-white/50 transition-all"
-            />
-            <button
-              type="submit"
-              disabled={state === "loading"}
-              className="px-6 py-3 font-semibold text-[14px] bg-white text-[var(--indigo)] rounded-lg hover:bg-indigo-50 transition-all disabled:opacity-60 shrink-0 shadow-md"
-            >
-              {state === "loading" ? (
-                <span className="flex items-center gap-2">
-                  <Spinner />
-                  Joining...
-                </span>
-              ) : (
-                "Join waitlist"
-              )}
-            </button>
-          </form>
+          <>
+            <form onSubmit={handleSubmit} className="reveal reveal-d3 flex flex-col sm:flex-row gap-3 max-w-md mx-auto mb-3">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@company.com"
+                required
+                className="flex-1 px-4 py-3 text-[14px] font-mono text-[var(--text)] placeholder:text-[var(--text3)] bg-white border border-indigo-300/30 rounded-lg outline-none focus:ring-2 focus:ring-white/50 transition-all"
+              />
+              <button
+                type="submit"
+                disabled={state === "loading"}
+                className="px-6 py-3 font-semibold text-[14px] bg-white text-[var(--indigo)] rounded-lg hover:bg-indigo-50 transition-all disabled:opacity-60 shrink-0 shadow-md"
+              >
+                {state === "loading" ? (
+                  <span className="flex items-center gap-2">
+                    <Spinner />
+                    Joining...
+                  </span>
+                ) : (
+                  "Join waitlist"
+                )}
+              </button>
+            </form>
+
+            {state === "error" && (
+              <p className="reveal text-sm text-red-200 mb-5">{errorMessage || "Failed to join waitlist."}</p>
+            )}
+          </>
         ) : (
           <div className="reveal py-5 px-6 bg-white/10 border border-white/20 rounded-xl max-w-md mx-auto mb-5">
             <div className="flex items-center gap-3 justify-center">
@@ -90,8 +123,8 @@ export default function Waitlist() {
                 <CheckIcon />
               </div>
               <div className="text-left">
-                <p className="text-white font-semibold">You're on the list</p>
-                <p className="text-indigo-100 text-[13px]">We'll reach out shortly.</p>
+                <p className="text-white font-semibold">You&apos;re on the list</p>
+                <p className="text-indigo-100 text-[13px]">We&apos;ll reach out shortly.</p>
               </div>
             </div>
           </div>

@@ -12,7 +12,18 @@ const nextConfig: NextConfig = {
     root: path.join(__dirname),
   },
   images: {
-    domains: ["img.icons8.com", "freepik.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "img.icons8.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "freepik.com",
+        pathname: "/**",
+      },
+    ],
   },
 };
 
