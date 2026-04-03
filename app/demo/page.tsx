@@ -71,6 +71,10 @@ export default function EnterpriseDashboard() {
   const [logFilter, setLogFilter] = useState("ALL");
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+  const [enforcementMode, setEnforcementMode] = useState<"BLOCKING" | "MONITORING">("BLOCKING");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [sidebarWidth, setSidebarWidth] = useState(256);
+  const [isSidebarResizing, setIsSidebarResizing] = useState(false);
 
   const notifications = [
     { id: 1, title: "New Threat Detected", desc: "Anomalous spike in Support-Agent", time: "2m ago", type: "alert" },
@@ -121,6 +125,46 @@ export default function EnterpriseDashboard() {
     }, 8000);
     return () => clearInterval(interval);
   }, [incidents.length]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setIsSidebarOpen(false);
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (!isSidebarResizing) return;
+
+    const handleMouseMove = (event: MouseEvent) => {
+      if (window.innerWidth < 1024) return;
+      const minWidth = 220;
+      const maxWidth = Math.min(420, Math.floor(window.innerWidth * 0.45));
+      const nextWidth = Math.min(maxWidth, Math.max(minWidth, event.clientX));
+      setSidebarWidth(nextWidth);
+    };
+
+    const handleMouseUp = () => {
+      setIsSidebarResizing(false);
+    };
+
+    document.body.style.userSelect = "none";
+    document.body.style.cursor = "col-resize";
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      document.body.style.userSelect = "";
+      document.body.style.cursor = "";
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isSidebarResizing]);
 
   // Simulate live data stream
   useEffect(() => {
@@ -199,6 +243,65 @@ export default function EnterpriseDashboard() {
     }));
   };
 
+  const handleSettingsClick = () => {
+    setActiveNav("Policy Editor");
+    toast.info("Opened Policy & Skill Editor");
+  };
+
+  const handleMarkAllNotificationsRead = () => {
+    setShowNotifications(false);
+    toast.success("All notifications marked as read");
+  };
+
+  const handleViewAllNotifications = () => {
+    setShowNotifications(false);
+    setActiveNav("Logs");
+    toast.info("Opened audit logs");
+  };
+
+  const handleProfileMenuAction = (action: "profile" | "security" | "api" | "signout") => {
+    setShowProfileMenu(false);
+
+    if (action === "profile") {
+      setActiveNav("Agent Passports");
+      toast.info("Profile settings opened");
+      return;
+    }
+
+    if (action === "security") {
+      toast.info("Security keys panel opened");
+      return;
+    }
+
+    if (action === "api") {
+      setActiveNav("Agent Passports");
+      toast.info("API access panel opened");
+      return;
+    }
+
+    toast.error("Signed out (demo)");
+  };
+
+  const handleIssueNewPassport = () => {
+    const newId = `N${Math.floor(Math.random() * 900 + 100)}`;
+    const newAgent = {
+      id: newId,
+      name: `New-Agent-${newId}`,
+      status: "active",
+      risk: "low",
+      calls: "0",
+    };
+
+    setAgents(prev => [newAgent, ...prev].slice(0, 8));
+    toast.success(`Issued passport for ${newAgent.name}`);
+  };
+
+  const handleSidebarResizeStart = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    if (window.innerWidth < 1024) return;
+    setIsSidebarResizing(true);
+  };
+
   return (
     <div className={cn(
       "flex h-screen w-full text-gray-700 font-sans overflow-hidden selection:bg-blue-500/30 transition-colors duration-500",
@@ -206,9 +309,11 @@ export default function EnterpriseDashboard() {
     )}>
       {/* SIDEBAR */}
       <div className={cn(
-        "w-64 flex-shrink-0 border-r flex flex-col z-10 transition-colors duration-500",
+        "fixed inset-y-0 left-0 relative max-w-[85vw] flex-shrink-0 border-r flex flex-col z-50 transition-all duration-300 lg:static lg:translate-x-0",
+        isSidebarOpen ? "translate-x-0" : "-translate-x-full",
         isLockdown ? "border-red-900/30 bg-[#fff5f5]" : "border-[#d1d5db] bg-[#ffffff]"
-      )}>
+      )}
+      style={{ width: sidebarWidth }}>
         <div className="flex items-center gap-3 px-6 py-6">
           <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black">
             {/* <Zap size={18} className="fill-current" /> */}
@@ -230,7 +335,10 @@ export default function EnterpriseDashboard() {
           ].map((item) => (
             <div key={item.label} className="flex flex-col">
               <button
-                onClick={() => setActiveNav(item.label)}
+                onClick={() => {
+                  setActiveNav(item.label);
+                  setIsSidebarOpen(false);
+                }}
                 className={cn(
                   "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors w-full text-left",
                   activeNav === item.label 
@@ -273,7 +381,10 @@ export default function EnterpriseDashboard() {
           "p-4 border-t space-y-4 transition-colors duration-500",
           isLockdown ? "border-red-900/30" : "border-[#d1d5db]"
         )}>
-          <button className="flex items-center gap-3 text-sm text-gray-600 hover:text-gray-200 w-full px-2 font-medium transition-colors">
+          <button
+            onClick={handleSettingsClick}
+            className="flex items-center gap-3 text-sm text-gray-600 hover:text-gray-900 w-full px-2 font-medium transition-colors"
+          >
             <SettingsIcon size={18} /> Setting
           </button>
           <div className="flex items-center gap-2 px-2 text-xs font-medium text-gray-600">
@@ -284,40 +395,74 @@ export default function EnterpriseDashboard() {
             In-Process Guard: <span className={isLockdown ? "text-red-400 font-bold" : "text-green-400"}>{isLockdown ? "LOCKDOWN" : "ACTIVE"}</span>
           </div>
         </div>
+
+        <div
+          role="separator"
+          aria-orientation="vertical"
+          aria-label="Resize sidebar"
+          onMouseDown={handleSidebarResizeStart}
+          className="absolute top-0 right-0 hidden h-full w-1 cursor-col-resize lg:block"
+        >
+          <div className={cn(
+            "h-full w-full transition-colors",
+            isSidebarResizing ? "bg-blue-500/40" : "hover:bg-blue-500/30"
+          )} />
+        </div>
       </div>
+
+      {isSidebarOpen && (
+        <button
+          type="button"
+          aria-label="Close sidebar"
+          onClick={() => setIsSidebarOpen(false)}
+          className="fixed inset-0 z-40 bg-black/20 backdrop-blur-[1px] lg:hidden"
+        />
+      )}
+
+      {/* <div className="hidden lg:block flex-shrink-0" style={{ width: sidebarWidth }} /> */}
 
       {/* MAIN CONTENT */}
       <div className={cn(
-        "flex-1 flex flex-col min-w-0 transition-colors duration-500",
+        "flex-1 flex flex-col min-w-0 min-h-0 transition-colors duration-500",
         isLockdown ? "bg-[#fff1f2]" : "bg-[#f5f7fb]"
       )}>
         {/* TOP BAR */}
         <header className={cn(
-          "h-14 flex items-center justify-between px-6 border-b transition-colors duration-500 relative",
+          "min-h-14 flex flex-wrap items-center justify-between gap-3 px-4 py-2 sm:px-6 border-b transition-colors duration-500 relative",
           isLockdown ? "border-red-900/30 bg-[#fff1f2]" : "border-[#d1d5db] bg-[#f5f7fb]"
         )}>
-          <div className="flex-1 max-w-xl relative">
-            <form onSubmit={handleSearch}>
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
-              <input 
-                type="text" 
-                placeholder="Search agents, policies, or audit logs..." 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className={cn(
-                  "w-full bg-[#ffffff] border border-[#d1d5db] rounded-lg py-2 pl-10 pr-4 text-sm text-gray-700 focus:outline-none focus:border-blue-500/50 transition-all",
-                  isLockdown ? "bg-[#ffe4e6] border-red-900/50" : "bg-[#ffffff] border-[#d1d5db]"
+          <div className="flex flex-1 items-center gap-3 min-w-0 lg:max-w-xl">
+            <button
+              type="button"
+              aria-label="Open sidebar"
+              onClick={() => setIsSidebarOpen((prev) => !prev)}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-[#d1d5db] bg-[#ffffff] text-black hover:bg-gray-100 lg:hidden"
+            >
+              <List size={18} />
+            </button>
+            <div className="relative flex-1">
+              <form onSubmit={handleSearch}>
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
+                <input 
+                  type="text" 
+                  placeholder="Search agents, policies, or audit logs..." 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className={cn(
+                    "w-full bg-[#ffffff] border border-[#d1d5db] rounded-lg py-2 pl-10 pr-4 text-sm text-gray-700 focus:outline-none focus:border-blue-500/50 transition-all",
+                    isLockdown ? "bg-[#ffe4e6] border-red-900/50" : "bg-[#ffffff] border-[#d1d5db]"
+                  )}
+                />
+                {isSearching && (
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                    <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                  </div>
                 )}
-              />
-              {isSearching && (
-                <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                  <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
-                </div>
-              )}
-            </form>
+              </form>
+            </div>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <button 
               onClick={toggleLockdown}
               className={cn(
@@ -337,7 +482,7 @@ export default function EnterpriseDashboard() {
                 className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors relative"
               >
                 <Bell size={20} />
-                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-blue-500 rounded-full border-2 border-[#0a0a0a]" />
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-blue-500 rounded-full border-2 border-[#f5f7fb]" />
               </button>
               
               <AnimatePresence>
@@ -348,11 +493,11 @@ export default function EnterpriseDashboard() {
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      className="absolute right-0 mt-2 w-80 bg-[#ffffff] border border-[#d1d5db] rounded-xl shadow-2xl z-50 overflow-hidden"
+                      className="absolute right-0 mt-2 w-[min(20rem,calc(100vw-2rem))] bg-[#ffffff] border border-[#d1d5db] rounded-xl shadow-2xl z-50 overflow-hidden"
                     >
                       <div className="p-4 border-b border-[#d1d5db] flex items-center justify-between">
                         <h3 className="text-sm font-bold text-gray-900">Notifications</h3>
-                        <button className="text-[10px] text-blue-400 hover:underline">Mark all as read</button>
+                        <button onClick={handleMarkAllNotificationsRead} className="text-[10px] text-blue-400 hover:underline">Mark all as read</button>
                       </div>
                       <div className="max-h-96 overflow-y-auto">
                         {notifications.map(n => (
@@ -371,7 +516,7 @@ export default function EnterpriseDashboard() {
                           </div>
                         ))}
                       </div>
-                      <button className="w-full p-3 text-xs text-gray-500 hover:text-gray-900 hover:bg-[#f3f4f6] transition-colors text-center font-medium">
+                      <button onClick={handleViewAllNotifications} className="w-full p-3 text-xs text-gray-500 hover:text-gray-900 hover:bg-[#f3f4f6] transition-colors text-center font-medium">
                         View all notifications
                       </button>
                     </motion.div>
@@ -385,11 +530,11 @@ export default function EnterpriseDashboard() {
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
                 className="flex items-center gap-2 p-1 pr-3 hover:bg-gray-100 rounded-lg transition-colors"
               >
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xs">
-                  ML
+                <div className="w-8 h-8 rounded-[18px] bg-black from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xs">
+                  D
                 </div>
                 <div className="text-left hidden sm:block">
-                  <div className="text-xs font-semibold text-gray-900">Miki Lezen</div>
+                  <div className="text-xs font-semibold text-gray-900">Demo</div>
                   <div className="text-[10px] text-gray-500">Enterprise Admin</div>
                 </div>
               </button>
@@ -402,25 +547,25 @@ export default function EnterpriseDashboard() {
                       initial={{ opacity: 0, y: 10, scale: 0.95 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      className="absolute right-0 mt-2 w-56 bg-[#ffffff] border border-[#d1d5db] rounded-xl shadow-2xl z-50 overflow-hidden"
+                      className="absolute right-0 mt-2 w-[min(14rem,calc(100vw-2rem))] bg-[#ffffff] border border-[#d1d5db] rounded-xl shadow-2xl z-50 overflow-hidden"
                     >
                       <div className="p-4 border-b border-[#d1d5db]">
                         <div className="text-xs font-semibold text-gray-900">mikilezen@gmail.com</div>
                         <div className="text-[10px] text-gray-500 mt-0.5">Organization: Megent Corp</div>
                       </div>
                       <div className="p-2">
-                        <button className="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-600 hover:text-gray-900 hover:bg-[#f3f4f6] rounded-lg transition-colors">
+                        <button onClick={() => handleProfileMenuAction("profile")} className="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-600 hover:text-gray-900 hover:bg-[#f3f4f6] rounded-lg transition-colors">
                           <User size={14} /> Profile Settings
                         </button>
-                        <button className="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-600 hover:text-gray-900 hover:bg-[#f3f4f6] rounded-lg transition-colors">
+                        <button onClick={() => handleProfileMenuAction("security")} className="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-600 hover:text-gray-900 hover:bg-[#f3f4f6] rounded-lg transition-colors">
                           <Shield size={14} /> Security Keys
                         </button>
-                        <button className="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-600 hover:text-gray-900 hover:bg-[#f3f4f6] rounded-lg transition-colors">
+                        <button onClick={() => handleProfileMenuAction("api")} className="w-full flex items-center gap-2 px-3 py-2 text-xs text-gray-600 hover:text-gray-900 hover:bg-[#f3f4f6] rounded-lg transition-colors">
                           <Grid size={14} /> API Access
                         </button>
                       </div>
                       <div className="p-2 border-t border-[#d1d5db]">
-                        <button className="w-full flex items-center gap-2 px-3 py-2 text-xs text-red-400 hover:bg-red-500/10 rounded-lg transition-colors">
+                        <button onClick={() => handleProfileMenuAction("signout")} className="w-full flex items-center gap-2 px-3 py-2 text-xs text-red-400 hover:bg-red-500/10 rounded-lg transition-colors">
                           <LogOut size={14} /> Sign Out
                         </button>
                       </div>
@@ -432,7 +577,7 @@ export default function EnterpriseDashboard() {
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-6 space-y-6">
+        <main className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
           {activeNav === "Overview" && (
             <>
             {/* HEADER */}
@@ -447,7 +592,7 @@ export default function EnterpriseDashboard() {
             </div>
 
             {/* METRIC CARDS */}
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
               <motion.div 
                 whileHover={{ scale: 1.02 }}
                 className={cn(
@@ -513,7 +658,7 @@ export default function EnterpriseDashboard() {
 
             {/* ENFORCEMENT STREAM TABLE */}
             <div className={cn(
-              "border rounded-xl overflow-hidden flex flex-col transition-colors duration-500",
+              "border rounded-xl resize-y overflow-auto min-h-[22rem] max-h-[80vh] flex flex-col transition-colors duration-500",
               isLockdown ? "bg-[#ffe4e6] border-red-900/50" : "bg-[#ffffff] border-[#d1d5db]"
             )}>
               <div className={cn(
@@ -521,13 +666,13 @@ export default function EnterpriseDashboard() {
                 isLockdown ? "border-red-900/50" : "border-[#d1d5db]"
               )}>
                 <h2 className="text-sm font-semibold text-gray-900">Real-time Grouped Enforcement Stream</h2>
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3">
                   <div className={cn(
                     "flex items-center border rounded px-2 py-1 transition-colors duration-500",
                     isLockdown ? "bg-[#fff1f2] border-red-900/50" : "bg-[#f5f7fb] border-[#d1d5db]"
                   )}>
                     <Search size={14} className="text-gray-500 mr-2" />
-                    <input type="text" placeholder="Search" className="bg-transparent border-none outline-none text-xs text-gray-700 w-32" />
+                    <input type="text" placeholder="Search" className="bg-transparent border-none outline-none text-xs text-gray-700 w-24 sm:w-32" />
                   </div>
                   <div className={cn(
                     "text-[10px] font-medium text-gray-600 border rounded px-2 py-1.5 transition-colors duration-500",
@@ -541,7 +686,7 @@ export default function EnterpriseDashboard() {
                   )}>
                     INTENT: <span className="text-gray-900">DATA MODIFICATION</span>
                   </div>
-                  <button className="text-gray-500 hover:text-gray-900"><MoreHorizontal size={16} /></button>
+                  <button onClick={() => toast.info("Opened stream options")} className="text-gray-500 hover:text-gray-900"><MoreHorizontal size={16} /></button>
                 </div>
               </div>
               
@@ -573,7 +718,7 @@ export default function EnterpriseDashboard() {
                             <span className="text-gray-900 font-semibold">Financial-Bot-1</span>
                             <span className="text-green-400 text-xs font-medium">[Verified]</span>
                           </div>
-                          <button className="text-gray-500 hover:text-gray-900"><MoreHorizontal size={16} /></button>
+                          <button onClick={() => toast.info("Opened session actions for A723")} className="text-gray-500 hover:text-gray-900"><MoreHorizontal size={16} /></button>
                         </div>
                       </td>
                     </tr>
@@ -634,16 +779,16 @@ export default function EnterpriseDashboard() {
               )}>
                 Multi-Dimensional Predictive Intelligence
               </div>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
                 {/* Anomalies Chart */}
                 <div className={cn(
-                  "col-span-2 border rounded-b-xl rounded-tr-xl p-5 transition-colors duration-500",
+                  "xl:col-span-2 border rounded-b-xl rounded-tr-xl p-5 transition-colors duration-500",
                   isLockdown ? "bg-[#ffe4e6] border-red-900/50" : "bg-[#ffffff] border-[#d1d5db]"
                 )}>
                   <h3 className="text-sm font-medium text-gray-900 mb-4">Anomalies & Deviations</h3>
-                  <div className="flex h-40 gap-6">
+                  <div className="flex h-auto md:h-40 flex-col md:flex-row gap-6">
                     <div className={cn(
-                      "w-1/3 relative flex items-center justify-center border-r pr-6 transition-colors duration-500",
+                      "w-full md:w-1/3 min-h-[10rem] relative flex items-center justify-center md:border-r md:pr-6 transition-colors duration-500",
                       isLockdown ? "border-red-900/50" : "border-[#d1d5db]"
                     )}>
                       <div className="absolute inset-0 flex items-center justify-center">
@@ -754,8 +899,8 @@ export default function EnterpriseDashboard() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-4 gap-4">
-                <div className="col-span-3 bg-[#ffffff] border border-[#d1d5db] rounded-xl p-6">
+              <div className="grid grid-cols-1 xl:grid-cols-4 gap-4">
+                <div className="xl:col-span-3 bg-[#ffffff] border border-[#d1d5db] rounded-xl p-6">
                   <div className="flex items-center justify-between mb-6">
                     <h3 className="text-sm font-medium text-gray-900">Threat Distribution Map</h3>
                     <div className="flex gap-4 text-xs">
@@ -841,12 +986,12 @@ export default function EnterpriseDashboard() {
               animate={{ opacity: 1, y: 0 }}
               className="space-y-6"
             >
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <h1 className="text-2xl font-semibold text-gray-900 tracking-tight">System Audit Logs</h1>
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center bg-[#ffffff] border border-[#d1d5db] rounded px-3 py-1.5">
+                <div className="flex w-full sm:w-auto flex-wrap items-center gap-2 sm:gap-3">
+                  <div className="flex w-full sm:w-auto items-center bg-[#ffffff] border border-[#d1d5db] rounded px-3 py-1.5">
                     <Search size={14} className="text-gray-500 mr-2" />
-                    <input type="text" placeholder="Filter by Agent, Tool, or ID" className="bg-transparent border-none outline-none text-xs text-gray-700 w-64" />
+                    <input type="text" placeholder="Filter by Agent, Tool, or ID" className="bg-transparent border-none outline-none text-xs text-gray-700 w-full sm:w-64" />
                   </div>
                   <select 
                     value={logFilter}
@@ -861,7 +1006,7 @@ export default function EnterpriseDashboard() {
                 </div>
               </div>
 
-              <div className="bg-[#ffffff] border border-[#d1d5db] rounded-xl overflow-hidden">
+              <div className="bg-[#ffffff] border border-[#d1d5db] rounded-xl overflow-x-auto">
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="text-xs text-gray-500 border-b border-[#d1d5db] bg-[#f5f7fb]/50">
@@ -899,9 +1044,9 @@ export default function EnterpriseDashboard() {
               animate={{ opacity: 1, y: 0 }}
               className="h-full flex flex-col"
             >
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
                 <h1 className="text-2xl font-semibold text-gray-900 tracking-tight">Live Interceptor Terminal</h1>
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                   <button 
                     onClick={() => setIsStreaming(!isStreaming)}
                     className="flex items-center gap-2 bg-[#f3f4f6] border border-[#d1d5db] text-gray-700 px-3 py-1.5 rounded text-sm hover:bg-[#222] transition-colors"
@@ -916,7 +1061,7 @@ export default function EnterpriseDashboard() {
                   </button>
                 </div>
               </div>
-              <div className="flex-1 bg-[#f8fafc] border border-[#d1d5db] rounded-xl p-4 font-mono text-xs overflow-y-auto">
+              <div className="flex-1 resize-y min-h-[18rem] max-h-[70vh] bg-[#f8fafc] border border-[#d1d5db] rounded-xl p-4 font-mono text-xs overflow-y-auto">
                 <AnimatePresence>
                   {logs.map((log) => (
                     <motion.div 
@@ -952,20 +1097,20 @@ export default function EnterpriseDashboard() {
               animate={{ opacity: 1, y: 0 }}
               className="space-y-6"
             >
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <h1 className="text-2xl font-semibold text-gray-900 tracking-tight">Agent Passport Registry</h1>
-                <button className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-700 transition-colors">
+                <button onClick={handleIssueNewPassport} className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-700 transition-colors">
                   <Plus size={16} /> Issue New Passport
                 </button>
               </div>
 
-              <div className="grid grid-cols-3 gap-6">
-                <div className="col-span-2 space-y-4">
+              <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                <div className="xl:col-span-2 space-y-4">
                   {agents.map((agent) => (
                     <motion.div 
                       key={agent.id}
                       layout
-                      className="bg-[#ffffff] border border-[#d1d5db] rounded-xl p-5 flex items-center justify-between group hover:border-blue-500/30 transition-all"
+                      className="bg-[#ffffff] border border-[#d1d5db] rounded-xl p-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between group hover:border-blue-500/30 transition-all"
                     >
                       <div className="flex items-center gap-4">
                         <div className={cn(
@@ -994,7 +1139,7 @@ export default function EnterpriseDashboard() {
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <button className="p-2 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
+                        <button onClick={() => toast.info(`Viewing passport details for ${agent.name}`)} className="p-2 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
                           <FileText size={18} />
                         </button>
                         <button 
@@ -1071,9 +1216,9 @@ export default function EnterpriseDashboard() {
               animate={{ opacity: 1, y: 0 }}
               className="space-y-6"
             >
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <h1 className="text-2xl font-semibold text-gray-900 tracking-tight">Enforcement Reports</h1>
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                   <div className="bg-[#f8fafc] border border-[#d1d5db] rounded-md p-1 flex text-sm">
                     <button 
                       onClick={() => setReportTimeRange("24h")}
@@ -1097,7 +1242,7 @@ export default function EnterpriseDashboard() {
                 </div>
               </div>
               
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
                 <div className="bg-[#ffffff] border border-[#d1d5db] rounded-xl p-5">
                   <h3 className="text-sm font-medium text-gray-900 mb-4">Actions by Policy</h3>
                   <div className="h-64">
@@ -1244,11 +1389,27 @@ export default function EnterpriseDashboard() {
                 <div>
                   <label className="block text-xs font-semibold text-gray-500 uppercase mb-1.5">Enforcement Mode</label>
                   <div className="grid grid-cols-2 gap-3">
-                    <button className="flex flex-col items-center gap-2 p-3 rounded-lg border border-blue-500/50 bg-blue-500/10 text-blue-400">
+                    <button
+                      onClick={() => setEnforcementMode("BLOCKING")}
+                      className={cn(
+                        "flex flex-col items-center gap-2 p-3 rounded-lg border transition-colors",
+                        enforcementMode === "BLOCKING"
+                          ? "border-blue-500/50 bg-blue-500/10 text-blue-400"
+                          : "border-[#d1d5db] bg-[#f5f7fb] text-gray-500 hover:text-gray-700"
+                      )}
+                    >
                       <Shield size={20} />
                       <span className="text-xs font-bold">BLOCKING</span>
                     </button>
-                    <button className="flex flex-col items-center gap-2 p-3 rounded-lg border border-[#d1d5db] bg-[#f5f7fb] text-gray-500 hover:text-gray-700">
+                    <button
+                      onClick={() => setEnforcementMode("MONITORING")}
+                      className={cn(
+                        "flex flex-col items-center gap-2 p-3 rounded-lg border transition-colors",
+                        enforcementMode === "MONITORING"
+                          ? "border-blue-500/50 bg-blue-500/10 text-blue-400"
+                          : "border-[#d1d5db] bg-[#f5f7fb] text-gray-500 hover:text-gray-700"
+                      )}
+                    >
                       <Activity size={20} />
                       <span className="text-xs font-bold">MONITORING</span>
                     </button>
@@ -1266,7 +1427,7 @@ export default function EnterpriseDashboard() {
                   onClick={() => {
                     setIsCreatePolicyOpen(false);
                     toast.success("Policy Created Successfully", {
-                      description: "The new policy is now being propagated to the edge."
+                      description: `The new ${enforcementMode.toLowerCase()} policy is now being propagated to the edge.`
                     });
                   }}
                   className="flex-1 px-4 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-sm font-semibold text-white transition-colors"
