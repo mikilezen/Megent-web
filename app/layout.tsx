@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 // import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider"
 
 const siteUrl = "https://megent.dev";
 const siteName = "Megent";
@@ -18,9 +17,15 @@ export const metadata: Metadata = {
   },
   description: defaultDescription,
   applicationName: siteName,
+  category: "technology",
+  referrer: "origin-when-cross-origin",
   alternates: {
     canonical: "/",
   },
+  manifest: "/manifest.webmanifest",
+  authors: [{ name: "Megent", url: siteUrl }],
+  creator: "Megent",
+  publisher: "Megent",
   keywords: [
     "AI agent governance",
     "AI operations",
@@ -50,6 +55,12 @@ export const metadata: Metadata = {
     title: defaultTitle,
     description: defaultDescription,
     images: [ogImage],
+    creator: "@megentdev",
+  },
+  appleWebApp: {
+    title: siteName,
+    capable: true,
+    statusBarStyle: "default",
   },
   robots: {
     index: true,
