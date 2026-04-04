@@ -1,0 +1,26 @@
+{
+  "name": "Megent - A runtime policy for AI agents",
+  "short_name": "Megent",
+  "description": "Operations, routing, and governance for AI agents in production.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4f46e5",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/icon-224x224.png",
+      "sizes": "224x224",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "developer tools", "ai"],
+  "lang": "en",
+  "dir": "ltr"
+}

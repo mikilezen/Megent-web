@@ -2,20 +2,36 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "OP",
-  description: "Megent OP for AI operations, routing, and governance in production.",
+  description: "Megent OP: Centralized operations, routing, and governance for AI agents in production. Control, monitor, and secure your AI agent infrastructure at scale.",
   alternates: {
     canonical: "/op",
   },
+  keywords: [
+    "Megent OP",
+    "AI operations",
+    "agent routing",
+    "AI governance",
+    "agent operations platform",
+  ],
   openGraph: {
-    title: "Megent OP",
-    description: "Megent OP for AI operations, routing, and governance in production.",
+    title: "Megent OP - AI Agent Operations Platform",
+    description: "Centralized operations, routing, and governance for AI agents in production. Control, monitor, and secure your AI agent infrastructure.",
     url: "https://megent.dev/op",
     type: "website",
+    images: [
+      {
+        url: "/freepik__adjust__68767.png",
+        width: 1200,
+        height: 630,
+        alt: "Megent OP Platform",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Megent OP",
-    description: "Megent OP for AI operations, routing, and governance in production.",
+    title: "Megent OP - AI Agent Operations Platform",
+    description: "Centralized operations, routing, and governance for AI agents in production.",
+    images: ["/freepik__adjust__68767.png"],
   },
 };
 
