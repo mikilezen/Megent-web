@@ -6,68 +6,54 @@ import { FAQS } from "@/data/faq";
 
 const siteUrl = "https://megent.dev";
 const siteName = "Megent";
-const defaultTitle = "Megent | A runtime policy";
-const defaultDescription = "Operations, routing, and governance for AI agents in production.";
+const defaultTitle = "Megent | A runtime policy for AI agents";
+const defaultDescription = "Operations, routing, and governance for AI agents in production. Intercept tool calls, enforce YAML rules, and mask PII across every major agentic framework.";
 const ogImage = "/freepik__adjust__68767.png";
 
-// --- JSON-LD Structured Data ---
-
-const organizationSchema = {
+// Structured Data for SEO
+const structuredData = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  name: siteName,
-  url: siteUrl,
-  logo: {
-    "@type": "ImageObject",
-    url: `${siteUrl}/openclaw.png`,
-  },
-  description: defaultDescription,
-  email: "hello@megent.dev",
-  sameAs: ["https://twitter.com/megentdev"],
-};
-
-const websiteSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: siteName,
-  url: siteUrl,
-  description: defaultDescription,
-};
-
-const softwareSchema = {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  name: siteName,
-  applicationCategory: "DeveloperApplication",
-  operatingSystem: "Python 3.9+",
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "USD",
-  },
-  description: defaultDescription,
-  url: siteUrl,
-  author: {
-    "@type": "Organization",
-    name: siteName,
-    url: siteUrl,
-  },
-};
-
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: FAQS.map((item) => ({
-    "@type": "Question",
-    name: item.q,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: item.a,
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      "name": siteName,
+      "url": siteUrl,
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${siteUrl}/favicon.ico`,
+      },
+      "description": defaultDescription,
+      "sameAs": [
+        "https://twitter.com/megentdev",
+      ],
     },
-  })),
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      "url": siteUrl,
+      "name": defaultTitle,
+      "description": defaultDescription,
+      "publisher": {
+        "@id": `${siteUrl}/#organization`,
+      },
+      "inLanguage": "en-US",
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": siteName,
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "description": defaultDescription,
+      "url": siteUrl,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+      },
+    },
+  ],
 };
-
-// --- Metadata ---
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -93,18 +79,15 @@ export const metadata: Metadata = {
     "agent policy",
     "LLM guardrails",
     "Megent",
-    "AI runtime policy",
-    "AI tool call interception",
-    "LLM agent control",
-    "AI compliance",
-    "AI observability",
+    "AI agent runtime",
+    "policy enforcement",
+    "PII masking",
+    "AI agent control",
+    "LLM security",
     "agent monitoring",
-    "PII masking AI",
-    "LangChain guardrails",
-    "CrewAI security",
-    "OpenAI Agents SDK",
-    "AI policy engine",
-    "AI audit log",
+    "AI compliance",
+    "agent framework",
+    "AI governance platform",
   ],
   openGraph: {
     title: defaultTitle,
@@ -168,19 +151,7 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
       <body className="antialiased">
