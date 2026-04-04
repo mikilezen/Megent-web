@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 // import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
+import { FAQS } from "@/data/faq";
 
 const siteUrl = "https://megent.dev";
 const siteName = "Megent";
@@ -110,11 +111,17 @@ export const metadata: Metadata = {
     description: defaultDescription,
     images: [ogImage],
     creator: "@megentdev",
+    site: "@megentdev",
   },
   appleWebApp: {
     title: siteName,
     capable: true,
     statusBarStyle: "default",
+  },
+  formatDetection: {
+    telephone: false,
+    email: false,
+    address: false,
   },
   robots: {
     index: true,
@@ -130,6 +137,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
+    apple: "/icon-224x224.png",
   },
 };
 
