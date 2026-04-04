@@ -19,11 +19,9 @@ async function readWaitlist(): Promise<WaitlistEntry[]> {
     const content = await fs.readFile(WAITLIST_FILE, "utf-8");
     const parsed = JSON.parse(content);
     return Array.isArray(parsed) ? parsed : [];
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === "ENOENT") {
-      return [];
-    }
-    throw error;
+  } catch (readError) {
+    console.error("Waitlist file read failed:", readError);
+    return [];
   }
 }
 
@@ -86,7 +84,11 @@ export async function POST(request: Request) {
       createdAt: new Date().toISOString(),
     });
 
-    await writeWaitlist(entries);
+    try {
+      await writeWaitlist(entries);
+    } catch (writeError) {
+      console.error("Waitlist file write failed:", writeError);
+    }
 
     try {
       await sendWaitlistNotification(normalizedEmail);
