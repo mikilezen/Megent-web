@@ -351,7 +351,7 @@ export default function EnterpriseDashboard() {
               </button>
               
               {/* JWT Passport Chain Sub-menu (Visible when Agent Passports is active or just as a visual element) */}
-              {item.label === "Agent Passports" && (
+              {/* {item.label === "Agent Passports" && (
                 <div className="ml-4 mt-2 mb-2 p-3 rounded-lg border border-[#d1d5db] bg-[#f8fafc]">
                   <div className="text-xs text-gray-600 mb-2 font-medium">JWT Passport Chain:</div>
                   <div className="space-y-1.5 text-xs">
@@ -372,7 +372,7 @@ export default function EnterpriseDashboard() {
                     </div>
                   </div>
                 </div>
-              )}
+              )} */}
             </div>
           ))}
         </nav>
