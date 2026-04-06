@@ -39,32 +39,7 @@ export default function LoginPage() {
       </div>
 
       <div className="relative mx-auto grid min-h-screen w-full max-w-6xl items-center gap-8 px-4 py-8 md:grid-cols-[1.1fr_0.9fr] md:px-8">
-        <section className="rounded-2xl border border-white/70 bg-white/75 p-8 shadow-[0_25px_80px_-40px_rgba(15,23,42,0.5)] backdrop-blur">
-          <div className="inline-flex items-center rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-indigo-700">
-            Enterprise Demo Access
-          </div>
-          <h1 className="mt-4 max-w-xl text-4xl font-semibold tracking-tight text-slate-900">
-            Sign in to your secure workspace.
-          </h1>
-          <p className="mt-3 max-w-xl text-sm leading-6 text-slate-600">
-            Centralized access for teams, role-based permissions, and audit-ready session controls built for enterprise operations.
-          </p>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            <div className="rounded-lg border border-slate-200 bg-white p-4">
-              <p className="text-xs uppercase tracking-[0.12em] text-slate-500">Uptime</p>
-              <p className="mt-1 text-xl font-semibold text-slate-900">99.99%</p>
-            </div>
-            <div className="rounded-lg border border-slate-200 bg-white p-4">
-              <p className="text-xs uppercase tracking-[0.12em] text-slate-500">SSO Ready</p>
-              <p className="mt-1 text-xl font-semibold text-slate-900">SAML + OIDC</p>
-            </div>
-            <div className="rounded-lg border border-slate-200 bg-white p-4">
-              <p className="text-xs uppercase tracking-[0.12em] text-slate-500">Compliance</p>
-              <p className="mt-1 text-xl font-semibold text-slate-900">SOC2 / ISO</p>
-            </div>
-          </div>
-        </section>
 
         <Card className="w-full border border-slate-200/80 bg-white/95 shadow-[0_30px_90px_-45px_rgba(15,23,42,0.75)]">
           <CardContent className="space-y-6 p-6">

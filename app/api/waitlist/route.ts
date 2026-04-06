@@ -35,32 +35,56 @@ async function sendWaitlistNotification(subscriberEmail: string) {
   const fromEmail = process.env.WAITLIST_FROM_EMAIL || "onboarding@resend.dev";
 
   if (!resendApiKey) {
-    throw new Error("Notification skipped: missing RESEND_API_KEY.");
+    return false;
   }
 
-  const response = await fetch(RESEND_API_URL, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${resendApiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: fromEmail,
-      to: [WAITLIST_NOTIFY_EMAIL],
-      subject: `New waitlist signup: ${subscriberEmail}`,
-      text: [
-        "A new user joined your waitlist.",
-        "",
-        `Email: ${subscriberEmail}`,
-        `Joined at: ${new Date().toISOString()}`,
-      ].join("\n"),
-    }),
+  const sendEmail = async ({ to, subject, text }: { to: string; subject: string; text: string }) => {
+    const response = await fetch(RESEND_API_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: fromEmail,
+        to: [to],
+        subject,
+        text,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorBody = await response.text().catch(() => "");
+      throw new Error(errorBody || "Failed to send waitlist email.");
+    }
+  };
+
+  await sendEmail({
+    to: WAITLIST_NOTIFY_EMAIL,
+    subject: "New Waitlist Registration",
+    text: [
+      "A new user has joined the waitlist.",
+      "",
+      `Email: ${subscriberEmail}`,
+      `Registered at: ${new Date().toISOString()}`,
+    ].join("\n"),
   });
 
-  if (!response.ok) {
-    const errorBody = await response.text().catch(() => "");
-    throw new Error(errorBody || "Failed to send waitlist notification email.");
-  }
+  await sendEmail({
+    to: subscriberEmail,
+    subject: "Thank You for Joining the Waitlist",
+    text: [
+      "Thank you for your interest.",
+      "",
+      "Your email has been successfully added to our waitlist.",
+      "We will contact you with updates and next steps as soon as they are available.",
+      "",
+      "Best regards,",
+      "The MavaAI Team",
+    ].join("\n"),
+  });
+
+  return true;
 }
 
 export async function POST(request: Request) {
@@ -76,7 +100,7 @@ export async function POST(request: Request) {
     const alreadyExists = entries.some((entry) => entry.email.toLowerCase() === normalizedEmail);
 
     if (alreadyExists) {
-      return NextResponse.json({ message: "You're already on the waitlist." }, { status: 200 });
+      return NextResponse.json({ message: "Your email is already registered on the waitlist." }, { status: 200 });
     }
 
     entries.push({
@@ -90,14 +114,19 @@ export async function POST(request: Request) {
       console.error("Waitlist file write failed:", writeError);
     }
 
-    try {
-      await sendWaitlistNotification(normalizedEmail);
-    } catch (notificationError) {
+    const emailSent = await sendWaitlistNotification(normalizedEmail).catch((notificationError) => {
       console.error("Waitlist email notification failed:", notificationError);
-    }
+      return false;
+    });
 
-    return NextResponse.json({ message: "Joined waitlist successfully." }, { status: 201 });
+    return NextResponse.json(
+      {
+        message: "Your waitlist registration has been received successfully.",
+        emailStatus: emailSent ? "sent" : "not-configured",
+      },
+      { status: 201 }
+    );
   } catch {
-    return NextResponse.json({ message: "Failed to join waitlist. Please try again." }, { status: 500 });
+    return NextResponse.json({ message: "We could not process your request at this time. Please try again." }, { status: 500 });
   }
 }

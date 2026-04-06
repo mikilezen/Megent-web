@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 // import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
-import { FAQS } from "@/data/faq";
 
 const siteUrl = "https://megent.dev";
 const siteName = "Megent";
@@ -122,6 +121,9 @@ export const metadata: Metadata = {
     telephone: false,
     email: false,
     address: false,
+  },
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
   },
   robots: {
     index: true,

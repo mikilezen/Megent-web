@@ -6,7 +6,9 @@ export default function Waitlist() {
   const [email, setEmail] = useState("");
   const [state, setState] = useState<"idle" | "loading" | "done" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const ref = useRef<HTMLDivElement>(null);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -28,14 +30,15 @@ export default function Waitlist() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!email || !email.includes("@")) {
+    if (!email || !emailRegex.test(email.trim())) {
       setState("error");
-      setErrorMessage("Please enter a valid email.");
+      setErrorMessage("Please enter a valid business email address.");
       return;
     }
 
     setState("loading");
     setErrorMessage("");
+    setSuccessMessage("");
 
     try {
       const response = await fetch("/api/waitlist", {
@@ -46,7 +49,10 @@ export default function Waitlist() {
         body: JSON.stringify({ email }),
       });
 
-      const data = (await response.json().catch(() => ({}))) as { message?: string };
+      const data = (await response.json().catch(() => ({}))) as {
+        message?: string;
+        emailStatus?: "sent" | "not-configured";
+      };
 
       if (!response.ok) {
         throw new Error(data.message || "Failed to join waitlist.");
@@ -54,9 +60,14 @@ export default function Waitlist() {
 
       setState("done");
       setEmail("");
+      setSuccessMessage(
+        data.emailStatus === "sent"
+          ? "Thank you. Your registration is confirmed, and a confirmation email has been sent."
+          : "Thank you. Your registration is confirmed."
+      );
     } catch (error) {
       setState("error");
-      setErrorMessage(error instanceof Error ? error.message : "Something went wrong. Try again.");
+      setErrorMessage(error instanceof Error ? error.message : "An unexpected error occurred. Please try again.");
     }
   };
 
@@ -76,13 +87,13 @@ export default function Waitlist() {
           Early access
         </span>
         <h2 className="reveal reveal-d1 text-[clamp(32px,5vw,58px)] font-extrabold tracking-[-2px] leading-[1.05] text-white mb-5">
-          Be the first to know
+          Stay informed
           <br />
-          when we ship.
+          as we launch.
         </h2>
         <p className="reveal reveal-d2 text-[17px] text-indigo-200 leading-[1.75] max-w-lg mx-auto mb-10">
-          We&apos;re onboarding early teams now — especially in fintech and healthcare.
-          Drop your email and we&apos;ll reach out directly
+          We are currently onboarding early teams, with priority for fintech and healthcare.
+          Please share your email address, and our team will contact you directly.
         </p>
 
         {state !== "done" ? (
@@ -104,10 +115,10 @@ export default function Waitlist() {
                 {state === "loading" ? (
                   <span className="flex items-center gap-2">
                     <Spinner />
-                    Joining...
+                    Submitting...
                   </span>
                 ) : (
-                  "Join waitlist"
+                  "Join Waitlist"
                 )}
               </button>
             </form>
@@ -123,8 +134,8 @@ export default function Waitlist() {
                 <CheckIcon />
               </div>
               <div className="text-left">
-                <p className="text-white font-semibold">You&apos;re on the list</p>
-                <p className="text-indigo-100 text-[13px]">We&apos;ll reach out shortly.</p>
+                <p className="text-white font-semibold">Registration Complete</p>
+                <p className="text-indigo-100 text-[13px]">{successMessage || "Thank you for your interest."}</p>
               </div>
             </div>
           </div>

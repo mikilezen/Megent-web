@@ -70,8 +70,8 @@ export default function Hero() {
         <div className="grid mt-[-100px] lg:grid-cols-2 gap-12 xl:gap-20 items-center">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--indigo-border)] bg-[var(--indigo-light)] mb-7 animate-[fadeUp_0.5s_0.1s_ease_both]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[var(--indigo)] animate-pulse2" />
-              <span className="text-[12px] font-semibold text-[var(--text)]">Runtime policy for AI agents</span>
+              {/* <span className="w-1.5 h-1.5 rounded-full bg-[var(--indigo)] animate-pulse2" />
+              <span className="text-[12px] font-semibold text-[var(--text)]">Runtime policy for AI agents</span> */}
             </div>
 
             <h1 className="text-[clamp(44px,5.5vw,72px)] font-extrabold tracking-[-3px] leading-[1.0] text-[var(--text)] mb-6 animate-[fadeUp_0.5s_0.2s_ease_both]">
