@@ -51,7 +51,7 @@ export default function Waitlist() {
 
       const data = (await response.json().catch(() => ({}))) as {
         message?: string;
-        emailStatus?: "sent" | "not-configured";
+        emailStatus?: "sent" | "not-configured" | "failed";
       };
 
       if (!response.ok) {
@@ -60,11 +60,7 @@ export default function Waitlist() {
 
       setState("done");
       setEmail("");
-      setSuccessMessage(
-        data.emailStatus === "sent"
-          ? "Thank you. Your registration is confirmed, and a confirmation email has been sent."
-          : "Thank you. Your registration is confirmed."
-      );
+      setSuccessMessage(data.message || "Thank you. Your registration is confirmed.");
     } catch (error) {
       setState("error");
       setErrorMessage(error instanceof Error ? error.message : "An unexpected error occurred. Please try again.");

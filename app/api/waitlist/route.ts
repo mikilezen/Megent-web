@@ -11,6 +11,7 @@ const DATA_DIR = path.join(process.cwd(), "data");
 const WAITLIST_FILE = path.join(DATA_DIR, "waitlist.json");
 const WAITLIST_NOTIFY_EMAIL = process.env.WAITLIST_NOTIFY_EMAIL || "mikilezen@gmail.com";
 const RESEND_API_URL = "https://api.resend.com/emails";
+type WaitlistEmailStatus = "sent" | "not-configured" | "failed";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -30,12 +31,12 @@ async function writeWaitlist(entries: WaitlistEntry[]) {
   await fs.writeFile(WAITLIST_FILE, JSON.stringify(entries, null, 2), "utf-8");
 }
 
-async function sendWaitlistNotification(subscriberEmail: string) {
-  const resendApiKey = process.env.RESEND_API_KEY;
+async function sendWaitlistNotification(subscriberEmail: string): Promise<WaitlistEmailStatus> {
+  const resendApiKey = process.env.RESEND_API_KEY?.trim();
   const fromEmail = process.env.WAITLIST_FROM_EMAIL || "onboarding@resend.dev";
 
   if (!resendApiKey) {
-    return false;
+    return "not-configured";
   }
 
   const sendEmail = async ({ to, subject, text }: { to: string; subject: string; text: string }) => {
@@ -59,32 +60,37 @@ async function sendWaitlistNotification(subscriberEmail: string) {
     }
   };
 
-  await sendEmail({
-    to: WAITLIST_NOTIFY_EMAIL,
-    subject: "New Waitlist Registration",
-    text: [
-      "A new user has joined the waitlist.",
-      "",
-      `Email: ${subscriberEmail}`,
-      `Registered at: ${new Date().toISOString()}`,
-    ].join("\n"),
-  });
+  try {
+    await sendEmail({
+      to: WAITLIST_NOTIFY_EMAIL,
+      subject: "New Waitlist Registration",
+      text: [
+        "A new user has joined the waitlist.",
+        "",
+        `Email: ${subscriberEmail}`,
+        `Registered at: ${new Date().toISOString()}`,
+      ].join("\n"),
+    });
 
-  await sendEmail({
-    to: subscriberEmail,
-    subject: "Thank You for Joining the Waitlist",
-    text: [
-      "Thank you for your interest.",
-      "",
-      "Your email has been successfully added to our waitlist.",
-      "We will contact you with updates and next steps as soon as they are available.",
-      "",
-      "Best regards,",
-      "The MavaAI Team",
-    ].join("\n"),
-  });
+    await sendEmail({
+      to: subscriberEmail,
+      subject: "Thank You for Joining the Waitlist",
+      text: [
+        "Thank you for your interest.",
+        "",
+        "Your email has been successfully added to our waitlist.",
+        "We will contact you with updates and next steps as soon as they are available.",
+        "",
+        "Best regards,",
+        " Megent",
+      ].join("\n"),
+    });
 
-  return true;
+    return "sent";
+  } catch (notificationError) {
+    console.error("Waitlist email notification failed:", notificationError);
+    return "failed";
+  }
 }
 
 export async function POST(request: Request) {
@@ -108,21 +114,35 @@ export async function POST(request: Request) {
       createdAt: new Date().toISOString(),
     });
 
+    let persisted = true;
     try {
       await writeWaitlist(entries);
     } catch (writeError) {
+      persisted = false;
       console.error("Waitlist file write failed:", writeError);
     }
 
-    const emailSent = await sendWaitlistNotification(normalizedEmail).catch((notificationError) => {
-      console.error("Waitlist email notification failed:", notificationError);
-      return false;
-    });
+    const emailStatus = await sendWaitlistNotification(normalizedEmail);
+
+    if (!persisted && emailStatus !== "sent") {
+      return NextResponse.json(
+        {
+          message: "Waitlist is temporarily unavailable. Please try again in a few minutes.",
+          emailStatus,
+        },
+        { status: 503 }
+      );
+    }
+
+    const message =
+      emailStatus === "sent"
+        ? "Your waitlist registration has been received successfully. A confirmation email has been sent."
+        : "Your waitlist registration has been received successfully.";
 
     return NextResponse.json(
       {
-        message: "Your waitlist registration has been received successfully.",
-        emailStatus: emailSent ? "sent" : "not-configured",
+        message,
+        emailStatus,
       },
       { status: 201 }
     );
