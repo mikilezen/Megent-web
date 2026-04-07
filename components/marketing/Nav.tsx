@@ -159,7 +159,7 @@ export default function Nav() {
             </a> */}
             <a href="/login">
               <button className="px-3.5 py-2 text-[13px] font-semibold text-white bg-[var(--indigo)] rounded-full hover:bg-inodigo-600 transition-all flex items-center gap-2 shadow-[0_10px_30px_-18px_rgba(79,70,229,0.8)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--indigo)]/50">
-                <Image src="/ll.png" alt="Megent logo" width={16} height={16} className="h-4 w-4" />
+                {/* <Image src="/ll.png" alt="Megent logo" width={16} height={16} className="h-4 w-4" /> */}
                 Login
               </button>
             </a>
