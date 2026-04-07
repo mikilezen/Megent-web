@@ -83,7 +83,7 @@ export default function LoginPage() {
           <div className="mt-8 rounded-2xl border border-slate-200 bg-white/90 p-4 text-sm text-slate-700">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">Demo Credentials</p>
             <p className="mt-2 font-medium text-slate-900">{DEMO_EMAIL}</p>
-            <p className="text-slate-600">Password: {DEMO_PASSWORD}</p>
+            <p className="text-slate-600">Password: {}</p>
           </div>
         </section>
 
@@ -134,7 +134,7 @@ export default function LoginPage() {
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
                 </div>
-                <p className="text-xs text-slate-500">Password for demo login: demo</p>
+                {/* <p className="text-xs text-slate-500">Password for demo login: demo</p> */}
               </div>
 
               <label className="flex items-center gap-2 text-sm text-slate-600" htmlFor="remember">
