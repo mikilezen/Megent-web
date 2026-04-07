@@ -81,11 +81,11 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-6 border-t border-[var(--border)]">
-          <p className="font-mono text-[11px] text-[var(--text3)]">© 2025 Megent. MIT licensed. Built</p>
+          <p className="font-mono text-[11px] text-[var(--text3)]">© 2026 Megent. Apache 2.0 licensed</p>
           <div className="flex items-center gap-2.5">
-            <span className="font-mono text-[10px] border border-[var(--border)] bg-white rounded px-2.5 py-1 text-[var(--text3)]">MIT</span>
+            {/* <span className="font-mono text-[10px] border border-[var(--border)] bg-white rounded px-2.5 py-1 text-[var(--text3)]">Apache 2.0</span>
             <span className="font-mono text-[10px] border border-[var(--border)] bg-white rounded px-2.5 py-1 text-[var(--text3)]">Python 3.9+</span>
-            <span className="font-mono text-[10px] border border-[var(--border)] bg-white rounded px-2.5 py-1 text-[var(--text3)]">0 telemetry</span>
+            <span className="font-mono text-[10px] border border-[var(--border)] bg-white rounded px-2.5 py-1 text-[var(--text3)]">0 telemetry</span> */}
           </div>
         </div>
       </div>
