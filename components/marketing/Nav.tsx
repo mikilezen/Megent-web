@@ -142,7 +142,7 @@ export default function Nav() {
 
           <div className="hidden lg:flex items-center gap-3">
             <a
-              href="https://docs.megent.dev"
+              href="https://www.github.com/megents/megent"
               target="_blank"
               rel="noopener noreferrer"
               className="px-3 flex gap-2 items-center py-2 text-[13px] font-semibold text-[var(--text2)] rounded-full border border-[var(--border)] hover:border-[var(--border2)] hover:text-[var(--text)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--indigo)]/40"
