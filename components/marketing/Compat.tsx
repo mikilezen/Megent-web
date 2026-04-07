@@ -8,7 +8,7 @@ const FRAMEWORKS = [
   ["AutoGen", "/images (2).jfif"],
   ["LlamaIndex", "/images (3).jfif"],
   // ["Mistral", badgeIcon("M")],
-  ["Openclaw", "/openclaw.png"],
+  ["Openclaw (soon)", "/openclaw.png"],
   ["CrewAI", "/crew-ai.6eff1255.png"],
   // ["Vercel AI SDK", "https://cdn.simpleicons.org/vercel/000000"],
 ];
