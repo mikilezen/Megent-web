@@ -50,24 +50,24 @@
 
 :root {
   --background: #e5ddd0;
-  --foreground: #0f172a;
+  --foreground: #141414;
   --card: #ffffff;
   --card-foreground: #0f172a;
   --popover: #ffffff;
   --popover-foreground: #0f172a;
-  --primary: #4f46e5;
+  --primary: #1a1a1a;
   --primary-foreground: #ffffff;
   --secondary: #f1f5f9;
   --secondary-foreground: #0f172a;
   --muted: #f8fafc;
   --muted-foreground: #475569;
   --accent: #eef2ff;
-  --accent-foreground: #312e81;
+  --accent-foreground: #303030;
   --destructive: #ef4444;
   --border: transparent;
   --border2: transparent;
   --input: #e2e8f0;
-  --ring: #4f46e5;
+  --ring: #1b1b1b;
   --chart-1: #312e81;
   --chart-2: #4338ca;
   --chart-3: #6366f1;
