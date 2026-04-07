@@ -67,7 +67,7 @@ export default function Nav() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-50" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--indigo)]" />
             </span> */}
-            <Image src="/ll.png" alt="Megent logo" width={28} height={28} priority />
+            <Image src="/ll.jpg" alt="Megent logo" width={28} height={28} priority />
             <span className="font-bold text-[17px] tracking-[-0.4px] text-[var(--text)] group-hover:text-[var(--indigo)] transition-colors">
               Megent
             </span>
