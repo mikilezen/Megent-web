@@ -28,7 +28,7 @@ export default function LoginPage() {
 
     const normalizedEmail = email.trim().toLowerCase();
     if (normalizedEmail !== DEMO_EMAIL || password !== DEMO_PASSWORD) {
-      setError("Only demo@megent.dev with password demo is allowed.");
+      setError("this page is under construction");
       setIsSubmitting(false);
       return;
     }
