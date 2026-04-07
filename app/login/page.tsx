@@ -160,7 +160,7 @@ export default function LoginPage() {
                 {isSubmitting ? "Signing in..." : "Enter demo workspace"}
               </Button>
 
-              <p className="text-center text-xs text-slate-500">Only demo@megent.dev and demo are allowed.</p>
+              {/* <p className="text-center text-xs text-slate-500">Only demo@megent.dev and demo are allowed.</p> */}
             </form>
           </CardContent>
         </Card>
