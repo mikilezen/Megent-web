@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 const siteUrl = "https://megent.dev";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date().toISOString();
+  const lastModified = new Date("2026-04-09T00:00:00.000Z");
 
   return [
     {
