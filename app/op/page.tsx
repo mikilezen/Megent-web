@@ -38,6 +38,17 @@ export const metadata: Metadata = {
 export default function OpPage() {
   return (
     <main className="min-h-screen bg-[#f3f5f8] text-slate-900">
+      <div className="mx-auto max-w-5xl px-6 pt-6">
+        <a
+          href="/"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          Back
+        </a>
+      </div>
       <section className="mx-auto flex min-h-screen max-w-5xl items-center px-6 py-20">
         <div className="space-y-4">
           <p className="inline-flex rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-indigo-700">

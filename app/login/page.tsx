@@ -57,6 +57,16 @@ export default function LoginPage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.8),transparent_45%),radial-gradient(circle_at_80%_60%,rgba(255,255,255,0.45),transparent_40%)]" />
       </div>
 
+      <a
+        href="/"
+        className="absolute left-5 top-5 z-10 flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-800 transition-colors"
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        Back
+      </a>
+
       <div className="relative mx-auto grid min-h-screen w-full max-w-6xl items-center gap-8 px-4 py-8 md:grid-cols-[1.1fr_0.9fr] md:px-8">
         <section className="hidden rounded-3xl border border-white/60 bg-white/65 p-8 shadow-[0_40px_120px_-60px_rgba(15,23,42,0.7)] backdrop-blur-xl md:block">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Megent Demo Environment</p>

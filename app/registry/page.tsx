@@ -125,6 +125,7 @@ export default function RegistryPage() {
 
       <header style={styles.header}>
         <div style={styles.headerLeft}>
+          <a href="/" style={styles.backLink}>← home</a>
           <span style={styles.logo}>
             <span style={styles.logoM}>megent</span>
             <span style={styles.logoDot}>/</span>
@@ -278,6 +279,14 @@ const styles: Record<string, CSSProperties> = {
     display: "flex",
     alignItems: "baseline",
     gap: "20px",
+  },
+  backLink: {
+    fontSize: "11px",
+    color: "#64748b",
+    textDecoration: "none",
+    fontFamily: "'IBM Plex Mono', monospace",
+    letterSpacing: "0.04em",
+    transition: "color 0.15s",
   },
   logo: {
     fontSize: "18px",

@@ -62,7 +62,7 @@ export default function Nav() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between h-16">
-          <a href="" className="flex items-center gap-2.5 group" aria-label="Megent home">
+          <a href="/" className="flex items-center gap-2.5 group" aria-label="Megent home">
             {/* <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-50" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--indigo)]" />
