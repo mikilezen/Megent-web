@@ -52,6 +52,21 @@ export default function Nav() {
     };
   }, [menuOpen]);
 
+  // Reset menu state when page is restored from the browser's back/forward cache
+  // (bfcache). Without this, the mobile overlay and body lock can persist after
+  // navigating away and returning via the back button.
+  useEffect(() => {
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        setMenuOpen(false);
+        setResourcesOpen(false);
+        document.body.style.overflow = "";
+      }
+    };
+    window.addEventListener("pageshow", handlePageShow);
+    return () => window.removeEventListener("pageshow", handlePageShow);
+  }, []);
+
   return (
     <>
       <header
