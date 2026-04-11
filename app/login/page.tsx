@@ -42,7 +42,7 @@ export default function LoginPage() {
           localStorage.removeItem("magent_demo_email");
         }
       }
-      router.push("/demo");
+      router.push("/dashboard");
     } catch {
       setError("Unable to sign in right now. Please try again.");
       setIsSubmitting(false);
@@ -90,7 +90,7 @@ export default function LoginPage() {
         <Card className="w-full border border-slate-200/80 bg-white/95 shadow-[0_30px_90px_-45px_rgba(15,23,42,0.75)]">
           <CardContent className="space-y-6 p-6">
             <div className="space-y-2 text-center">
-              <Image src="/ll.png" alt="Megent logo" width={40} height={40} className="mx-auto h-10 w-10" />
+              <Image src="/ll.jpg" alt="Megent logo" width={40} height={40} className="mx-auto h-10 w-10" />
               <h2 className="text-2xl font-semibold text-slate-900">Welcome to Megent</h2>
               <p className="text-sm text-slate-600">Sign in with the demo account to continue</p>
             </div>

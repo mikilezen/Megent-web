@@ -223,6 +223,12 @@ export default function Nav() {
                 <GithubIcon />
                 GitHub
               </a>
+              <a
+                href="/login"
+                className="px-3 py-3 rounded-lg text-[14px] font-semibold text-white bg-[var(--indigo)] text-center"
+              >
+                Login
+              </a>
             </div>
           </nav>
         </div>
