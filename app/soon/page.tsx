@@ -24,12 +24,12 @@ export default function SoonPage() {
           Advanced governance, SSO, and dedicated support for teams at scale. We&apos;re putting the finishing touches on it.
         </p>
         <div className="flex flex-wrap justify-center gap-3 pt-2">
-          <a
+          <Link
             href="/#waitlist"
             className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white bg-[var(--indigo)] rounded-full hover:bg-indigo-600 transition-colors"
           >
             Join the waitlist
-          </a>
+          </Link>
           <Link
             href="/"
             className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-[var(--text2)] rounded-full border border-[var(--border)] hover:border-[var(--border2)] hover:text-[var(--text)] transition-colors"
