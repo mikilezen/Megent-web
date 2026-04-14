@@ -14,6 +14,10 @@ export const metadata: Metadata = {
     "LLM security policies",
     "AI compliance controls",
     "Megent registry",
+    "AI policy marketplace",
+    "agent guardrail policies",
+    "AI compliance policies",
+    "AI runtime protection",
   ],
   openGraph: {
     title: "AI Policy Registry for Agent Guardrails | Megent",
@@ -37,13 +41,6 @@ export const metadata: Metadata = {
       "Browse and install verified policies for AI agent governance, compliance, monitoring, and runtime protection.",
     images: ["/freepik__adjust__68767.png"],
   },
-  keywords: [
-    "AI policy marketplace",
-    "agent guardrail policies",
-    "Megent registry",
-    "AI compliance policies",
-    "AI runtime protection",
-  ],
 };
 
 export default function RegistryLayout({
