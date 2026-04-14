@@ -1,8 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect } from "react";
 
 export default function DemoPage() {
+  useEffect(() => {
+    const key = "magent_force_reload_demo";
+    if (sessionStorage.getItem(key) === "1") {
+      sessionStorage.removeItem(key);
+      window.location.reload();
+    }
+  }, []);
+
   return (
     <main className="min-h-screen bg-[var(--background)] px-6 py-24 text-[var(--text)]">
       <div className="mx-auto max-w-3xl rounded-2xl border border-[var(--border)] bg-[var(--card)] p-8">

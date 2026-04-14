@@ -18,6 +18,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,13 +40,26 @@ export default function LoginPage() {
         } else {
           localStorage.removeItem("magent_demo_email");
         }
+        sessionStorage.setItem("magent_force_reload_demo", "1");
       }
+      setIsRedirecting(true);
       window.location.assign("/demo");
     } catch {
       setError("Unable to sign in right now. Please try again.");
       setIsSubmitting(false);
+      setIsRedirecting(false);
     }
   };
+
+  if (isRedirecting) {
+    return (
+      <div className="grid min-h-screen place-items-center bg-[#eef4ff]">
+        <div className="rounded-2xl border border-slate-200 bg-white px-6 py-4 text-sm text-slate-700 shadow-sm">
+          Loading demo workspace...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#eef4ff]">
