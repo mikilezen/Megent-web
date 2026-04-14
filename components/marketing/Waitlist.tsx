@@ -1,32 +1,62 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 
 export default function Waitlist() {
+  const pathname = usePathname();
   const [email, setEmail] = useState("");
-  const [state, setState] = useState<"idle" | "loading" | "done" | "error">("idle");
+  const [state, setState] = useState<"idle" | "done" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const ref = useRef<HTMLDivElement>(null);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   useEffect(() => {
+    const root = ref.current;
+    if (!root) return;
+
+    root.querySelectorAll(".reveal").forEach((el) => {
+      el.classList.remove("visible");
+    });
+
+    const timeouts: number[] = [];
+    const revealAll = () => {
+      root.querySelectorAll(".reveal").forEach((el, i) => {
+        const timeoutId = window.setTimeout(() => el.classList.add("visible"), i * 80);
+        timeouts.push(timeoutId);
+      });
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.querySelectorAll(".reveal").forEach((el, i) => {
-              setTimeout(() => el.classList.add("visible"), i * 80);
-            });
-            observer.unobserve(entry.target);
+            revealAll();
+            return;
           }
+
+          root.querySelectorAll(".reveal").forEach((el) => {
+            el.classList.remove("visible");
+          });
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0, rootMargin: "0px 0px -10% 0px" }
     );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+    observer.observe(root);
+
+    const fallbackTimeout = window.setTimeout(() => {
+      if (!root.querySelector(".reveal.visible")) {
+        revealAll();
+      }
+    }, 260);
+    timeouts.push(fallbackTimeout);
+
+    return () => {
+      observer.disconnect();
+      timeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    };
+  }, [pathname]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -36,7 +66,6 @@ export default function Waitlist() {
       return;
     }
 
-    setState("loading");
     setErrorMessage("");
     setSuccessMessage("");
 
@@ -68,7 +97,7 @@ export default function Waitlist() {
   };
 
   return (
-    <section id="waitlist" className="py-32 bg-[var(--indigo)] relative overflow-hidden" ref={ref}>
+    <section id="waitlist" className="py-28 bg-[var(--text)] relative overflow-hidden" ref={ref}>
       <div
         className="absolute right-0 top-0 w-[500px] h-[500px] rounded-full opacity-10 pointer-events-none"
         style={{ background: "radial-gradient(circle, white, transparent)", transform: "translate(35%, -35%)" }}
@@ -79,15 +108,15 @@ export default function Waitlist() {
       />
 
       <div className="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 text-center">
-        <span className="reveal inline-block font-mono text-[11px] uppercase tracking-[0.14em] text-indigo-200 mb-4">
+        <span className="reveal inline-block text-[11px] uppercase tracking-[0.14em] text-[#b0aea5] mb-4">
           Early access
         </span>
-        <h2 className="reveal reveal-d1 text-[clamp(32px,5vw,58px)] font-extrabold tracking-[-2px] leading-[1.05] text-white mb-5">
+        <h2 className="reveal reveal-d1 text-[clamp(32px,5vw,58px)] font-medium tracking-[-0.02em] leading-[1.05] text-[#faf9f5] mb-5 [font-family:var(--font-serif)]">
           Stay informed
           <br />
           as we launch.
         </h2>
-        <p className="reveal reveal-d2 text-[17px] text-indigo-200 leading-[1.75] max-w-lg mx-auto mb-10">
+        <p className="reveal reveal-d2 text-[17px] text-[#b0aea5] leading-[1.75] max-w-lg mx-auto mb-10">
           We are currently onboarding early teams, with priority for fintech and healthcare.
           Please share your email address, and our team will contact you directly.
         </p>
@@ -101,26 +130,18 @@ export default function Waitlist() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@company.com"
                 required
-                className="flex-1 px-4 py-3 text-[14px] font-mono text-[var(--text)] placeholder:text-[var(--text3)] bg-white border border-black rounded-lg outline-none focus:ring-2 focus:ring-white/50 transition-all"
+                className="flex-1 px-4 py-3 text-[14px] [font-family:var(--font-mono-ui)] text-[var(--text)] placeholder:text-[var(--text3)] bg-[#faf9f5] border border-[var(--border2)] rounded-xl outline-none focus:ring-2 focus:ring-[#faf9f5]/50 transition-all"
               />
               <button
                 type="submit"
-                disabled={state === "loading"}
-                className="px-6 py-3 font-semibold text-[14px] bg-white text-[var(--indigo)] rounded-lg hover:bg-indigo-50 transition-all disabled:opacity-60 shrink-0 shadow-md"
+                className="px-6 py-3 font-medium text-[14px] bg-[var(--primary)] text-[#faf9f5] rounded-xl hover:brightness-95 transition-all shrink-0 shadow-[0_0_0_1px_var(--primary)]"
               >
-                {state === "loading" ? (
-                  <span className="flex items-center gap-2">
-                    <Spinner />
-                    Submitting...
-                  </span>
-                ) : (
-                  "Join Waitlist"
-                )}
+                Join Waitlist
               </button>
             </form>
 
             {state === "error" && (
-              <p className="reveal text-sm text-red-200 mb-5">{errorMessage || "Failed to join waitlist."}</p>
+              <p className="reveal text-sm text-[#f4b6a7] mb-5">{errorMessage || "Failed to join waitlist."}</p>
             )}
           </>
         ) : (
@@ -131,26 +152,17 @@ export default function Waitlist() {
               </div>
               <div className="text-left">
                 <p className="text-white font-semibold">Registration Complete</p>
-                <p className="text-indigo-100 text-[13px]">{successMessage || "Thank you for your interest."}</p>
+                <p className="text-[#e8e6dc] text-[13px]">{successMessage || "Thank you for your interest."}</p>
               </div>
             </div>
           </div>
         )}
 
-        <p className="reveal reveal-d4 font-mono text-[11px] text-indigo-300">
+        <p className="reveal reveal-d4 text-[11px] text-[#87867f]">
           {/* No spam. A real message from the founders when it's time. Unsubscribe any time. */}
         </p>
       </div>
     </section>
-  );
-}
-
-function Spinner() {
-  return (
-    <svg className="animate-spin h-4 w-4 text-[var(--indigo)]" viewBox="0 0 24 24">
-      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
-    </svg>
   );
 }
 

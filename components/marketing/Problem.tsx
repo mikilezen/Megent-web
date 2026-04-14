@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 const PROBLEMS = [
@@ -27,34 +29,66 @@ const PROBLEMS = [
 ];
 
 export default function Problem() {
+  const pathname = usePathname();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const root = ref.current;
+    if (!root) return;
+
+    // Reset reveal state so the section can animate again after route navigation.
+    root.querySelectorAll(".reveal").forEach((el) => {
+      el.classList.remove("visible");
+    });
+
+    const timeouts: number[] = [];
+
+    const revealAll = () => {
+      root.querySelectorAll(".reveal").forEach((el, i) => {
+        const timeoutId = window.setTimeout(() => el.classList.add("visible"), i * 80);
+        timeouts.push(timeoutId);
+      });
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.querySelectorAll(".reveal").forEach((el, i) => {
-              setTimeout(() => el.classList.add("visible"), i * 80);
-            });
-            observer.unobserve(entry.target);
+            revealAll();
+            return;
           }
+
+          root.querySelectorAll(".reveal").forEach((el) => {
+            el.classList.remove("visible");
+          });
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0, rootMargin: "0px 0px -10% 0px" }
     );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+    observer.observe(root);
+
+    // Fallback for cached/fast navigations where IntersectionObserver may not dispatch.
+    const fallbackTimeout = window.setTimeout(() => {
+      if (!root.querySelector(".reveal.visible")) {
+        revealAll();
+      }
+    }, 260);
+    timeouts.push(fallbackTimeout);
+
+    return () => {
+      observer.disconnect();
+      timeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    };
+  }, [pathname]);
 
   return (
-    <section className="py-28 bg-white" ref={ref} id="problem">
+    <section className="py-24 bg-[var(--background)]" ref={ref} id="problem">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="max-w-3xl mb-16">
-          <span className="reveal inline-block font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--indigo)] mb-4">
+          <span className="reveal inline-block text-[11px] uppercase tracking-[0.12em] text-[var(--text3)] mb-4">
             The problem
           </span>
-          <h2 className="reveal reveal-d1 text-[clamp(30px,4vw,50px)] font-extrabold tracking-[-1.8px] leading-[1.08] text-[var(--text)] mb-5">
+          <h2 className="reveal reveal-d1 text-[clamp(30px,4vw,52px)] font-medium tracking-[-0.02em] leading-[1.08] text-[var(--text)] mb-5 [font-family:var(--font-serif)]">
             You're shipping AI agents into production.
             <br />
             <span className="text-[var(--text3)]">Do you know what they're doing?</span>
@@ -65,19 +99,43 @@ export default function Problem() {
           </p>
         </div>
 
-        {/* <div className="grid md:grid-cols-3 gap-5">
+        <div className="reveal mb-8 overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-[0_0_0_1px_var(--border),0_20px_38px_-30px_rgba(20,20,19,0.45)]">
+          <div className="grid md:grid-cols-[0.4fr_0.9fr]">
+            <div className="relative min-h-[220px]">
+              <Image
+                src="/freepik__adjust__68767.png"
+                alt="Dashboard-style overview for agent runtime controls"
+                fill
+                sizes="(max-width: 768px) 100vw, 60vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="p-6 sm:p-7">
+              <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--text3)]">Runtime Snapshot</p>
+              <h3 className="mt-2 text-[24px] leading-[1.12] text-[var(--text)] [font-family:var(--font-serif)]">
+                See risky behavior before it ships
+              </h3>
+              <p className="mt-3 text-[14px] leading-[1.75] text-[var(--text2)]">
+                Route actions through a policy layer so every important tool call is visible,
+                evaluated, and traceable in one place.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-5">
           {PROBLEMS.map((problem, i) => (
             <div
               key={problem.tag}
-              className={`reveal reveal-d${i + 1} group relative bg-white border border-[var(--border)] rounded-2xl p-7 hover:border-[var(--indigo-border)] hover:shadow-card-md transition-all duration-300`}
+              className={`reveal reveal-d${i + 1} group relative bg-[var(--card)] border border-[var(--border)] rounded-2xl p-7 hover:border-[var(--border2)] hover:shadow-[0_0_0_1px_var(--border),0_22px_40px_-30px_rgba(20,20,19,0.5)] transition-all duration-300`}
             >
               <div
                 className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                style={{ background: "radial-gradient(ellipse 300px 200px at 50% -30%, rgba(79,70,229,0.04), transparent)" }}
+                style={{ background: "radial-gradient(ellipse 300px 200px at 50% -30%, rgba(201,100,66,0.08), transparent)" }}
               />
               <div className="relative space-y-3">
                 <span className="text-3xl block">{problem.icon}</span>
-                <h3 className="text-[19px] font-semibold tracking-[-0.6px] text-[var(--text)]">{problem.title}</h3>
+                <h3 className="text-[24px] font-medium tracking-[-0.01em] text-[var(--text)] [font-family:var(--font-serif)]">{problem.title}</h3>
                 <p className="text-[15px] text-[var(--text2)] leading-[1.7]">{problem.body}</p>
                 <span className="inline-flex px-3 py-1 text-[12px] font-mono text-[var(--text3)] border border-[var(--border)] rounded-full bg-[var(--bg1)]">
                   {problem.tag}
@@ -85,17 +143,17 @@ export default function Problem() {
               </div>
             </div>
           ))}
-        </div> */}
+        </div>
 
-        <div className="reveal mt-14 bg-[var(--indigo)] rounded-2xl p-8 md:p-10 text-white relative overflow-hidden">
+        <div className="reveal mt-14 bg-[var(--text)] rounded-2xl p-8 md:p-10 text-[#faf9f5] relative overflow-hidden">
           <div
             className="absolute right-0 top-0 w-64 h-64 rounded-full opacity-10"
             style={{ background: "radial-gradient(circle, white, transparent)", transform: "translate(40%, -40%)" }}
           />
-          <p className="relative text-[20px] md:text-[24px] font-bold tracking-[-0.5px] leading-[1.4] max-w-2xl">
+          <p className="relative text-[20px] md:text-[24px] font-medium tracking-[-0.01em] leading-[1.4] max-w-2xl [font-family:var(--font-serif)]">
             "The moment you deploy an agent that can take real actions, you need a runtime that enforces what it's allowed to do. Hoping for the best is not a security posture."
           </p>
-          <p className="relative mt-4 font-mono text-[13px] text-indigo-200">— The Megent team</p>
+          <p className="relative mt-4 text-[13px] text-[#b0aea5]">- The Megent team</p>
         </div>
       </div>
     </section>

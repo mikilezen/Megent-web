@@ -1,16 +1,24 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Megent Registry | AI Agent Policy Marketplace",
+  title: "AI Policy Registry for Agent Guardrails | Megent",
   description:
-    "Browse and install verified policies for AI agent governance, compliance, monitoring, and runtime protection.",
+    "Browse and install production-ready AI agent guardrail policies for PII masking, exfiltration defense, rate limiting, and compliance workflows.",
   alternates: {
     canonical: "/registry",
   },
+  keywords: [
+    "AI policy registry",
+    "agent guardrails",
+    "PII masking policies",
+    "LLM security policies",
+    "AI compliance controls",
+    "Megent registry",
+  ],
   openGraph: {
-    title: "Megent Registry | AI Agent Policy Marketplace",
+    title: "AI Policy Registry for Agent Guardrails | Megent",
     description:
-      "Browse and install verified policies for AI agent governance, compliance, monitoring, and runtime protection.",
+      "Discover verified policies for AI agent governance, data protection, and runtime controls.",
     url: "https://megent.dev/registry",
     type: "website",
     images: [

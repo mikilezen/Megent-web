@@ -197,6 +197,7 @@ export const Plasma: React.FC<PlasmaProps> = ({
       if (mouseInteractive && containerRef.current) {
         containerRef.current.removeEventListener('mousemove', handleMouseMove);
       }
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
       try {
         containerRef.current?.removeChild(canvas);
       } catch {}

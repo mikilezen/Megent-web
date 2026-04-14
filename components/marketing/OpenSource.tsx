@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
 const FILES = [
@@ -13,25 +14,54 @@ const FILES = [
 ];
 
 export default function OpenSource() {
+  const pathname = usePathname();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const root = ref.current;
+    if (!root) return;
+
+    root.querySelectorAll(".reveal").forEach((el) => {
+      el.classList.remove("visible");
+    });
+
+    const timeouts: number[] = [];
+    const revealAll = () => {
+      root.querySelectorAll(".reveal").forEach((el, i) => {
+        const timeoutId = window.setTimeout(() => el.classList.add("visible"), i * 80);
+        timeouts.push(timeoutId);
+      });
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.querySelectorAll(".reveal").forEach((el, i) => {
-              setTimeout(() => el.classList.add("visible"), i * 80);
-            });
-            observer.unobserve(entry.target);
+            revealAll();
+            return;
           }
+
+          root.querySelectorAll(".reveal").forEach((el) => {
+            el.classList.remove("visible");
+          });
         });
       },
-      { threshold: 0.08 }
+      { threshold: 0, rootMargin: "0px 0px -10% 0px" }
     );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
+    observer.observe(root);
+
+    const fallbackTimeout = window.setTimeout(() => {
+      if (!root.querySelector(".reveal.visible")) {
+        revealAll();
+      }
+    }, 260);
+    timeouts.push(fallbackTimeout);
+
+    return () => {
+      observer.disconnect();
+      timeouts.forEach((timeoutId) => window.clearTimeout(timeoutId));
+    };
+  }, [pathname]);
 
   return (
     <section id="oss" className="py-28 bg-white" ref={ref}>

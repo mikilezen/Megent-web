@@ -21,7 +21,7 @@ export default function manifest(): MetadataRoute.Manifest {
         type: "image/png",
       },
       {
-        src: "/favicon.ico",
+        src: "/Group.ico",
         type: "image/x-icon",
       },
     ],

@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 const siteUrl = "https://megent.dev";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date("2026-04-09T00:00:00.000Z");
+  const lastModified = new Date();
 
   return [
     {
@@ -22,7 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${siteUrl}/registry`,
       lastModified,
       changeFrequency: "weekly",
-      priority: 0.9,
+      priority: 0.7,
     },
   ];
 }

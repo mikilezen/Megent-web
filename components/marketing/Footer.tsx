@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
 
 const LINKS = {
   Product: [
@@ -24,27 +27,27 @@ const LINKS = {
 
 export default function Footer() {
   return (
-    <footer className="bg-[var(--bg1)] border-t border-[var(--border)]">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-14 pb-8">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] gap-10 mb-12">
+    <footer className="border-t border-[var(--border)] bg-[var(--card)]">
+      <div className="mx-auto max-w-6xl px-5 pb-10 pt-14 sm:px-8">
+        <div className="mb-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr]">
           <div>
-            <a href="" className="flex items-center gap-2.5 mb-4" aria-label="Megent home">
-              {/* <span className="relative flex h-2.5 w-2.5"> */}
-                {/* <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-40" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--indigo)]" /> */}
-              {/* </span> */}
-              <Image src="/ll.png" alt="Megent" width={60} height={60} className="p-4 scale-115" />
-              <span className="font-bold text-[17px] tracking-[-0.4px] text-[var(--text)]">megent</span>
-            </a>
-            <p className="font-mono text-[12px] text-[var(--text3)] leading-[1.8] max-w-[240px]">
-              Policy language and runtime security for AI agents. .
+            <Link
+              href="/"
+              className="mb-4 flex items-center gap-2.5"
+              aria-label="Megent home"
+            >
+              <Image src="/ll.jpg" alt="Megent" width={40} height={40} className="rounded-full" />
+              <span className="text-[30px] font-medium leading-none tracking-[-0.02em] text-[var(--text)] [font-family:var(--font-serif)]">Megent</span>
+            </Link>
+            <p className="max-w-[280px] text-[15px] leading-[1.7] text-[var(--text2)]">
+              Policy language and runtime security for AI agents, designed with calm controls and deterministic enforcement.
             </p>
-            <div className="flex items-center gap-3 mt-5">
+            <div className="mt-5 flex items-center gap-3">
               <a
                 href="https://github.com/getmegent"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-3 py-1.5 font-mono text-[11px] text-[var(--text2)] border border-[var(--border)] rounded-md hover:border-[var(--border2)] hover:text-[var(--text)] transition-all"
+                className="flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[12px] font-medium text-[var(--text2)] transition-all hover:border-[var(--border2)] hover:text-[var(--text)]"
               >
                 <GithubIcon />
                 GitHub
@@ -53,7 +56,7 @@ export default function Footer() {
                 href="https://twitter.com/magenzs"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-3 py-1.5 font-mono text-[11px] text-[var(--text2)] border border-[var(--border)] rounded-md hover:border-[var(--border2)] hover:text-[var(--text)] transition-all"
+                className="flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[12px] font-medium text-[var(--text2)] transition-all hover:border-[var(--border2)] hover:text-[var(--text)]"
               >
                 <TwitterIcon />
                 X
@@ -63,13 +66,13 @@ export default function Footer() {
 
           {Object.entries(LINKS).map(([title, links]) => (
             <div key={title}>
-              <h4 className="font-mono text-[11px] uppercase tracking-widest text-[var(--text3)] mb-4">{title}</h4>
+              <h4 className="mb-4 text-[11px] uppercase tracking-[0.14em] text-[var(--text3)]">{title}</h4>
               <ul className="space-y-2.5">
                 {links.map((link) => (
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      className="text-[14px] text-[var(--text2)] hover:text-[var(--text)] transition-colors"
+                      className="text-[15px] text-[var(--text2)] transition-colors hover:text-[var(--text)]"
                     >
                       {link.label}
                     </a>
@@ -80,13 +83,9 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-6 border-t border-[var(--border)]">
-          <p className="font-mono text-[11px] text-[var(--text3)]">© 2026 Megent. Apache 2.0 licensed</p>
-          <div className="flex items-center gap-2.5">
-            {/* <span className="font-mono text-[10px] border border-[var(--border)] bg-white rounded px-2.5 py-1 text-[var(--text3)]">Apache 2.0</span>
-            <span className="font-mono text-[10px] border border-[var(--border)] bg-white rounded px-2.5 py-1 text-[var(--text3)]">Python 3.9+</span>
-            <span className="font-mono text-[10px] border border-[var(--border)] bg-white rounded px-2.5 py-1 text-[var(--text3)]">0 telemetry</span> */}
-          </div>
+        <div className="flex flex-col items-start justify-between gap-4 border-t border-[var(--border)] pt-6 sm:flex-row sm:items-center">
+            <p className="text-[12px] text-[var(--text3)]">© 2026 Megent. Apache 2.0 licensed.</p>
+            <p className="text-[12px] text-[var(--text3)]">Built for policy-first AI operations.</p>
         </div>
       </div>
     </footer>

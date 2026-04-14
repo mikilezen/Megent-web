@@ -16,10 +16,10 @@ const FRAMEWORKS = [
 export default function Compat() {
   const doubled = [...FRAMEWORKS, ...FRAMEWORKS];
   return (
-    <section className="justify-between flex flex-wrap  py-5 overflow-hidden">
-        <span className="pl-1 m-auto h-6 shrink-0 font-mono text-[11px] text-[var(--text3)] uppercase tracking-[0.14em] whitespace-nowrap">
+    <section className="justify-between flex flex-wrap py-5 overflow-hidden border-y border-[var(--border)]">
+      <span className="pl-1 m-auto h-6 shrink-0 text-[11px] text-[var(--text3)] uppercase tracking-[0.14em] whitespace-nowrap">
           Works with all your favorite frameworks
-        </span>
+      </span>
       <div className="max-w-7xl mx-auto flex items-center gap-4 px-5 sm:px-8">
         <div
           className="overflow-hidden relative flex-1"
@@ -37,10 +37,10 @@ export default function Compat() {
               return (
                 <span
                   key={`${label}-${i}`}
-                  className="inline-flex items-center gap-2 px-4 py-1.5 font-mono text-[12px] text-[var(--text2)] border border-[var(--border)] rounded-full bg-white hover:border-[var(--border2)] hover:text-[var(--text)] transition-colors cursor-default"
+                  className="inline-flex items-center gap-2 px-4 py-1.5 text-[12px] text-[var(--text2)] border border-[var(--border)] rounded-full bg-[var(--background)] hover:border-[var(--border2)] hover:text-[var(--text)] transition-colors cursor-default"
                 >
                   {icon ? (
-                    <span className="relative h-5 w-5 shrink-0 overflow-hidden rounded-full bg-[var(--bg2)]">
+                    <span className="relative h-5 w-5 shrink-0 overflow-hidden rounded-full bg-[var(--card)]">
                       <Image src={icon} alt={label} fill sizes="20px" className="object-contain spin-slow" loading="lazy" />
                     </span>
                   ) : null}

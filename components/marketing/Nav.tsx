@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const LINKS = [
   { label: "Features", href: "#features" },
@@ -40,7 +41,8 @@ export default function Nav() {
   };
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 12);
+    const handler = () => setScrolled(window.scrollY > 88);
+    handler();
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, []);
@@ -52,37 +54,78 @@ export default function Nav() {
     };
   }, [menuOpen]);
 
+  useEffect(() => {
+    const resetNavigationUi = () => {
+      setMenuOpen(false);
+      setResourcesOpen(false);
+      document.body.style.overflow = "";
+    };
+
+    window.addEventListener("popstate", resetNavigationUi);
+    window.addEventListener("pageshow", resetNavigationUi);
+
+    return () => {
+      window.removeEventListener("popstate", resetNavigationUi);
+      window.removeEventListener("pageshow", resetNavigationUi);
+    };
+  }, []);
+
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 1024) {
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   return (
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300 ${
           scrolled
-            ? "bg-white/95 backdrop-blur-xl border-[var(--border)] shadow-[0_10px_40px_-24px_rgba(0,0,0,0.35)]"
-            : "bg-white/85 backdrop-blur-md border-transparent"
+            ? "bg-[var(--background)] backdrop-blur-none border-[var(--border2)]"
+            : "bg-transparent backdrop-blur-none border-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between h-16">
-          <a href="" className="flex items-center gap-2.5 group" aria-label="Megent home">
-            {/* <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-50" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--indigo)]" />
-            </span> */}
-            <Image src="/ll.jpg" alt="Megent logo" width={28} height={28} priority />
-            <span className="font-bold text-[17px] tracking-[-0.4px] text-[var(--text)] group-hover:text-[var(--indigo)] transition-colors">
+          <Link
+            href="/"
+            className="flex items-center gap-2.5 group"
+            aria-label="Megent home"
+          >
+            <Image src="/ll.jpg" alt="Megent logo" width={28} height={28} priority className="rounded-full" />
+            <span className="text-[26px] leading-none font-medium tracking-[-0.02em] text-[var(--text)] group-hover:text-[var(--indigo)] transition-colors [font-family:var(--font-serif)]">
               Megent
             </span>
-          </a>
+          </Link>
 
           <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
             {LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={handleAnchorNav(link.href)}
-                className="px-3 py-2 text-[13px] font-semibold text-[var(--text2)] rounded-lg hover:text-[var(--text)] hover:bg-[var(--bg1)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--indigo)]/40"
-              >
-                {link.label}
-              </a>
+              link.href.startsWith("#") ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={handleAnchorNav(link.href)}
+                  className="px-3 py-2 text-[15px] font-medium text-[var(--text2)] rounded-lg hover:text-[var(--text)] hover:bg-[var(--muted)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]/40"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    setResourcesOpen(false);
+                  }}
+                  className="px-3 py-2 text-[15px] font-medium text-[var(--text2)] rounded-lg hover:text-[var(--text)] hover:bg-[var(--muted)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]/40"
+                >
+                  {link.label}
+                </Link>
+              )
             ))}
             <div
               className="relative"
@@ -97,7 +140,7 @@ export default function Nav() {
             >
               <button
                 type="button"
-                className="flex items-center gap-1 px-3 py-2 text-[13px] font-semibold text-[var(--text2)] rounded-lg hover:text-[var(--text)] hover:bg-[var(--bg1)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--indigo)]/40"
+                className="flex items-center gap-1 px-3 py-2 text-[15px] font-medium text-[var(--text2)] rounded-lg hover:text-[var(--text)] hover:bg-[var(--muted)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]/40"
                 aria-haspopup="true"
                 aria-expanded={resourcesOpen}
                 onClick={() => setResourcesOpen((open) => !open)}
@@ -111,7 +154,7 @@ export default function Nav() {
                 <ChevronDownIcon />
               </button>
               <div
-                className={`absolute left-0 top-full w-52 rounded-xl border border-[var(--border)] bg-white shadow-xl transition-opacity duration-150 ${
+                className={`absolute left-0 top-full w-52 rounded-xl border border-[var(--border)] bg-[var(--card)] shadow-[0_18px_34px_-26px_rgba(20,20,19,0.5)] transition-opacity duration-150 ${
                   resourcesOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
                 }`}
               >
@@ -122,7 +165,7 @@ export default function Nav() {
                       href={item.href}
                       target={item.external ? "_blank" : undefined}
                       rel={item.external ? "noopener noreferrer" : undefined}
-                      className="flex items-center justify-between px-4 py-2 text-[13px] font-semibold text-[var(--text2)] hover:text-[var(--text)] hover:bg-[var(--bg1)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--indigo)]/30"
+                      className="flex items-center justify-between px-4 py-2 text-[14px] font-medium text-[var(--text2)] hover:text-[var(--text)] hover:bg-[var(--muted)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]/30"
                       onClick={(event) => {
                         if (!item.external) {
                           handleAnchorNav(item.href)(event);
@@ -145,37 +188,21 @@ export default function Nav() {
               href="https://www.github.com/megents/megent"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3 flex gap-2 items-center py-2 text-[13px] font-semibold text-[var(--text2)] rounded-full border border-[var(--border)] hover:border-[var(--border2)] hover:text-[var(--text)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--indigo)]/40"
+              className="px-3.5 flex gap-2 items-center py-2.5 text-[14px] font-medium text-[var(--text2)] rounded-xl border border-[var(--border)] bg-[var(--card)] hover:border-[var(--border2)] hover:text-[var(--text)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]/40"
             >
               <GithubIcon />
-              Github
+              GitHub
             </a>
-            {/* <a
-              href="/docs"
-              className="px-3.5 py-2 text-[13px] font-semibold text-white bg-[var(--indigo)] rounded-full hover:bg-indigo-600 transition-all flex items-center gap-1.5 shadow-[0_10px_30px_-18px_rgba(79,70,229,0.8)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--indigo)]/50"
+            <Link
+              href="/login"
+              className="px-4 py-2.5 text-[14px] font-medium text-[#faf9f5] bg-[var(--indigo)] rounded-xl hover:brightness-95 transition-all flex items-center gap-2 shadow-[0_0_0_1px_var(--indigo),0_18px_32px_-26px_rgba(20,20,19,0.55)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]/50"
             >
-              Docs
-              {/* <ArrowRight /> 
-            </a> */}
-            <a href="/login">
-              <button className="px-3.5 py-2 text-[13px] font-semibold text-white bg-[var(--indigo)] rounded-full hover:bg-inodigo-600 transition-all flex items-center gap-2 shadow-[0_10px_30px_-18px_rgba(79,70,229,0.8)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--indigo)]/50">
-                {/* <Image src="/ll.png" alt="Megent logo" width={16} height={16} className="h-4 w-4" /> */}
-                Login
-              </button>
-            </a>
-            {/* <a
-              // href="https://github.com/getmegent"
-            //   target="_blank"
-            //   rel="noopener noreferrer"
-            //   className="px-3 py-2 text-[13px] font-semibold text-[var(--text2)] rounded-lg border border-[var(--border)] hover:border-[var(--border2)] hover:text-[var(--text)] transition-colors flex items-center gap-1.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--indigo)]/40"
-            // >
-            //   <GithubIcon />
-            //   GitHub
-            // </a> */}
+              Login
+            </Link>
           </div>
 
           <button
-            className="lg:hidden p-2 rounded-lg text-[var(--text2)] hover:bg-[var(--bg1)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--indigo)]/40"
+            className="lg:hidden p-2 rounded-lg text-[var(--text2)] hover:bg-[var(--muted)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]/40"
             onClick={() => setMenuOpen((open) => !open)}
             aria-label="Toggle menu"
             aria-expanded={menuOpen}
@@ -186,31 +213,45 @@ export default function Nav() {
       </header>
 
       {menuOpen && (
-        <div className="fixed inset-0 z-40 bg-white pt-16 flex flex-col overflow-y-auto">
+        <div className="fixed inset-0 z-40 bg-[var(--background)] pt-16 flex flex-col overflow-y-auto lg:hidden">
           <nav className="flex flex-col p-5 gap-1">
             {LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={handleAnchorNav(link.href)}
-                className="px-3 py-3 rounded-lg text-[15px] font-semibold text-[var(--text)] hover:bg-[var(--bg1)]"
-              >
-                {link.label}
-              </a>
+              link.href.startsWith("#") ? (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={handleAnchorNav(link.href)}
+                  className="px-3 py-3 rounded-lg text-[16px] font-medium text-[var(--text)] hover:bg-[var(--muted)]"
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    setResourcesOpen(false);
+                  }}
+                  className="px-3 py-3 rounded-lg text-[16px] font-medium text-[var(--text)] hover:bg-[var(--muted)]"
+                >
+                  {link.label}
+                </Link>
+              )
             ))}
             <div className="flex flex-col gap-3 pt-6">
               <a
                 href="https://docs.megent.dev"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3 py-3 rounded-lg text-[14px] font-semibold text-[var(--text2)] border border-[var(--border)] hover:border-[var(--border2)]"
+                className="px-3 py-3 rounded-lg text-[14px] font-medium text-[var(--text2)] border border-[var(--border)] hover:border-[var(--border2)]"
               >
                 Docs
               </a>
               <a
                 href="#waitlist"
                 onClick={handleAnchorNav("#waitlist")}
-                className="px-3 py-3 rounded-lg text-[14px] font-semibold text-white bg-[var(--indigo)] text-center"
+                className="px-3 py-3 rounded-lg text-[14px] font-medium text-[#faf9f5] bg-[var(--indigo)] text-center"
               >
                 Join waitlist
               </a>
@@ -218,7 +259,7 @@ export default function Nav() {
                 href="https://github.com/getmegent"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-3 py-3 rounded-lg text-[14px] font-semibold text-[var(--text2)] border border-[var(--border)] hover:border-[var(--border2)] flex items-center gap-2"
+                className="px-3 py-3 rounded-lg text-[14px] font-medium text-[var(--text2)] border border-[var(--border)] hover:border-[var(--border2)] flex items-center gap-2"
               >
                 <GithubIcon />
                 GitHub
