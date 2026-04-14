@@ -3,6 +3,10 @@ import { Analytics } from "@vercel/analytics/next";
 import GlobalUiReset from "@/components/GlobalUiReset";
 // import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
+import { Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const siteUrl = "https://megent.dev";
 const siteName = "Megent";
@@ -150,7 +154,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
       <head>
         <script
           type="application/ld+json"
