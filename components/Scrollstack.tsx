@@ -47,6 +47,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
   const stackCompletedRef = useRef(false);
   const animationFrameRef = useRef<number | null>(null);
   const lenisRef = useRef<Lenis | null>(null);
+  const isLenisActiveRef = useRef(false);
   const cardsRef = useRef<HTMLElement[]>([]);
   const lastTransformsRef = useRef(new Map<number, any>());
   const isUpdatingRef = useRef(false);
@@ -220,14 +221,18 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       });
 
       lenis.on('scroll', handleScroll);
+      isLenisActiveRef.current = true;
 
       const raf = (time: number) => {
+        // Guard against late RAF ticks after teardown.
+        if (!isLenisActiveRef.current || lenisRef.current !== lenis) {
+          return;
+        }
         lenis.raf(time);
         animationFrameRef.current = requestAnimationFrame(raf);
       };
-      animationFrameRef.current = requestAnimationFrame(raf);
-
       lenisRef.current = lenis;
+      animationFrameRef.current = requestAnimationFrame(raf);
       return lenis;
     } else {
       const scroller = scrollerRef.current;
@@ -249,14 +254,18 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       });
 
       lenis.on('scroll', handleScroll);
+      isLenisActiveRef.current = true;
 
       const raf = (time: number) => {
+        // Guard against late RAF ticks after teardown.
+        if (!isLenisActiveRef.current || lenisRef.current !== lenis) {
+          return;
+        }
         lenis.raf(time);
         animationFrameRef.current = requestAnimationFrame(raf);
       };
-      animationFrameRef.current = requestAnimationFrame(raf);
-
       lenisRef.current = lenis;
+      animationFrameRef.current = requestAnimationFrame(raf);
       return lenis;
     }
   }, [handleScroll, useWindowScroll]);
@@ -292,11 +301,14 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     updateCardTransforms();
 
     return () => {
+      isLenisActiveRef.current = false;
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
       }
       if (lenisRef.current) {
         lenisRef.current.destroy();
+        lenisRef.current = null;
       }
       stackCompletedRef.current = false;
       cardsRef.current = [];

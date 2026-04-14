@@ -1074,6 +1074,10 @@ export default function LiquidEther({
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (resizeRafRef.current) {
+        cancelAnimationFrame(resizeRafRef.current);
+        resizeRafRef.current = null;
+      }
       if (resizeObserverRef.current) {
         try {
           resizeObserverRef.current.disconnect();

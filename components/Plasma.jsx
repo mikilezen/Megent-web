@@ -189,6 +189,7 @@ export const Plasma = ({
       if (mouseInteractive && containerEl) {
         containerEl.removeEventListener('mousemove', handleMouseMove);
       }
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
       try {
         containerEl?.removeChild(canvas);
       } catch {

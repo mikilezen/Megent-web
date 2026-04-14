@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
+import GlobalUiReset from "@/components/GlobalUiReset";
 // import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
@@ -20,7 +21,7 @@ const structuredData = {
       "url": siteUrl,
       "logo": {
         "@type": "ImageObject",
-        "url": `${siteUrl}/favicon.ico`,
+        "url": `${siteUrl}/Group.ico`,
       },
       "description": defaultDescription,
       "sameAs": [
@@ -137,8 +138,8 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
+    icon: "/Group.ico",
+    shortcut: "/Group.ico",
     apple: "/icon-224x224.png",
   },
 };
@@ -157,9 +158,9 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
+        <GlobalUiReset />
         {/* <ThemeProvider
           attribute="class"
-          defaultTheme="light"
           enableSystem={false}
           forcedTheme="light"
           disableTransitionOnChange

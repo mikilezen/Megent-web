@@ -351,9 +351,17 @@ const PixelBlast = ({
         const t = threeRef.current;
         t.resizeObserver?.disconnect();
         cancelAnimationFrame(t.raf);
+        if (t.pointerDownHandler) {
+          t.renderer.domElement.removeEventListener('pointerdown', t.pointerDownHandler);
+        }
+        if (t.pointerMoveHandler) {
+          t.renderer.domElement.removeEventListener('pointermove', t.pointerMoveHandler);
+        }
+        t.touch?.texture?.dispose?.();
         t.quad?.geometry.dispose();
         t.material.dispose();
         t.composer?.dispose();
+        t.renderer.forceContextLoss();
         t.renderer.dispose();
         if (t.renderer.domElement.parentElement === container) container.removeChild(t.renderer.domElement);
         threeRef.current = null;
@@ -532,7 +540,9 @@ const PixelBlast = ({
         timeOffset,
         composer,
         touch,
-        liquidEffect
+        liquidEffect,
+        pointerDownHandler: onPointerDown,
+        pointerMoveHandler: onPointerMove
       };
     } else {
       const t = threeRef.current;
@@ -564,9 +574,17 @@ const PixelBlast = ({
       const t = threeRef.current;
       t.resizeObserver?.disconnect();
       cancelAnimationFrame(t.raf);
+      if (t.pointerDownHandler) {
+        t.renderer.domElement.removeEventListener('pointerdown', t.pointerDownHandler);
+      }
+      if (t.pointerMoveHandler) {
+        t.renderer.domElement.removeEventListener('pointermove', t.pointerMoveHandler);
+      }
+      t.touch?.texture?.dispose?.();
       t.quad?.geometry.dispose();
       t.material.dispose();
       t.composer?.dispose();
+      t.renderer.forceContextLoss();
       t.renderer.dispose();
       if (t.renderer.domElement.parentElement === container) container.removeChild(t.renderer.domElement);
       threeRef.current = null;

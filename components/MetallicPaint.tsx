@@ -423,6 +423,9 @@ export default function MetallicPaint({
       if (textureRef.current && glRef.current) {
         glRef.current.deleteTexture(textureRef.current);
       }
+      if (glRef.current) {
+        glRef.current.getExtension('WEBGL_lose_context')?.loseContext();
+      }
     };
   }, [initGL]);
 

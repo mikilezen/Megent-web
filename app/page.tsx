@@ -13,23 +13,43 @@ import PythonPreview from "@/components/marketing/PythonPreview";
 import UseCases from "@/components/marketing/UseCases";
 import Waitlist from "@/components/marketing/Waitlist";
 import Policy from "@/components/marketing/Policy";
+import { FAQS } from "@/data/faq";
+
+const siteUrl = "https://megent.dev";
+const ogImage = "/freepik__adjust__68767.png";
+const pageTitle = "AI Agent Governance Platform | Megent";
+const pageDescription =
+  "Operations, routing, and governance for AI agents in production. Enforce runtime policies, monitor tool calls, and protect sensitive data.";
+const pageUrl = `${siteUrl}/`;
 
 export const metadata: Metadata = {
-  title: "Megent | AI Agent Governance Platform",
-  description:
-    "Operations, routing, and governance for AI agents in production. Enforce policies, monitor tool calls, and protect sensitive data.",
+  title: pageTitle,
+  description: pageDescription,
   alternates: {
     canonical: "/",
   },
+  keywords: [
+    "AI agent governance",
+    "agent policy engine",
+    "tool call interception",
+    "PII masking for AI",
+    "AI runtime security",
+    "LLM guardrails",
+    "Megent",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
-    title: "Megent | AI Agent Governance Platform",
-    description:
-      "Operations, routing, and governance for AI agents in production. Enforce policies, monitor tool calls, and protect sensitive data.",
-    url: "https://megent.dev",
+    title: pageTitle,
+    description: pageDescription,
+    url: pageUrl,
+    siteName: "Megent",
     type: "website",
     images: [
       {
-        url: "/freepik__adjust__68767.png",
+        url: ogImage,
         width: 1200,
         height: 630,
         alt: "Megent platform preview",
@@ -38,27 +58,44 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Megent | AI Agent Governance Platform",
-    description:
-      "Operations, routing, and governance for AI agents in production. Enforce policies, monitor tool calls, and protect sensitive data.",
-    images: ["/freepik__adjust__68767.png"],
+    title: pageTitle,
+    description: pageDescription,
+    images: [ogImage],
+    creator: "@megentdev",
   },
+};
+
+const faqStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQS.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.a,
+    },
+  })),
 };
 
 export default function Page() {
   return (
     <main className="text-[var(--text)]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
+      />
       <Nav />
       <div className="pt-1">
         <Hero />
         {/* <AgentPlayground /> */}
+        <PythonPreview />
         <Compat />
-        
+
         <Problem />
         <Features />
         <HowItWorks />
-        <PythonPreview />
-        <Policy/>
+        <Policy />
         <UseCases />
         {/* <OpenSource /> */}
         <FAQ />

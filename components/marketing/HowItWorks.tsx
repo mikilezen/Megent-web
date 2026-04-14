@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
 const STEPS = [
@@ -16,7 +17,7 @@ const STEPS = [
   {
     title: "Deploy",
     body: "Run your app. Violations are blocked and logged automatically.",
-    callout: "ALLOW | BLOCK | MASK",
+    callout: "ALLOW | BLOCK | MASK | HITL |STOP",
   },
 ];
 
@@ -24,17 +25,17 @@ export default function HowItWorks() {
   const [activeStep, setActiveStep] = useState(0);
 
   return (
-    <section id="how" className="py-20 sm:py-24 bg-white">
-      {/* <div className="max-w-6xl mx-auto px-5 sm:px-8">
+    <section id="how" className="py-24 sm:py-24 bg-[var(--card)]">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="max-w-2xl mb-8 sm:mb-10">
-          <span className="inline-block font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--indigo)] mb-3">
+          <span className="inline-block text-[11px] uppercase tracking-[0.12em] text-[var(--text3)] mb-3">
             How it works
           </span>
-          <h2 className="text-[clamp(28px,4vw,42px)] font-extrabold tracking-[-1.2px] leading-[1.1] text-[var(--text)] mb-3">
-            Simple, interactive setup
+          <h2 className="text-[clamp(30px,4vw,48px)] font-medium tracking-[-0.02em] leading-[1.1] text-[var(--text)] mb-3 [font-family:var(--font-serif)]">
+            Three steps to runtime safety
           </h2>
           <p className="text-[15px] text-[var(--text2)] leading-[1.7]">
-            Click each step to preview what happens.
+            Click a step to preview exactly what your team would configure.
           </p>
         </div>
 
@@ -44,10 +45,10 @@ export default function HowItWorks() {
               key={step.title}
               type="button"
               onClick={() => setActiveStep(i)}
-              className={`px-4 py-2 rounded-full border text-[13px] font-medium transition-colors ${
+              className={`px-4 py-2 rounded-xl border text-[13px] font-medium transition-colors ${
                 activeStep === i
-                  ? "border-[var(--indigo-border)] bg-indigo-50 text-[var(--indigo)]"
-                  : "border-[var(--border)] bg-white text-[var(--text2)] hover:border-[var(--indigo-border)]"
+                  ? "border-[var(--border2)] bg-[var(--background)] text-[var(--text)]"
+                  : "border-[var(--border)] bg-[var(--card)] text-[var(--text2)] hover:border-[var(--border2)]"
               }`}
             >
               0{i + 1} {step.title}
@@ -55,15 +56,33 @@ export default function HowItWorks() {
           ))}
         </div>
 
-        <div className="rounded-2xl border border-[var(--border)] bg-[var(--bg1)] p-5 sm:p-6">
-          <div className="w-10 h-10 rounded-full bg-white border border-[var(--border)] flex items-center justify-center font-semibold text-[var(--indigo)] mb-4">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-5 sm:p-7 shadow-[0_0_0_1px_var(--border)]">
+          <div className="w-10 h-10 rounded-full bg-[var(--card)] border border-[var(--border)] flex items-center justify-center font-semibold text-[var(--text)] mb-4">
             0{activeStep + 1}
           </div>
-          <h3 className="text-[20px] font-bold text-[var(--text)] mb-2">{STEPS[activeStep].title}</h3>
+          <h3 className="text-[28px] font-medium text-[var(--text)] mb-2 [font-family:var(--font-serif)]">{STEPS[activeStep].title}</h3>
           <p className="text-[15px] text-[var(--text2)] leading-[1.7] mb-4">{STEPS[activeStep].body}</p>
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border)] bg-white text-[12px] font-mono text-[var(--text3)]">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--border)] bg-[var(--card)] text-[12px] [font-family:var(--font-mono-ui)] text-[var(--text3)]">
             {STEPS[activeStep].callout}
           </div>
+
+          {/* <div className="mt-6 grid gap-4 sm:grid-cols-[1fr_1fr]">
+            <div className="relative min-h-[150px] overflow-hidden rounded-xl border border-[var(--border)]">
+              <Image
+                src="/Frame.png"
+                alt="Megent setup visual"
+                fill
+                sizes="(max-width: 640px) 100vw, 40vw"
+                className="object-cover"
+              />
+            </div> */}
+            {/* <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
+              <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--text3)]">Quick Outcome</p>
+              <p className="mt-2 text-[14px] leading-[1.75] text-[var(--text2)]">
+                Simple setup for developers, strict control for security and compliance teams.
+              </p>
+            </div> */}
+          {/* </div> */}
         </div>
 
         <div className="mt-5 flex gap-2">
@@ -73,11 +92,11 @@ export default function HowItWorks() {
               type="button"
               onClick={() => setActiveStep(i)}
               aria-label={`Go to step ${i + 1}`}
-              className={`h-2.5 rounded-full transition-all ${activeStep === i ? "w-8 bg-[var(--indigo)]" : "w-2.5 bg-slate-300"}`}
+              className={`h-2.5 rounded-full transition-all ${activeStep === i ? "w-8 bg-[var(--primary)]" : "w-2.5 bg-[var(--border2)]"}`}
             />
           ))}
         </div>
-      </div> */}
+      </div>
     </section>
   );
 }
