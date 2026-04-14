@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 };
 
 type DashboardLayoutProps = {
-	children: ReactNode;
+  children: ReactNode;
 };
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
-	return <>{children}</>;
+  return <>{children}</>;
 }
