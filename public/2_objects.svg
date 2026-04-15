@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="58" height="58" viewBox="0 0 58 58" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <image id="image_1" width="58" height="58" p3:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA6CAYAAADhu0ooAAAABHNCSVQICAgIfAhkiAAABDtJREFUaIHtmz9s20YUxr/vUYtI+k8HA4YBG8hWI/BgZGgQxNmyJEW8BfDqdsqQzK3aJWkMT5kNuGm8ePKWtdlaBMlgI0MyevOWJaB0khfxdTCl6g8lUuSRINr8Rur47n34jrrj3SNRAMaYlTAMbwHYFJF1Vb0GYJnkgqrWAXRVNSD5GcCFqp47jvMRwGm9Xn9LUm3nRFuBgiD4luRDkg8A3MicEHmpqm9IvnZd94TkFxv55RZqjLmnqo8A3LeQTxxHInLguu77PEEyC+10OlvdbvdXAHfzJJAWkiequuf7/odM9896g6o6xpgXAB5n6TAvIrLvuu5Ps943k9AgCG6TPCB5fdaOLHMmIo9mGc6phRpjflDV37PlVRi7vu+/StNQ0jRqNpuNCooEgD+MMT+naZgo1BjzlORv+XMqBlV9box5mtRu6tBtNpuNKoscRFV/mZubez7p94lCK/pMToXkj57nvYz9Le5iEAS3ReSvYtMqhjAMt+bn5/8evT72jKqqQ/KgnLTsQ/JAVZ3R67XRC8aYF0XPk77vp2rXarVmjk3yerSgeTJ4fcjRTqezhRJWPBsbG4ltFhcX83TxONLSZ0hotHYtnLW1tcQ2ruvm6mNUS1+oMeYeSlqgr66uJrbxPC9vN3cjTQAGhEavWqVQhqPAsCYBrl6aUdz75BhphFpwFADuR9quhJJ8aCNqWtIMXRuOAv9q6wl9YCVqSkp0tK+tZoxZUdXMezxJpJ0zR7HlKIAbxpgViXbrCiPNnBmHLUcBIAzDWwJg01rEGNIM0zgsOgpcbbvKus2Io6T544nDpqMisi7R5nJhVMFRVb0mAJatRYwhq1CbjgJYFpILNiOOknXo2nSU5IJEZyGFUZGhW68B6AIYe1G1xdLSElzXRbvdnthmZ2cHh4eHRaUAAN1adKr1jY1oWRcHlp/HMVQ1kOjozgpZFweW58wxSH4WABe2AlbkHzaOC1HVc1vRqvAPG4eqnkt00myFqjrqOM5HAXBqK2AVppIJnEpUM3BpI1oVhy7Jy3q9/rZGUlut1hsA3+cNmsbR7e1tHB8f5+0qNVE9hPZ2GF7bCNpbHEyjhGE6RE+bRJ2f2Aqc5GoJU8kQPW09R78AOLIROOk5LdnRo175Tn9fV0SsHCxVydFBTX2hruu+J5l7CFfFUZIng8UcQ2cvqrqXt4OqODqqZUio7/sfRGQ/TwdVcFRE9kcLr8YOgqNipbOsnSQ5WoLQs7iCq9ij/Xa7/V0Yhu+KzqgIRORmXKFVbPlN1HC38KzsszupmmxinZHv+69INorLyS4kG9OqyKYWVHmet0fymf207ELymed5U2eMVLWAVS6sItlIEgl8LXocx/O8l2EYbqnqp+x5WeNMRG6mFQn8jwqTUzvag2TX9/0njuPcAfDnrPdnJVqHb2YRCXz9eGB2/vOfg8RRxQ98/gERZoexA49w9wAAAABJRU5ErkJggg==" xmlns:p3="http://www.w3.org/1999/xlink" />
+    <pattern id="pattern_2" width="2" height="2">
+      <use p4:href="#image_1" xmlns:p4="http://www.w3.org/1999/xlink" />
+    </pattern>
+  </defs>
+  <g id="SingleElement">
+    <path d="M1 0L57 0C57.5524 0 58 0.447632 58 1L58 57C58 57.5524 57.5524 58 57 58L1 58C0.447632 58 0 57.5524 0 57L0 1C0 0.447632 0.447632 0 1 0L1 0Z" fill="#FFFFFF" transform="translate(521 512)" />
+    <path d="M29 0L29 0C45.0184 0 58 12.9816 58 29L58 29C58 45.0184 45.0184 58 29 58L29 58C12.9816 58 0 45.0184 0 29L0 29C0 12.9816 12.9816 0 29 0L29 0Z" fill="url(#pattern_2)" transform="translate(521 512)" />
+  </g>
+</svg>

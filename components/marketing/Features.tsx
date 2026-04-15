@@ -93,7 +93,7 @@ export default function Features() {
   }, [pathname]);
 
   return (
-    <section id="features" className="py-24 bg-[var(--card)]" ref={ref}>
+    <section id="features" className="py-24 bg-[var(--backgound)]" ref={ref}>
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <span className="reveal inline-block text-[11px] uppercase tracking-[0.12em] text-[var(--text3)] mb-4">
           Features

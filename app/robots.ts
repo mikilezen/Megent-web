@@ -7,12 +7,27 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: "*",
-        allow: ["/", "/op", "/registry"],
+        allow: ["/", "/op", "/registry", "/llms.txt", "/sitemap.xml"],
         disallow: ["/api/", "/dashboard", "/login"],
       },
       {
         userAgent: "Googlebot",
-        allow: ["/", "/op", "/registry"],
+        allow: ["/", "/op", "/registry", "/llms.txt", "/sitemap.xml"],
+        disallow: ["/api/", "/dashboard", "/login"],
+      },
+      {
+        userAgent: "GPTBot",
+        allow: ["/", "/op", "/registry", "/llms.txt", "/sitemap.xml"],
+        disallow: ["/api/", "/dashboard", "/login"],
+      },
+      {
+        userAgent: "ClaudeBot",
+        allow: ["/", "/op", "/registry", "/llms.txt", "/sitemap.xml"],
+        disallow: ["/api/", "/dashboard", "/login"],
+      },
+      {
+        userAgent: "PerplexityBot",
+        allow: ["/", "/op", "/registry", "/llms.txt", "/sitemap.xml"],
         disallow: ["/api/", "/dashboard", "/login"],
       },
     ],

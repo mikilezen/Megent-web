@@ -58,7 +58,7 @@ export default function FAQ() {
   const toggle = (i: number) => setOpen(open === i ? null : i);
 
   return (
-    <section id="faq" className="py-24 bg-[var(--card)]" ref={ref}>
+    <section id="faq" className="py-24 bg-[var(--back)]" ref={ref}>
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="grid lg:grid-cols-[340px_1fr] gap-14 xl:gap-20 items-start">
           <div>

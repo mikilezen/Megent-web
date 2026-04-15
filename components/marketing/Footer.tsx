@@ -27,7 +27,7 @@ const LINKS = {
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[var(--border)] bg-[var(--card)]">
+    <footer className="border-t border-[var(--border)] bg-[var(--ard)]">
       <div className="mx-auto max-w-6xl px-5 pb-10 pt-14 sm:px-8">
         <div className="mb-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr]">
           <div>

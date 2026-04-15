@@ -74,7 +74,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
       };
     } else {
       const scroller = scrollerRef.current;
-      return {
+      if (!scroller)return {
         scrollTop: scroller!.scrollTop,
         containerHeight: scroller!.clientHeight,
         scrollContainer: scroller!

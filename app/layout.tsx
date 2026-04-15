@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
-import GlobalUiReset from "@/components/GlobalUiReset";
+import GlobalUiReset from "@/components/ui/GlobalUiReset";
 // import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { Geist } from "next/font/google";

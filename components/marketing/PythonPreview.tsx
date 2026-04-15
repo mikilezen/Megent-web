@@ -61,7 +61,7 @@ tools:
   const activeSnippet = activeFile === "python" ? pythonSnippet : policySnippet;
 
   return (
-    <section className="bg-[var(--background)] py-22" id="code-preview">
+    <section className="bg-[var(--backgkround)] py-22" id="code-preview">
       <div className="mx-auto max-w-6xl px-5 sm:px-10">
         <div className="mb-8 max-w-2xl sm:mb-10">
           {/* <span className="mb-3 inline-block text-[11px] uppercase tracking-[0.12em] text-[var(--text3)]">
