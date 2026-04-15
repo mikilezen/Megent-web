@@ -1,4 +1,8 @@
 {
   "buildCommand": "npm run build",
+<<<<<<< HEAD
+=======
+  "installCommand": "npm install",
+>>>>>>> 6ab0d88 (Fix build: add vercel.json with correct build command, fix duplicate keywords in registry layout)
   "framework": "nextjs"
 }
