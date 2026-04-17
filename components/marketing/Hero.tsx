@@ -89,9 +89,9 @@ Block what they cannot. Enforced at every tool call, before it executes.
               <p className="text-[11px] uppercase tracking-[0.14em] text-[var(--text3)]">Live Runtime Stream</p>
               <p className="mt-1 text-[22px] leading-none text-[var(--text)] [font-family:var(--font-serif)]">policy.log</p>
             </div>
-            <span className="rounded-full border border-[var(--border2)] bg-[var(--muted)] px-3 py-1 text-[11px] text-[var(--text2)]">
+            {/* <span className="rounded-full border border-[var(--border2)] bg-[var(--muted)] px-3 py-1 text-[11px] text-[var(--text2)]">
               agent online
-            </span>
+            </span> */}
           </div>
 
           <div className="rounded-2xl border border-[#30302e] bg-[#141413] p-4 [font-family:var(--font-mono-ui)]">
