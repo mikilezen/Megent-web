@@ -83,7 +83,8 @@ async function sendWaitlistNotification(subscriberEmail: string): Promise<Waitli
         "",
         "Best regards,",
         "https://megent.dev",
-        "https://github.coms/megents/megent",
+        "https://github.com/megents/megent",
+        "if you want to unsubscribe go to megent.dev/unsubscribe"
       ].join("\n"),
     });
 

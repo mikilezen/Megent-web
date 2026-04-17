@@ -103,7 +103,7 @@ export default function Problem() {
           <div className="grid md:grid-cols-[0.4fr_0.9fr]">
             <div className="relative min-h-[220px]">
               <Image
-                src="/freepik__adjust__68767.png"
+                src="/2_objects.jpg"
                 alt="Dashboard-style overview for agent runtime controls"
                 fill
                 sizes="(max-width: 768px) 100vw, 60vw"
