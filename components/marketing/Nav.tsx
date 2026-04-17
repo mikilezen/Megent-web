@@ -13,7 +13,7 @@ const LINKS = [
 
 const DROPDOWN_ITEMS = [
   { label: "Docs", href: "https://docs.megent.dev", external: true },
-  { label: "GitHub", href: "https://github.com/getmegent", external: true },
+  { label: "GitHub", href: "https://github.com/megents", external: true },
   { label: "Join waitlist", href: "#waitlist" },
 ];
 

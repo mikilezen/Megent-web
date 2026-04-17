@@ -27,19 +27,9 @@ def send_email(to: str, body: str) -> str:
 send_email("ops@example.com", "Call me at +1 555 111 2222")`;
 
   const policySnippet = `version: "1"
+  passport: M98ffF0F8
 default_action: deny
-on_block: stop_tool
-
-budget_limit:
-  daily_usd: 50
-
-human_in_the_loop:
-  tools: [search_customer_history]
-
-awareness:
-  detect_sensitive_data: true
-  rectify_before_search: true
-
+pii_mask: [email]
 tools:
   send_email:
     allow: true
