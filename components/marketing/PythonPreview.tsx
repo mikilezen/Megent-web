@@ -129,23 +129,24 @@ tools:
                   <>
                     <span className="text-[#9cdcfe]">version</span>: <span className="text-[#ce9178]">{"\"1\""}</span>
                     {"\n"}
-                    <span className="text-[#9cdcfe]">default_action</span>: <span className="text-[#c586c0]">deny</span>
+                    <span className="text-[#9cdcfe]">passport</span>: <span className="text-[#c586c0]">M390nvnf90</span>
                     {"\n"}
                     <span className="text-[#9cdcfe]">on_block</span>: <span className="text-[#4ec9b0]">stop_tool</span>
                     {"\n\n"}
-                    <span className="text-[#9cdcfe]">budget_limit</span>:
+                    <span className="text-[#9cdcfe]">pii_mask: [email]</span>:
+                    <span className="text-[#b5cea8]">50</span>
                     {"\n  "}
-                    <span className="text-[#9cdcfe]">daily_usd</span>: <span className="text-[#b5cea8]">50</span>
+                    {/* <span className="text-[#9cdcfe]">daily_usd</span>: 
                     {"\n\n"}
                     <span className="text-[#9cdcfe]">human_in_the_loop</span>:
-                    {"\n  "}
-                    <span className="text-[#9cdcfe]">tools</span>: [<span className="text-[#4ec9b0]">search_customer_history</span>]
+                    {"\n  "} */}
+                    {/* <span className="text-[#9cdcfe]">tools</span>: [<span className="text-[#4ec9b0]">search_customer_history</span>]
                     {"\n\n"}
                     <span className="text-[#9cdcfe]">awareness</span>:
                     {"\n  "}
-                    <span className="text-[#9cdcfe]">detect_sensitive_data</span>: <span className="text-[#569cd6]">true</span>
+                    <span className="text-[#9cdcfe]">detect_sensitive_data</span>: <span className="text-[#569cd6]">true</span> */}
                     {"\n  "}
-                    <span className="text-[#9cdcfe]">rectify_before_search</span>: <span className="text-[#569cd6]">true</span>
+                    {/* <span className="text-[#9cdcfe]">rectify_before_search</span>: <span className="text-[#569cd6]">true</span> */}
                     {"\n\n"}
                     <span className="text-[#9cdcfe]">tools</span>:
                     {"\n  "}
