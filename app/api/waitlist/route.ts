@@ -82,7 +82,8 @@ async function sendWaitlistNotification(subscriberEmail: string): Promise<Waitli
         "We will contact you with updates and next steps as soon as they are available.",
         "",
         "Best regards,",
-        " Megent",
+        "https://megent.dev",
+        "https://github.coms/megents/megent",
       ].join("\n"),
     });
 
