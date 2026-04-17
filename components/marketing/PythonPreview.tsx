@@ -132,10 +132,10 @@ tools:
                     <span className="text-[#9cdcfe]">passport</span>: <span className="text-[#c586c0]">M390nvnf90</span>
                     {"\n"}
                     <span className="text-[#9cdcfe]">pii_mask</span>:
-                    <span className="text-[#b5cea8]">[email]</span>
+                    <span className="text-[#b5cea8]"> [email]</span>
                     {"\n\n  "}
                 
-                    <span className="text-[#9cdcfe]">tools</span>:
+                    <span className="text-[#9cdcfe]">tools</span>:<span></span>
                     {"\n  "}
                     <span className="text-[#dcdcaa]">send_email</span>:
                     {"\n    "}
