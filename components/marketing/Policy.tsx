@@ -4,7 +4,7 @@ export default function Policy() {
   return (
     <section id="policy" className="py-24 bg-[var(--background)] border-t border-[var(--border)]">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <div className="mb-10">
+        <div className="mb-0">
           <span className="inline-block text-[11px] uppercase tracking-[0.12em] text-[var(--text3)] mb-4">
             Policy Marketplace
           </span>
@@ -14,20 +14,24 @@ export default function Policy() {
           <p className="text-[15px] text-[var(--text2)] leading-[1.8] max-w-2xl">
             Discover predefined and community-authored policy packs, all versioned and ready for production workflows.
           </p>
+          <button className=" mt-4 items-center gap-2 text-sm font-medium text-[var(--background)] bg-[var(--primary)]  rounded-full px-4 py-2 hover:bg-[var(--primary)] hover:text-white transition inline-flex items-center gap-2 rounded-xl bg-[var(--primary)] px-5 py-3 text-[15px] font-medium text-[var(--primary-foreground)] shadow-[0_0_0_1px_var(--primary)] transition hover:brightness-95">
+            Explore
+          </button>
         </div>
 
-        <div className="grid gap-5 lg:grid-cols-[1.25fr_1fr]">
-          <div className="relative overflow-hidden rounded-3xl border border-[var(--border)] min-h-[310px] p-6 sm:p-7 flex flex-col justify-end">
-            <div
+        <div className="grid gap-5 w-full">
+          <div className="relative overflow-hidden rounded-3xl border border-[var(--border)] mn-h-[310px] p-6 sm:p-7 flex flex-col justify-end">
+            {/* <img src="/Frame.jpg" /> */}
+            {/* <div
               className="absolute inset-0"
               style={{
                 backgroundImage:
-                  "linear-gradient(135deg, rgba(24,18,13,0.72), rgba(24,18,13,0.36)), url('/images%20(4).jfif')",
+                  "linear-gradient(135deg, rgba(24,18,13,0.72), rgba(24,18,13,0.36)), url('/image.jpg')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-              }}
-            />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(255,255,255,0.16),transparent_45%)]" />
+              }} */}
+            {/* /> */}
+            {/* <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_15%,rgba(255,255,255,0.16),transparent_45%)]" />
 
             <div className="relative z-10 max-w-xl">
               <p className="text-[11px] uppercase tracking-[0.14em] text-white/80 mb-2">Featured Bundle</p>
@@ -38,9 +42,9 @@ export default function Policy() {
                 Checkout fraud rules, customer PII masking, and outbound notification controls packaged into one production-ready policy set.
               </p>
             </div>
-          </div>
+          </div> */}
 
-          <div className="rounded-3xl border border-[var(--border)] bg-[var(--card)] p-6 sm:p-7">
+          {/* <div className="rounded-3xl border border-[var(--border)] bg-[var(--card)] p-6 sm:p-7">
             <h3 className="text-xl [font-family:var(--font-serif)] text-[var(--text)] mb-4">Top policy packs</h3>
             <div className="space-y-3">
               <div className="rounded-2xl border border-[var(--border)] bg-[var(--background)] p-4">
@@ -55,7 +59,7 @@ export default function Policy() {
                 <p className="text-sm font-medium text-[var(--text)]">Comms Compliance</p>
                 <p className="mt-1 text-[13px] text-[var(--text2)]">Automated masking for outbound email, SMS, and agent notifications.</p>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
