@@ -36,7 +36,7 @@ export default function Footer() {
               className="mb-4 flex items-center gap-2.5"
               aria-label="Megent home"
             >
-              <Image src="/ll.jpg" alt="Megent" width={40} height={40} className="rounded-full" />
+              <Image src="/logo.jpg" alt="Megent" width={40} height={40} className="rounded-[12px]" />
               <span className="text-[30px] font-medium leading-none tracking-[-0.02em] text-[var(--text)] [font-family:var(--font-serif)]">Megent</span>
             </Link>
             <p className="max-w-[280px] text-[15px] leading-[1.7] text-[var(--text2)]">

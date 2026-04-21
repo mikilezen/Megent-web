@@ -123,7 +123,7 @@ tools:
                     {"\n    "}
                     <span className="text-[#c586c0]">return</span> <span className="text-[#ce9178]">{"\"sent\""}</span>
                     {"\n\n"}
-                    <span className="text-[#dcdcaa]">send_email</span>(<span className="text-[#ce9178]">{"\"ops@example.com\""}</span>, <span className="text-[#ce9178]">{"\"Call me at +1 555 111 2222\""}</span>)
+                    <span className="text-[#dcdcaa]">send_email</span>(<span className="text-[#ce9178]">{"\"ops@example.com\""}</span>, <span className="text-[#ce9178]">{"\"+1 555 111 2222\""}</span>)
                   </>
                 ) : (
                   <>
@@ -132,17 +132,17 @@ tools:
                     <span className="text-[#9cdcfe]">passport</span>: <span className="text-[#c586c0]">M390nvnf90</span>
                     {"\n"}
                     <span className="text-[#9cdcfe]">pii_mask</span>:
-                    <span className="text-[#b5cea8]"> [email]</span>
-                    {"\n  "}
+                    <span className="text-[#b5cea8]"> [email, phone]</span>
+                    {/* {"\n  "} */}
                 
                     {"\n  "}
                     {"\n"}
                     <span className="text-[#9cdcfe]">tools</span>:<span></span>
-                    {"\n    "}
+                    {"\n  "}
                     <span className="text-[#dcdcaa]">send_email</span>:
-                    {"\n    "}
+                    {"\n     "}
                     <span className="text-[#9cdcfe]">allow</span>: <span className="text-[#569cd6]">true</span>
-                    {"\n    "}
+                    {"\n     "}
                     <span className="text-[#9cdcfe]">pii_mask</span>: [<span className="text-[#4ec9b0]">email</span>, <span className="text-[#4ec9b0]">phone</span>]
                   </>
                 )}

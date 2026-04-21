@@ -6,8 +6,8 @@ import Link from "next/link";
 
 const LINKS = [
   { label: "Features", href: "#features" },
-  { label: "Use cases", href: "#usecases" },
-  { label: "FAQ", href: "#faq" },
+  { label: "About", href: "#usecases" },
+  { label: "Pricing", href: "/price" },
   { label: "Enterprise", href: "/soon" },
 ];
 
@@ -96,7 +96,11 @@ export default function Nav() {
             className="flex items-center gap-2.5 group"
             aria-label="Megent home"
           >
-            <Image src="/ll.jpg" alt="Megent logo" width={28} height={28} priority className="rounded-full" />
+            <Image src="/logo.jpg" alt="Megent logo" width={35} height={35} priority className={`rounded-[9px] ${
+          scrolled
+            ? "shadow"
+            : ""
+        }`}/>
             <span className="text-[26px] leading-none font-medium tracking-[-0.02em] text-[var(--text)] group-hover:text-[var(--indigo)] transition-colors [font-family:var(--font-serif)]">
               Megent
             </span>
