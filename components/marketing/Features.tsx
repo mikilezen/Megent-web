@@ -2,40 +2,40 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
-
+import Image from "next/image"
 const FEATURES = [
   {
-    icon: "🔐",
+    icon: <Image src="https://img.icons8.com/?size=100&id=0R7F3PxtxHVm&format=png&color=000000" alt="Tool call interception" width={40} height={40} />,
     tag: "Core runtime",
     title: "Tool call interception",
     body: "Every tool call your agent makes is caught before it executes. Checked against policy. ALLOW, STOP_TOOL, or HUMAN_IN_THE_LOOP decisions return in under a millisecond.",
   },
   {
-    icon: "🪪",
+    icon: <Image src="https://img.icons8.com/?size=100&id=ZNosAtmXF3V2&format=png&color=000000" alt="Agent JWT passports" width={40} height={40} />,
     tag: "Identity layer",
     title: "Agent JWT passports",
     body: "Each agent carries a signed JWT passport with a trust level baked in. The runtime verifies it on every call. No valid identity means no tool access — no exceptions.",
   },
   {
-    icon: "🧠",
+    icon: <Image src="https://img.icons8.com/?size=100&id=tbj4NAsHPaQz&format=png&color=000000" alt="Sensitive-data detection and rectification" width={40} height={40} />,
     tag: "Awareness",
     title: "Sensitive-data detection and rectification",
     body: "When an agent calls data and then runs search, Megent detects sensitive fields, rectifies risky values first, and allows only policy-compliant search/query to continue.",
   },
   {
-    icon: "📦",
+    icon: <Image src="https://img.icons8.com/?size=100&id=107714&format=png&color=000000" alt="Third-party agent coverage" width={40} height={40} />,
     tag: "Supply chain",
     title: "Third-party agent coverage",
     body: "Wrap any agent you didn't write — vendor plugins, marketplace agents, open-source bots — and enforce your rules regardless of what's inside the black box.",
   },
   {
-    icon: "💸",
+    icon: <Image src="https://img.icons8.com/?size=100&id=7977&format=png&color=000000" alt="Budget limiting policy" width={40} height={40} />,
     tag: "Governance",
     title: "Budget limiting policy",
     body: "Set spend caps by agent, workflow, or day. When a limit is reached, Megent pauses non-critical tools and keeps your core flow under control.",
   },
   {
-    icon: "🛑",
+    icon: <Image src="https://img.icons8.com/?size=100&id=86637&format=png&color=000000" alt="Safety mode" width={40} height={40} />,
     tag: "Safety mode",
     title: "Stop tool, not whole agent",
     body: "When policy blocks an action, Megent can stop only that risky tool call instead of breaking the whole agent run, so your workflow degrades gracefully.",

@@ -1,5 +1,6 @@
 "use client";
 
+import Nav from "@/components/marketing/Nav";
 import { useState, type CSSProperties } from "react";
 
 type Policy = {
@@ -119,8 +120,9 @@ export default function RegistryPage() {
 
   return (
     <div style={styles.root} className="registry-root">
-      <style>{css}</style>
-      <div aria-hidden style={styles.backdropOrbA} />
+      <Nav/>
+      {/* <style>{css}</style> */}
+      {/* <div aria-hidden style={styles.backdropOrbA} />
       <div aria-hidden style={styles.backdropOrbB} />
       <div aria-hidden style={styles.noiseLayer} />
 
@@ -134,11 +136,14 @@ export default function RegistryPage() {
           <span style={styles.headerTag}>policy marketplace · {policies.length.toLocaleString()} policies</span>
         </div>
         <div style={styles.headerRight}>
-          <span style={styles.statPill}>↓ 52.8k installs/mo</span>
+          {/* <span style={styles.statPill}>↓ 52.8k installs/mo</span>
           <button style={styles.publishBtn}>Publish Policy ↗</button>
         </div>
-      </header>
-
+      </header> */}
+<br />
+<br />
+<br />
+<br />
       <div style={styles.terminalBar}>
         <span style={styles.termPrompt}>$</span>
         <span style={styles.termCmd}>megent policy install </span>
@@ -223,7 +228,7 @@ export default function RegistryPage() {
 
             <div style={styles.cardBottom}>
               <div style={styles.cardStats}>
-                <span style={styles.stat}>↓ {p.installs}</span>
+                {/* <span style={styles.stat}>↓ {p.installs}</span> */}
                 <span style={styles.statDivider}>·</span>
                 <span style={styles.statVer}>v{p.version}</span>
               </div>
@@ -237,7 +242,7 @@ export default function RegistryPage() {
                   ...(installed[p.id] ? styles.installBtnDone : {}),
                 }}
               >
-                {copiedId === p.id ? "✓ added" : installed[p.id] ? "installed" : "megent install"}
+                {copiedId === p.id ? "✓ added" : installed[p.id] ? "installed" : "install"}
               </button>
             </div>
           </div>

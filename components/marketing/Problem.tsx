@@ -6,21 +6,23 @@ import { useEffect, useRef } from "react";
 
 const PROBLEMS = [
   {
-    icon: "🔓",
+    icon: <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40" height="40" viewBox="0 0 72 72">
+<path d="M 49 10 C 41.28 10 35 16.28 35 24 L 35 28 L 18 28 C 13.582 28 10 31.582 10 36 L 10 52 C 10 56.418 13.582 60 18 60 L 40 60 C 44.418 60 48 56.418 48 52 L 48 36 C 48 32.643974 45.930202 29.775473 43 28.587891 L 43 24 C 43 20.691 45.691 18 49 18 C 52.309 18 55 20.691 55 24 L 55 32 C 55 34.209 56.791 36 59 36 C 61.209 36 63 34.209 63 32 L 63 24 C 63 16.28 56.72 10 49 10 z"></path>
+</svg>,
     title: "No visibility into what your agents actually do",
     body:
       "Your agent runs, returns an answer, and you ship it. But between the LLM call and the result, tool calls happened. Files were read. APIs were hit. Data moved. You have no record of any of it.",
     tag: "Observability gap",
   },
   {
-    icon: "📦",
+    icon: <Image src="https://img.icons8.com/?size=100&id=112470&format=png&color=000000" alt="Supply chain risk" width={100} height={100} />,
     title: "You installed a vendor agent you didn't write",
     body:
       "It works. You deployed it. But you have no idea what it does under the hood. When it starts making unexpected tool calls, you'll find out the hard way — after the incident, not before.",
     tag: "Supply chain risk",
   },
   {
-    icon: "🏥",
+    icon: <Image src="https://img.icons8.com/?size=100&id=QWVOzOyIffWI&format=png&color=000000" alt="Compliance" width={100} height={100} />,
     title: "One unmasked field ends your compliance story",
     body:
       "Fintech. Healthcare. Legal. Your agents process sensitive data. Your compliance framework says it can't appear in logs or agent context. Your agents don't know that. Megent does.",
@@ -134,7 +136,7 @@ export default function Problem() {
                 style={{ background: "radial-gradient(ellipse 300px 200px at 50% -30%, rgba(201,100,66,0.08), transparent)" }}
               />
               <div className="relative space-y-3">
-                <span className="text-3xl block">{problem.icon}</span>
+                <span className="text-3xl w-9 block">{problem.icon}</span>
                 <h3 className="text-[24px] font-medium tracking-[-0.01em] text-[var(--text)] [font-family:var(--font-serif)]">{problem.title}</h3>
                 <p className="text-[15px] text-[var(--text2)] leading-[1.7]">{problem.body}</p>
                 <span className="inline-flex px-3 py-1 text-[12px] font-mono text-[var(--text3)] border border-[var(--border)] rounded-full bg-[var(--bg1)]">
@@ -146,7 +148,7 @@ export default function Problem() {
         </div>
 
         <div className="reveal mt-14 bg-[var(--text)] rounded-2xl p-8 md:p-10 text-[#faf9f5] relative overflow-hidden">
-          <div
+          {/* <div
             className="absolute right-0 top-0 w-64 h-64 rounded-full opacity-10"
             style={{ background: "radial-gradient(circle, white, transparent)", transform: "translate(40%, -40%)" }}
           />
@@ -154,6 +156,7 @@ export default function Problem() {
             "The moment you deploy an agent that can take real actions, you need a runtime that enforces what it's allowed to do. Hoping for the best is not a security posture."
           </p>
           <p className="relative mt-4 text-[13px] text-[#b0aea5]">- The Megent team</p>
+          */}
         </div>
       </div>
     </section>
