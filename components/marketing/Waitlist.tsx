@@ -7,6 +7,7 @@ export default function Waitlist() {
   const pathname = usePathname();
   const [email, setEmail] = useState("");
   const [state, setState] = useState<"idle" | "done" | "error">("idle");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const ref = useRef<HTMLDivElement>(null);
@@ -60,6 +61,8 @@ export default function Waitlist() {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+
     if (!email || !emailRegex.test(email.trim())) {
       setState("error");
       setErrorMessage("Please enter a valid business email address.");
@@ -68,6 +71,7 @@ export default function Waitlist() {
 
     setErrorMessage("");
     setSuccessMessage("");
+    setIsSubmitting(true);
 
     try {
       const response = await fetch("/api/waitlist", {
@@ -93,6 +97,8 @@ export default function Waitlist() {
     } catch (error) {
       setState("error");
       setErrorMessage(error instanceof Error ? error.message : "An unexpected error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -134,18 +140,19 @@ export default function Waitlist() {
               />
               <button
                 type="submit"
-                className="px-6 py-3 font-medium text-[14px] bg-[var(--primary)] text-[#faf9f5] rounded-xl hover:brightness-95 transition-all shrink-0 shadow-[0_0_0_1px_var(--primary)]"
+                disabled={isSubmitting}
+                className="px-6 py-3 font-medium text-[14px] bg-[var(--primary)] text-[#faf9f5] rounded-xl hover:brightness-95 disabled:opacity-70 disabled:cursor-not-allowed transition-all shrink-0 shadow-[0_0_0_1px_var(--primary)]"
               >
-                Join Waitlist
+                {isSubmitting ? "Joining..." : "Join Waitlist"}
               </button>
             </form>
 
             {state === "error" && (
-              <p className="reveal text-sm text-[#f4b6a7] mb-5">{errorMessage || "Failed to join waitlist."}</p>
+              <p className="reveal visible text-sm text-[#f4b6a7] mb-5">{errorMessage || "Failed to join waitlist."}</p>
             )}
           </>
         ) : (
-          <div className="reveal py-5 px-6 bg-white/10 border border-white/20 rounded-xl max-w-md mx-auto mb-5">
+          <div className="reveal visible py-5 px-6 bg-white/10 border border-white/20 rounded-xl max-w-md mx-auto mb-5">
             <div className="flex items-center gap-3 justify-center">
               <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
                 <CheckIcon />

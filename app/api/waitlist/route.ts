@@ -11,7 +11,10 @@ const DATA_DIR = path.join(process.cwd(), "data");
 const WAITLIST_FILE = path.join(DATA_DIR, "waitlist.json");
 const WAITLIST_NOTIFY_EMAIL = process.env.WAITLIST_NOTIFY_EMAIL || "mikilezen@gmail.com";
 const RESEND_API_URL = "https://api.resend.com/emails";
+const RESEND_AUDIENCE_API_URL = "https://api.resend.com/audiences";
+const WAITLIST_RESEND_AUDIENCE_ID = process.env.WAITLIST_RESEND_AUDIENCE_ID?.trim();
 type WaitlistEmailStatus = "sent" | "not-configured" | "failed";
+type WaitlistAudienceStatus = "added" | "already-exists" | "not-configured" | "failed";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -95,6 +98,43 @@ async function sendWaitlistNotification(subscriberEmail: string): Promise<Waitli
   }
 }
 
+async function addWaitlistContactToResend(email: string): Promise<WaitlistAudienceStatus> {
+  const resendApiKey = process.env.RESEND_API_KEY?.trim();
+
+  if (!resendApiKey || !WAITLIST_RESEND_AUDIENCE_ID) {
+    return "not-configured";
+  }
+
+  try {
+    const response = await fetch(`${RESEND_AUDIENCE_API_URL}/${WAITLIST_RESEND_AUDIENCE_ID}/contacts`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        unsubscribed: false,
+      }),
+    });
+
+    if (response.ok) {
+      return "added";
+    }
+
+    const rawError = await response.text().catch(() => "");
+    const normalized = rawError.toLowerCase();
+    if (response.status === 409 || normalized.includes("already") || normalized.includes("exists")) {
+      return "already-exists";
+    }
+
+    throw new Error(rawError || "Failed to create Resend contact.");
+  } catch (contactError) {
+    console.error("Resend audience contact create failed:", contactError);
+    return "failed";
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const body = (await request.json().catch(() => ({}))) as { email?: string };
@@ -116,6 +156,8 @@ export async function POST(request: Request) {
       createdAt: new Date().toISOString(),
     });
 
+    const audienceStatus = await addWaitlistContactToResend(normalizedEmail);
+
     let persisted = true;
     try {
       await writeWaitlist(entries);
@@ -126,13 +168,38 @@ export async function POST(request: Request) {
 
     const emailStatus = await sendWaitlistNotification(normalizedEmail);
 
-    if (!persisted && emailStatus !== "sent") {
+    if (audienceStatus === "failed" && !persisted && emailStatus !== "sent") {
       return NextResponse.json(
         {
           message: "Waitlist is temporarily unavailable. Please try again in a few minutes.",
           emailStatus,
+          audienceStatus,
         },
         { status: 503 }
+      );
+    }
+
+    if (!persisted) {
+      if (emailStatus === "sent") {
+        return NextResponse.json(
+          {
+            message:
+              "Your waitlist registration has been received successfully. A confirmation email has been sent.",
+            emailStatus,
+            audienceStatus,
+          },
+          { status: 201 }
+        );
+      }
+
+      return NextResponse.json(
+        {
+          message:
+            "Your request was received. If you do not get a confirmation message, please try again later.",
+          emailStatus,
+          audienceStatus,
+        },
+        { status: 202 }
       );
     }
 
@@ -145,6 +212,7 @@ export async function POST(request: Request) {
       {
         message,
         emailStatus,
+        audienceStatus,
       },
       { status: 201 }
     );
