@@ -34,7 +34,11 @@ async function writeWaitlist(entries: WaitlistEntry[]) {
   await fs.writeFile(WAITLIST_FILE, JSON.stringify(entries, null, 2), "utf-8");
 }
 
-async function sendWaitlistNotification(subscriberEmail: string): Promise<WaitlistEmailStatus> {
+async function sendWaitlistNotification(
+  subscriberEmail: string,
+  options: { notifyAdmin?: boolean } = {}
+): Promise<WaitlistEmailStatus> {
+  const { notifyAdmin = true } = options;
   const resendApiKey = process.env.RESEND_API_KEY?.trim();
   const fromEmail = process.env.WAITLIST_FROM_EMAIL || "onboarding@resend.dev";
 
@@ -64,16 +68,18 @@ async function sendWaitlistNotification(subscriberEmail: string): Promise<Waitli
   };
 
   try {
-    await sendEmail({
-      to: WAITLIST_NOTIFY_EMAIL,
-      subject: "New Waitlist Registration",
-      text: [
-        "A new user has joined the waitlist.",
-        "",
-        `Email: ${subscriberEmail}`,
-        `Registered at: ${new Date().toISOString()}`,
-      ].join("\n"),
-    });
+    if (notifyAdmin) {
+      await sendEmail({
+        to: WAITLIST_NOTIFY_EMAIL,
+        subject: "New Waitlist Registration",
+        text: [
+          "A new user has joined the waitlist.",
+          "",
+          `Email: ${subscriberEmail}`,
+          `Registered at: ${new Date().toISOString()}`,
+        ].join("\n"),
+      });
+    }
 
     await sendEmail({
       to: subscriberEmail,
@@ -148,7 +154,39 @@ export async function POST(request: Request) {
     const alreadyExists = entries.some((entry) => entry.email.toLowerCase() === normalizedEmail);
 
     if (alreadyExists) {
-      return NextResponse.json({ message: "Your email is already registered on the waitlist." }, { status: 200 });
+      const emailStatus = await sendWaitlistNotification(normalizedEmail, { notifyAdmin: false });
+
+      if (emailStatus === "sent") {
+        return NextResponse.json(
+          {
+            message: "Your email is already registered on the waitlist. A confirmation email has been re-sent.",
+            emailStatus,
+            audienceStatus: "already-exists",
+          },
+          { status: 200 }
+        );
+      }
+
+      if (emailStatus === "failed") {
+        return NextResponse.json(
+          {
+            message:
+              "Your email is already registered, but we could not send a confirmation right now. Please try again shortly.",
+            emailStatus,
+            audienceStatus: "already-exists",
+          },
+          { status: 503 }
+        );
+      }
+
+      return NextResponse.json(
+        {
+          message: "Your email is already registered on the waitlist.",
+          emailStatus,
+          audienceStatus: "already-exists",
+        },
+        { status: 200 }
+      );
     }
 
     entries.push({
