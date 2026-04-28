@@ -14,7 +14,7 @@ const FEATURES = [
     icon: <Image src="https://img.icons8.com/?size=100&id=ZNosAtmXF3V2&format=png&color=000000" alt="Agent JWT passports" width={40} height={40} />,
     tag: "Identity layer",
     title: "Agent JWT passports",
-    body: "Each agent carries a signed JWT passport with a trust level baked in. The runtime verifies it on every call. No valid identity means no tool access — no exceptions.",
+    body: "Each agent carries a signed JWT passport with a trust level baked in. The runtime verifies it on every call. No valid identity means no tool access - no exceptions.",
   },
   {
     icon: <Image src="https://img.icons8.com/?size=100&id=tbj4NAsHPaQz&format=png&color=000000" alt="Sensitive-data detection and rectification" width={40} height={40} />,
@@ -26,7 +26,7 @@ const FEATURES = [
     icon: <Image src="https://img.icons8.com/?size=100&id=107714&format=png&color=000000" alt="Third-party agent coverage" width={40} height={40} />,
     tag: "Supply chain",
     title: "Third-party agent coverage",
-    body: "Wrap any agent you didn't write — vendor plugins, marketplace agents, open-source bots — and enforce your rules regardless of what's inside the black box.",
+    body: "Wrap any agent you didn't write - vendor plugins, marketplace agents, open-source bots - and enforce your rules regardless of what's inside the black box.",
   },
   {
     icon: <Image src="https://img.icons8.com/?size=100&id=7977&format=png&color=000000" alt="Budget limiting policy" width={40} height={40} />,

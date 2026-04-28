@@ -18,7 +18,7 @@ const PROBLEMS = [
     icon: <Image src="https://img.icons8.com/?size=100&id=112470&format=png&color=000000" alt="Supply chain risk" width={100} height={100} />,
     title: "You installed a vendor agent you didn't write",
     body:
-      "It works. You deployed it. But you have no idea what it does under the hood. When it starts making unexpected tool calls, you'll find out the hard way — after the incident, not before.",
+      "It works. You deployed it. But you have no idea what it does under the hood. When it starts making unexpected tool calls, you'll find out the hard way - after the incident, not before.",
     tag: "Supply chain risk",
   },
   {
@@ -96,7 +96,7 @@ export default function Problem() {
             <span className="text-[var(--text3)]">Do you know what they're doing?</span>
           </h2>
           <p className="reveal reveal-d2 text-[17px] text-[var(--text2)] leading-[1.75] max-w-xl">
-            Most teams don't. That's fine — until a hallucination triggers a fund transfer,
+            Most teams don't. That's fine - until a hallucination triggers a fund transfer,
             a vendor agent accesses a database it shouldn't, or a customer's SSN lands in a log file.
           </p>
         </div>
