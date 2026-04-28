@@ -17,9 +17,9 @@ import { FAQS } from "@/data/faq";
 
 const siteUrl = "https://megent.dev";
 const ogImage = "/freepik__adjust__68767.png";
-const pageTitle = "AI Agent Governance Platform | Megent";
+const pageTitle = "Firewall for AI agents.";
 const pageDescription =
-  "Operations, routing, and governance for AI agents in production. Enforce runtime policies, monitor tool calls, and protect sensitive data.";
+  "Control every agent tool call from one policy layer.";
 const pageUrl = `${siteUrl}/`;
 
 export const metadata: Metadata = {
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     title: pageTitle,
     description: pageDescription,
     images: [ogImage],
-    creator: "@megentdev",
+    creator: "@megents",
   },
 };
 

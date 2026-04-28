@@ -138,8 +138,8 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/Group.ico",
-    shortcut: "/Group.ico",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
     apple: "/icon-224x224.png",
   },
 };
