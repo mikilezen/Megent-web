@@ -6,14 +6,14 @@ const USE_CASES = [
   {
     title: "Fintech",
     body: "Mask card data and block risky transfers by default.",
-    label: "Payments",
+    label: "",
     gradient:
       "linear-gradient(135deg, #0f172a 0%, #1d4ed8 45%, #22d3ee 100%)",
   },
   {
     title: "Healthcare",
     body: "Hide PHI and enforce role checks before external calls.",
-    label: "HIPAA",
+    label: "",
     gradient:
       "linear-gradient(140deg, #14532d 0%, #10b981 45%, #ecfeff 100%)",
   },
@@ -26,28 +26,28 @@ const USE_CASES = [
   {
     title: "Legal",
     body: "privilege, confidentiality, and billable-hour audit trails. Every AmLaw firm is blocked on agent deployment for exactly the reasons Megent solves. Huge budget, desperate buyers.",
-    label: "Customer ops",
+    label: "",
     gradient:
       "linear-gradient(145deg, #2d1b69 0%, #6d28d9 42%, #f59e0b 100%)",
   },
   {
     title: "Insurance",
     body: "adjacent to fintech but distinct: underwriting decisions, claims automation, state-by-state regulatory variance (NAIC model laws). Policy-as-code maps 1:1 to their mental model.",
-    label: "Customer ops",
+    label: "",
     gradient:
       "linear-gradient(130deg, #0c4a6e 0%, #0284c7 50%, #fde68a 100%)",
   },
   {
     title: "Government",
     body: "FedRAMP, FISMA, CJIS. Self-hosted + zero telemetry is your killer feature here. Even 'SLED' (state/local/education) is a real wedge.",
-    label: "Customer ops",
+    label: "",
     gradient:
       "linear-gradient(150deg, #1f2937 0%, #334155 48%, #93c5fd 100%)",
   },
   {
     title: "Enterprise IT/ Internal Platforms",
     body: "the horizontal play. Any Fortune 500 deploying Copilot/Cursor/internal agents needs this. Less regulated but highest volume.",
-    label: "Customer ops",
+    label: "",
     gradient:
       "linear-gradient(135deg, #1f2937 0%, #0f766e 46%, #6ee7b7 100%)",
   },
@@ -58,7 +58,7 @@ export default function UseCases() {
   const activeCase = USE_CASES[activeIndex];
 
   return (
-    <section id="usecases" className="py-24 sm:py-24 bg-[var(--background)]">
+    <section id="usecases" className="py-4 sm:py-2 bg-[var(--background)]">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="max-w-2xl mb-8 sm:mb-10">
           <span className="inline-block text-[11px] uppercase tracking-[0.12em] text-[var(--text3)] mb-3">Use cases</span>

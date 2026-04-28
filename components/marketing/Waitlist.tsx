@@ -115,16 +115,18 @@ export default function Waitlist() {
 
       <div className="relative z-10 max-w-3xl mx-auto px-5 sm:px-8 text-center">
         <span className="reveal inline-block text-[11px] uppercase tracking-[0.14em] text-[#b0aea5] mb-4">
-          Early access
+          {/* Early access */}
         </span>
         <h2 className="reveal reveal-d1 text-[clamp(32px,5vw,58px)] font-medium tracking-[-0.02em] leading-[1.05] text-[#faf9f5] mb-5 [font-family:var(--font-serif)]">
-          Stay informed
+          Waitlist 
+          for 
           <br />
-          as we launch.
+          international payment support
         </h2>
         <p className="reveal reveal-d2 text-[17px] text-[#b0aea5] leading-[1.75] max-w-lg mx-auto mb-10">
-          We are currently onboarding early teams, with priority for fintech and healthcare.
-          Please share your email address, and our team will contact you directly.
+          We’re building international payment support for Megent.
+Join the waitlist to get early access when it launches.
+{/* Please share your email address, and our team will contact you directly. */}
         </p>
 
         {state !== "done" ? (

@@ -1,8 +1,13 @@
+"use client"
 import React from "react";
-
+import { useRouter } from "next/navigation";
 export default function Policy() {
+  const router = useRouter();
+  function go() {
+    router.push("/registry")
+  }
   return (
-    <section id="policy" className="py-24 bg-[var(--background)] border-t border-[var(--border)]">
+    <section id="policy" className="py-4 bg-[var(--background)] border-t border-[var(--border)]">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="mb-0">
           <span className="inline-block text-[11px] uppercase tracking-[0.12em] text-[var(--text3)] mb-4">
@@ -14,7 +19,7 @@ export default function Policy() {
           <p className="text-[15px] text-[var(--text2)] leading-[1.8] max-w-2xl">
             Discover predefined and community-authored policy packs, all versioned and ready for production workflows.
           </p>
-          <button className=" mt-4 items-center gap-2 text-sm font-medium text-[var(--background)] bg-[var(--primary)]  rounded-full px-4 py-2 hover:bg-[var(--primary)] hover:text-white transition inline-flex items-center gap-2 rounded-xl bg-[var(--primary)] px-5 py-3 text-[15px] font-medium text-[var(--primary-foreground)] shadow-[0_0_0_1px_var(--primary)] transition hover:brightness-95">
+          <button className=" mt-4 items-center gap-2 text-sm font-medium text-[var(--background)] bg-[var(--primary)]  rounded-full px-4 py-2 hover:bg-[var(--primary)] hover:text-white transition inline-flex items-center gap-2 rounded-xl bg-[var(--primary)] px-5 py-3 text-[15px] font-medium text-[var(--primary-foreground)] shadow-[0_0_0_1px_var(--primary)] transition hover:brightness-95" onClick={() => go()}>
             Explore
           </button>
         </div>
