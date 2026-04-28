@@ -5,10 +5,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 const LINKS = [
+  { label: "Home", href: "/" },
   { label: "Features", href: "#features" },
-  { label: "Registry", href: "/registry" },
+  { label: "Policies", href: "/registry" },
   { label: "Pricing", href: "/price" },
-  { label: "Enterprise", href: "/soon" },
 ];
 
 const DROPDOWN_ITEMS = [
@@ -197,12 +197,12 @@ export default function Nav() {
               <GithubIcon />
               GitHub
             </a>
-            <Link
+            {/* <Link
               href="/login"
               className="px-4 py-2.5 text-[14px] font-medium text-[#faf9f5] bg-[var(--indigo)] rounded-xl hover:brightness-95 transition-all flex items-center gap-2 shadow-[0_0_0_1px_var(--indigo),0_18px_32px_-26px_rgba(20,20,19,0.55)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]/50"
             >
               Login
-            </Link>
+            </Link> */}
           </div>
 
           <button

@@ -73,8 +73,8 @@ export const metadata: Metadata = {
   creator: "Megent",
   publisher: "Megent",
   keywords: [
-    "AI agent governance",
-    "AI operations",
+    "Firewall",
+    "Firewall for AI agents.",
     "agent security",
     "agent policy",
     "LLM guardrails",
