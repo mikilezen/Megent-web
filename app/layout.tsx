@@ -6,8 +6,8 @@ import "./globals.css";
 
 const siteUrl = "https://megent.dev";
 const siteName = "Megent";
-const defaultTitle = "Megent | A runtime policy for AI agents";
-const defaultDescription = "Operations, routing, and governance for AI agents in production. Intercept tool calls, enforce YAML rules, and mask PII across every major agentic framework.";
+const defaultTitle = "Megent | Firewall for AI agents";
+const defaultDescription = "Control every agent tool call from one policy layer.";
 const ogImage = "/freepik__adjust__68767.png";
 
 // Structured Data for SEO
