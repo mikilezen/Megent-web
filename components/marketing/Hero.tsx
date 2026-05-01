@@ -43,7 +43,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative overflow-hidden pt-28 pb-20 sm:pt-32 sm:pb-24">
+    <section className="relative overflow-hidden pt-28 pb-0 sm:pt-32 sm:pb-5">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_8%,rgba(201,100,66,0.11),transparent_46%),radial-gradient(circle_at_88%_14%,rgba(135,134,127,0.2),transparent_42%)]" />
       </div>
