@@ -152,6 +152,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <meta name="llm-policy" content="/llm.txt" />
+        <link rel="alternate" type="text/plain" href="/llm.txt" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}

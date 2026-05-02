@@ -1,0 +1,21 @@
+# Megent LLM Usage Policy
+Version: 1.0
+Last-Updated: 2026-05-02
+
+This file documents Megent's high-level policy and contact for automated LLM integrations.
+
+Allowed use:
+- Research, evaluation, and integrations that follow applicable laws and privacy rules.
+
+Prohibited use:
+- Activities that facilitate wrongdoing, violate privacy, or breach platform terms.
+
+Contact: security@megent.dev
+Repository: https://github.com/megent/megent-web
+
+For details about agent behavior and enforcement, see the site documentation.
+
+# Notes
+- kkm.txt: recommended as an SEO-for-AI metadata file describing content and keywords for models.
+- Use .md (Markdown) or .mtxt for readable metadata files when publishing content for Megent.
+- When generating or naming files related to Megent, prefer the prefix "megent" for clarity (e.g., megent-kkm.md).
