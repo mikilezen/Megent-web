@@ -9,7 +9,7 @@ export default function page() {
 
       <section className='max-w-6xl mx-auto px-6 py-20'>
         <h1 className='font-serif text-4xl md:text-5xl text-[#141413] text-center leading-tight'>Pricing</h1>
-        <p className='mt-3 text-center text-lg text-[#5e5d59] max-w-2xl mx-auto'>Thoughtfully priced plans — warm, simple, and built for real teams.</p>
+        <p className='mt-3 text-center text-lg text-[#5e5d59] max-w-2xl mx-auto'>Thoughtfully priced plans - warm, simple, and built for real teams.</p>
 
         <div className='mt-12 grid gap-8 grid-cols-1 md:grid-cols-2'>
           {/* Megent Cloud - $9 */}
@@ -17,7 +17,7 @@ export default function page() {
             <div className='flex items-start justify-between'>
               <div>
                 <h2 className='font-serif text-2xl text-[#141413]'>Megent Cloud</h2>
-                <p className='text-sm mt-1 text-[#5e5d59]'>Starter — hosted</p>
+                <p className='text-sm mt-1 text-[#5e5d59]'>Starter - hosted</p>
               </div>
 
               <div className='text-right'>
@@ -31,7 +31,7 @@ export default function page() {
               <li>• Anomaly detection & agent actions</li>
             </ul>
 
-            <div className='mt-4 text-sm text-[#b53333]'>Global payment not supported — local transfer allowed.</div>
+            <div className='mt-4 text-sm text-[#b53333]'>Global payment not supported - local transfer allowed.</div>
 
             <div className='mt-6 flex items-center gap-3'>
               <Link href={'/price/manual-transfer'} className='inline-flex items-center justify-center bg-[#c96442] text-[#faf9f5] px-5 py-2 rounded-lg shadow-sm ring-1 ring-[#d1cfc5] hover:brightness-95'>
@@ -66,7 +66,7 @@ export default function page() {
           </div>
         </div>
 
-        <p className='text-center text-sm text-[#5e5d59] mt-8'>Need help? Local transfers are supported today — global payment gateways coming soon.</p>
+        <p className='text-center text-sm text-[#5e5d59] mt-8'>Need help? Local transfers are supported today - global payment gateways coming soon.</p>
       </section>
     </main>
   )

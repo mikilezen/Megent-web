@@ -5,10 +5,10 @@ import { useEffect, useRef } from "react";
 
 const FILES = [
   { icon: "📁", name: "megent/", desc: "core runtime", bold: true },
-  { icon: "🐍", name: "megent/guard.py", desc: "4.2 kb — interception engine" },
-  { icon: "🐍", name: "megent/policy.py", desc: "3.8 kb — policy evaluation" },
-  { icon: "🐍", name: "megent/pii.py", desc: "2.1 kb — PII masking" },
-  { icon: "🐍", name: "megent/identity.py", desc: "1.9 kb — JWT agent passports" },
+  { icon: "🐍", name: "megent/guard.py", desc: "4.2 kb - interception engine" },
+  { icon: "🐍", name: "megent/policy.py", desc: "3.8 kb - policy evaluation" },
+  { icon: "🐍", name: "megent/pii.py", desc: "2.1 kb - PII masking" },
+  { icon: "🐍", name: "megent/identity.py", desc: "1.9 kb - JWT agent passports" },
   { icon: "📁", name: "examples/", desc: "langchain, crewai, openai sdk" },
   { icon: "📄", name: "pyproject.toml", desc: "pip installable, MIT licensed" },
 ];
@@ -77,7 +77,7 @@ export default function OpenSource() {
               Free forever.
             </h2>
             <p className="reveal reveal-d2 text-[16px] text-[var(--text2)] leading-[1.75] mb-8">
-              The core runtime — interception, policy evaluation, PII masking, audit logging — is MIT licensed and will stay that way.
+              The core runtime - interception, policy evaluation, PII masking, audit logging - is MIT licensed and will stay that way.
               We're building trust with developers first. Enterprise features (SSO, centralized dashboards, managed rulesets) come later, optionally.
             </p>
 

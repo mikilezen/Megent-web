@@ -9,7 +9,7 @@ export const FAQS = [
   },
   {
     q: "Is the core runtime really free? What's the business model?",
-    a: "The core - interception, policy evaluation, PII masking, audit logging - is MIT licensed and free forever. Enterprise features like a centralized dashboard, SSO, managed rulesets, and SLA-backed support will eventually be commercial. We'll be honest about what's changing and when. The core stays free.",
+    a: "The core - interception, policy evaluation, PII masking, audit logging - is apache 2.0 licensed and free forever. Enterprise features like a centralized dashboard, SSO, managed rulesets, and SLA-backed support will eventually be commercial. We'll be honest about what's changing and when. The core stays free.",
   },
   {
     q: "Does Megent send any data to your servers?",

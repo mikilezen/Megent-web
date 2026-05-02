@@ -44,7 +44,7 @@ export default function Footer() {
             </p>
             <div className="mt-5 flex items-center gap-3">
               <a
-                href="https://github.com/getmegent"
+                href="https://github.com/megents"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[12px] font-medium text-[var(--text2)] transition-all hover:border-[var(--border2)] hover:text-[var(--text)]"
@@ -53,7 +53,7 @@ export default function Footer() {
                 GitHub
               </a>
               <a
-                href="https://twitter.com/magenzs"
+                href="https://twitter.com/magents_"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 rounded-lg border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[12px] font-medium text-[var(--text2)] transition-all hover:border-[var(--border2)] hover:text-[var(--text)]"

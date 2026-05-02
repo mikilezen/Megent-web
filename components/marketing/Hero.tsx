@@ -75,7 +75,7 @@ Block what they cannot. Enforced at every tool call, before it executes.
             <button
               type="button"
               onClick={handleCopy}
-              className="inline-flex items-center gap-2 rounded-xl border border-[var(--border2)] bg-[var(--card)] px-4 py-3 text-[14px] font-medium text-[var(--text2)] shadow-[0_0_0_1px_var(--border)] transition hover:border-[var(--border2)] hover:text-[var(--text)]"
+              className="inline-flex items-center gap-2 rounded-xl border border-[var(--border2)] b-[var(--card)] px-4 py-3 text-[14px] font-medium text-[var(--text2)] shadow-[0_0_0_1px_var(--border)] transition hover:border-[var(--border2)] hover:text-[var(--text)]"
             >
               <CodeIcon />
               <span className="[font-family:var(--font-mono-ui)]">{copied ? "Copied" : "pip install megent"}</span>

@@ -27,7 +27,7 @@ const policies: Policy[] = [
     installs: "18.4k",
     version: "0.1",
     badge: "MEGENT",
-    badgeColor: "#00ffa3",
+    badgeColor: "#000",
   },
   {
     id: "fin-exfil-guard",
@@ -38,8 +38,8 @@ const policies: Policy[] = [
     tags: ["fintech", "exfiltration", "pci-dss"],
     installs: "9.2k",
     version: "0.1",
-    badge: "PARTNER",
-    badgeColor: "#635bff",
+    badge: "MEGENT",
+    badgeColor: "#000",
   },
   {
     id: "rate-limit-adaptive",
@@ -50,8 +50,8 @@ const policies: Policy[] = [
     tags: ["rate-limit", "ddos", "tokens"],
     installs: "14.1k",
     version: "0.1",
-    badge: "OFFICIAL",
-    badgeColor: "#00ffa3",
+    badge: "MEGENT",
+    badgeColor: "#000",
   },
   {
     id: "hipaa-audit-trail",
@@ -555,9 +555,9 @@ const styles: Record<string, CSSProperties> = {
     transition: "all 0.2s",
   },
   tagBtnActive: {
-    border: "1px solid #c96442",
+    border: "1px solid #999",
     color: "#faf9f5",
-    background: "#c96442",
+    background: "#000",
   },
   grid: {
     display: "grid",

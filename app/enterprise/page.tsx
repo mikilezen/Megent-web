@@ -25,7 +25,7 @@ export default function EnterprisePage() {
 
           {submitted ? (
             <div className='mt-6 rounded-lg p-4 bg-[#e8e6dc] text-[#3d3d3a]'>
-              Thanks — we received your request and will contact you shortly.
+              Thanks - we received your request and will contact you shortly.
               <div className='mt-3'>
                 <Link href='/' className='text-sm text-[#30302e] underline'>Back to home</Link>
               </div>
