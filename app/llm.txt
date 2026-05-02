@@ -1,0 +1,71 @@
+# llms.txt — Generative Engine Optimization (GEO) index for Megent
+Version: 1.0
+Last-Updated: 2026-05-02
+
+## Title
+Megent — Firewall for AI agents
+
+## Summary
+`llms.txt` is a proposed standard for a plain text, Markdown-formatted file placed at the root of a website (e.g., yoursite.com/llms.txt) designed to make website content easier for Large Language Models (LLMs) and AI agents to understand, parse, and cite. Think of it as a "robots.txt for AI," but instead of telling bots what to avoid, it guides AI toward your most important, up-to-date content.
+
+## Key Features and Purpose
+- AI Optimization (GEO): Supports Generative Engine Optimization by delivering a concise, structured summary of a site's best content.
+- Reduced Clutter: Provides a direct path to information, avoiding token-heavy HTML/JS parsing.
+- Contextual Guidance: Declares canonical pages and high-value resources to reduce outdated citations.
+- Adoption: Gaining traction in documentation sites and tooling (e.g., Mintlify).
+
+## Typical Structure
+The file is Markdown and usually contains:
+- H1 Title: The title of the website.
+- Summary: A short description of the site.
+- Links: Structured lists of key pages (guides, docs, APIs).
+- Optional Section: Lower-priority resources.
+
+## Canonical Pages (Canonical and high-priority)
+- / — Homepage (overview)
+- /dashboard — Dashboard and management console
+- /docs — Documentation index (developer guides and API)
+- /price — Pricing and plans
+- /enterprise — Enterprise contact and offerings
+- /login — User sign-in
+- /registry — Registry and integrations
+- /op — Operations and examples
+
+## Guides (high priority)
+- /docs/getting-started — Quickstart and installation
+- /docs/guides/guardrails — Guardrail and policy examples
+- /docs/api — API reference and endpoints
+
+## Optional / Lower-priority resources
+- /blog — Blog and updates
+- /changelog — Release notes
+- /contact — General contact and support
+
+## LLM Usage Policy
+Version: 1.0
+Last-Updated: 2026-05-02
+
+Megent's high-level policy for automated LLM integrations and agent access.
+
+Allowed use:
+- Research, evaluation, and integrations that follow applicable laws and privacy rules.
+
+Prohibited use:
+- Activities that facilitate wrongdoing, violate privacy, or breach platform terms.
+
+Contact: security@megent.dev
+Repository: https://github.com/megent/megent-web
+
+Notes:
+- `kkm.txt`: recommended as an SEO-for-AI metadata file describing content and keywords for models.
+- Use Markdown or `.mtxt` for readable metadata files when publishing content for Megent.
+
+## Related Standards
+- `llms-full.txt` — a full-site dump for machine consumption (optional).
+- https://llmstxt.org — proposed specification and examples.
+
+## Video / Further Reading
+- "llms.txt explained (SEO Hack for the AI Era)" — Artur Chmaro, YouTube (Oct 1, 2025).
+
+---
+This file is intended to be machine-friendly, concise, and kept up-to-date to help LLMs and AI agents find canonical information quickly.
