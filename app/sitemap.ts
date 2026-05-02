@@ -25,10 +25,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
-      url: `${siteUrl}/llm.txt`,
+      url: `${siteUrl}/price`,
       lastModified,
-      changeFrequency: "monthly",
-      priority: 0.1,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${siteUrl}/enterprise`,
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/login`,
+      lastModified,
+      changeFrequency: "daily",
+      priority: 0.5,
     },
   ];
 }
