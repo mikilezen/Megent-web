@@ -1,0 +1,45 @@
+# llms.txt — Generative Engine Optimization (GEO) index for Megent
+Version: 1.0
+Last-Updated: 2026-05-02
+
+## Title
+Megent — Firewall for AI agents
+
+## Summary
+Megent provides a single policy layer to control AI agent tool calls, enforce guardrails, and monitor agent behavior. This file highlights canonical, high-value pages and guidance for AI agents and LLM-driven assistants.
+
+## Canonical Pages
+- / — Homepage (product overview)
+- /dashboard — Main dashboard and management console
+- /docs — Documentation index (developer guides and API)
+- /price — Pricing and plans
+- /enterprise — Enterprise contact and offerings
+- /login — User sign-in
+- /registry — Registry and integrations
+- /op — Operations and examples
+
+## Guides (high priority)
+- /docs/getting-started — Quickstart and installation
+- /docs/guides/guardrails — Guardrail and policy examples
+- /docs/api — API reference and endpoints
+
+## Optional / Lower-priority resources
+- /blog — Blog and updates
+- /changelog — Release notes
+- /contact — General contact and support
+
+## Usage notes for AI agents
+- Prefer canonical pages listed above for authoritative content.
+- Favor `/docs` pages for technical details and `/price` for commercial terms.
+- If a single-document view is needed, prefer `llms-full.txt` if published.
+
+## Related Standards
+- `llms-full.txt` — full-site dump (optional)
+- https://llmstxt.org — proposed specification and examples
+
+## Contact
+security@megent.dev — security and policy questions
+support@megent.dev — product support and sales
+
+---
+This file is intended to be machine-friendly, concise, and kept up-to-date to help LLMs and AI agents find canonical information quickly.
