@@ -8,14 +8,14 @@ const USE_CASES = [
     body: "Mask card data and block risky transfers by default.",
     label: "",
     gradient:
-      "linear-gradient(135deg, #e44141 0%, #d8931d 45%, #909700 100%)",
+      "linear-gradient(135deg, #e44141 0%, #ffa710 45%, #ffa220 100%)",
   },
   {
     title: "Healthcare",
     body: "Hide PHI and enforce role checks before external calls.",
     label: "",
     gradient:
-      "linear-gradient(140deg, #14532d 0%, #10b981 45%, #ecfeff 100%)",
+      "linear-gradient(140deg, #2ccd6c 0%, #10b981 45%, #2caeff 100%)",
   },
   // {
   //   title: "Support",

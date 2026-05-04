@@ -65,10 +65,10 @@ Block what they cannot. Enforced at every tool call, before it executes.
 
           <div className="mt-10 flex flex-wrap items-center gap-3">
             <a
-              href="#waitlist"
+              href="/price"
               className="inline-flex items-center gap-2 rounded-xl bg-[var(--primary)] px-5 py-3 text-[15px] font-medium text-[var(--primary-foreground)] shadow-[0_0_0_1px_var(--primary)] transition hover:brightness-95"
             >
-              Request Early Access
+              Get Started
               <ArrowRight />
             </a>
 
