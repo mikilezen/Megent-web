@@ -1,7 +1,7 @@
 ---
 name: next-shadcn-dashboard
 shortName: "Next + shadcn dashboard"
-description: "Use when: building or updating a Next.js App Router + shadcn dashboard with sidebar tabs (Dashboard/Agents/Guardrail/Logs/Reports), tables, light theme, and interactive button handlers."
+description: "Use when: building or updating a Next.js App Router + shadcn dashboard with sidebar tabs (Dashboard/Agents/Guardrail/Logs/Reports), tables, light theme, and interactive
 ---
 
 ## When to use
