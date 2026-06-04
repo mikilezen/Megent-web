@@ -257,7 +257,6 @@ export default function Nav() {
                 href="/price"
                 className="btn-primary px-5 py-2 text-sm flex items-center gap-2"
               >
-                <Sparkles className="w-4 h-4" />
                 Get Started
               </Link>
             </div>
