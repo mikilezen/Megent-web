@@ -2,11 +2,23 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import {
+  Terminal,
+  Copy,
+  Check,
+  Sparkles,
+  Shield,
+  Zap,
+  LockKeyhole,
+} from "lucide-react";
 
 const LINES = [
   { type: "cmd", text: "megent run --policy ./policy.yaml" },
-  { type: "info", text: "rules: allow | stop_tool | hitl | awareness | budget" },
-  { type: "ok", text: "ALLOW send_email(to=\"***@***.com\")" },
+  {
+    type: "info",
+    text: "rules: allow | stop_tool | hitl | awareness | budget",
+  },
+  { type: "ok", text: 'ALLOW send_email(to="***@***.com")' },
   { type: "warn", text: "HITL search_customer_history(...)" },
   { type: "info", text: "RECTIFY sensitive fields -> continue" },
   { type: "block", text: "STOP_TOOL transfer_funds(amount=14200)" },
@@ -28,7 +40,10 @@ export default function Hero() {
 
   useEffect(() => {
     if (shownLines >= LINES.length) return;
-    const t = setTimeout(() => setShownLines((n) => n + 1), shownLines === 0 ? 180 : 260);
+    const t = setTimeout(
+      () => setShownLines((n) => n + 1),
+      shownLines === 0 ? 180 : 260,
+    );
     return () => clearTimeout(t);
   }, [shownLines]);
 
@@ -43,96 +58,226 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative overflow-hidden pt-28 pb-0 sm:pt-32 sm:pb-5">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[linear-gradient(180deg,#fff7ef_0%,#fffaf6_42%,#0a0a0f_100%)] text-[#15110f]">
+      {/* Light-screen background with animated warm glows */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_8%,rgba(201,100,66,0.11),transparent_46%),radial-gradient(circle_at_88%_14%,rgba(135,134,127,0.2),transparent_42%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.98),transparent_28%),radial-gradient(circle_at_82%_22%,rgba(255,178,122,0.42),transparent_34%),radial-gradient(circle_at_50%_72%,rgba(201,100,66,0.22),transparent_42%)]" />
+        <div className="absolute left-1/2 top-24 h-72 w-72 -translate-x-1/2 rounded-full bg-white/70 blur-3xl animate-pulse" />
+        <div className="absolute -left-20 top-1/3 h-96 w-96 rounded-full bg-primary/20 blur-3xl animate-pulse" />
+        <div className="absolute -right-24 bottom-24 h-96 w-96 rounded-full bg-[#ffb27a]/25 blur-3xl animate-pulse delay-1000" />
+        <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/70 to-transparent" />
       </div>
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-[1.08fr_0.92fr]">
-        <div className="fade-up">
-          {/* <p className="mb-5 inline-flex rounded-full border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-[12px] tracking-[0.12em] text-[var(--text3)] uppercase">
-            Policy Guardrails for AI Agents
-          </p> */}
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left Column - Content */}
+          <div className="space-y-8">
+            {/* Badge
+            <div className="fade-up inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20"></div> */}
+            {/* Main Heading */}
+            <h1 className="fade-up stagger-item text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight">
+              <span className="bg-gradient-to-r from-[#15110f] via-[#3a251b] to-primary bg-clip-text text-transparent">
+                One policy,
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                total control.
+              </span>
+            </h1>
+            {/* Description */}
+            <p className="fade-up stagger-item text-lg sm:text-xl text-[#4a403b] leading-relaxed max-w-xl">
+              Define what your agents can do. Block what they cannot. Enforced
+              at every tool call, before it executes.
+            </p>
+            <div className="fade-up stagger-item flex flex-wrap gap-3">
+              {[
+                "Policy before execution",
+                "Human approval gates",
+                "PII rectification",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white/60 px-3 py-1.5 text-xs font-semibold text-[#4a2b20] shadow-sm backdrop-blur"
+                >
+                  <Sparkles className="h-3.5 w-3.5 text-primary" />
+                  {item}
+                </span>
+              ))}
+            </div>
+            {/* CTA Buttons */}
+            <div className="fade-up stagger-item flex flex-wrap items-center gap-4 pt-4">
+              <a
+                href="/price"
+                className="btn-primary flex items-center gap-2 px-6 py-3 text-base group"
+              >
+                <span>Get Started</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </a>
 
-          <h1 className="max-w-3xl text-[clamp(42px,7vw,78px)] font-medium leading-[1.02] tracking-[-0.02em] text-[var(--text)] [font-family:var(--font-serif)]">
-            Control every agent tool call from one policy layer.
-          </h1>
+              <button
+                type="button"
+                onClick={handleCopy}
+                className="btn-secondary flex items-center gap-2 border-[#d9c5b8] bg-white/65 px-6 py-3 text-base text-[#15110f] shadow-sm backdrop-blur group"
+              >
+                {copied ? (
+                  <Check className="w-4 h-4 text-emerald-400" />
+                ) : (
+                  <Copy className="w-4 h-4" />
+                )}
+                <span className="font-mono text-sm">
+                  {copied ? "Copied!" : "pip install megent"}
+                </span>
+              </button>
+            </div>
+            {/* Trust cards */}
+            <div className="fade-up stagger-item grid max-w-xl grid-cols-1 gap-3 pt-6 sm:grid-cols-3">
+              {[
+                {
+                  icon: Shield,
+                  label: "Runtime firewall",
+                  value: "Every call",
+                },
+                {
+                  icon: LockKeyhole,
+                  label: "Safe fallback",
+                  value: "Stop tool",
+                },
+                { icon: Zap, label: "Fast checks", value: "Low latency" },
+              ].map(({ icon: Icon, label, value }) => (
+                <div
+                  key={label}
+                  className="rounded-2xl border border-white/60 bg-white/55 p-4 shadow-[0_18px_45px_rgba(73,39,24,0.08)] backdrop-blur"
+                >
+                  <Icon className="mb-3 h-4 w-4 text-primary" />
+                  <p className="text-sm font-semibold text-[#15110f]">
+                    {value}
+                  </p>
+                  <p className="text-xs text-[#6b5a50]">{label}</p>
+                </div>
+              ))}
+            </div>
+            {/* Stats */}
+            {/* <div className="fade-up stagger-item flex gap-8 pt-8">
+              <div className="flex items-center gap-2">
+                <Shield className="w-4 h-4 text-primary" />
+                <span className="text-sm text-muted-foreground">
+                  &lt;1ms latency
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Zap className="w-4 h-4 text-primary" />
+                <span className="text-sm text-muted-foreground">
+                  MIT licensed
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Terminal className="w-4 h-4 text-primary" />
+                <span className="text-sm text-muted-foreground">
+                  Python 3.9+
+                </span>
+              </div>
+            </div> */}
+          </div>
 
-          <p className="mt-6 max-w-2xl text-[18px] leading-[1.65] text-[var(--text2)] sm:text-[20px]">
-            Define what your agents can do.
-Block what they cannot. Enforced at every tool call, before it executes.
-          </p>
+          {/* Right Column - Terminal */}
+          <div className="fade-up stagger-item">
+            <div className="relative group">
+              {/* Glow Effect */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-primary/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-          <div className="mt-10 flex flex-wrap items-center gap-3">
-            <a
-              href="/price"
-              className="inline-flex items-center gap-2 rounded-xl bg-[var(--primary)] px-5 py-3 text-[15px] font-medium text-[var(--primary-foreground)] shadow-[0_0_0_1px_var(--primary)] transition hover:brightness-95"
-            >
-              Get Started
-              <ArrowRight />
-            </a>
+              {/* Terminal Window */}
+              <div className="relative rounded-2xl border border-border bg-[#0a0a0f] shadow-2xl overflow-hidden">
+                {/* Terminal Header */}
+                <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-secondary/50">
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-1.5">
+                      <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                      <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                      <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                    </div>
+                    <div className="flex items-center gap-1.5 ml-3">
+                      <Terminal className="w-3 h-3 text-muted-foreground" />
+                      <span className="text-xs text-muted-foreground font-mono">
+                        megent-terminal
+                      </span>
+                    </div>
+                  </div>
+                  <div className="text-xs text-muted-foreground font-mono">
+                    policy.log
+                  </div>
+                </div>
 
-            <button
-              type="button"
-              onClick={handleCopy}
-              className="inline-flex items-center gap-2 rounded-xl border border-[var(--border2)] b-[var(--card)] px-4 py-3 text-[14px] font-medium text-[var(--text2)] shadow-[0_0_0_1px_var(--border)] transition hover:border-[var(--border2)] hover:text-[var(--text)]"
-            >
-              <CodeIcon />
-              <span className="[font-family:var(--font-mono-ui)]">{copied ? "Copied" : "pip install megent"}</span>
-            </button>
+                {/* Terminal Body */}
+                <div className="p-5 font-mono text-sm">
+                  {LINES.slice(0, shownLines).map((line, idx) => (
+                    <div
+                      key={idx}
+                      className="py-0.5 animate-fadeIn"
+                      style={{ animationDelay: `${idx * 0.05}s` }}
+                    >
+                      <span
+                        className={`${
+                          line.type === "cmd"
+                            ? "text-primary"
+                            : line.type === "ok"
+                              ? "text-emerald-400"
+                              : line.type === "block"
+                                ? "text-red-400"
+                                : line.type === "warn"
+                                  ? "text-amber-400"
+                                  : "text-muted-foreground"
+                        }`}
+                      >
+                        {line.type === "cmd" && (
+                          <span className="text-primary mr-2">$</span>
+                        )}
+                        {line.text}
+                      </span>
+                    </div>
+                  ))}
+                  {shownLines < LINES.length && (
+                    <div className="flex items-center gap-2 mt-2">
+                      <span className="text-primary">$</span>
+                      <div className="w-2 h-4 bg-primary animate-blink" />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Terminal Decorative Elements */}
+              <div className="absolute -bottom-2 -right-2 w-20 h-20 bg-primary/5 rounded-full blur-2xl" />
+              <div className="absolute -top-2 -left-2 w-16 h-16 bg-primary/5 rounded-full blur-2xl" />
+            </div>
           </div>
         </div>
+      </div>
 
-        <div className="fade-up rounded-[24px] border border-[var(--border)] bg-[var(--card)] p-5 shadow-[0_0_0_1px_var(--border),0_26px_44px_-34px_rgba(20,20,19,0.6)] sm:p-6">
-          <div className="mb-4 flex items-center justify-between border-b border-[var(--border)] pb-4">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.14em] text-[var(--text3)]">Live Runtime Stream</p>
-              <p className="mt-1 text-[22px] leading-none text-[var(--text)] [font-family:var(--font-serif)]">policy.log</p>
-            </div>
-            {/* <span className="rounded-full border border-[var(--border2)] bg-[var(--muted)] px-3 py-1 text-[11px] text-[var(--text2)]">
-              agent online
-            </span> */}
-          </div>
-
-          <div className="rounded-2xl border border-[#30302e] bg-[#141413] p-4 [font-family:var(--font-mono-ui)]">
-            {LINES.slice(0, shownLines).map((line) => (
-              <p
-                key={line.text}
-                className={`text-[13px] leading-[1.8] ${
-                  line.type === "cmd"
-                    ? "text-[#faf9f5]"
-                    : line.type === "ok"
-                      ? "text-[#b8d6bd]"
-                      : line.type === "block"
-                        ? "text-[#e8b0a1]"
-                        : line.type === "warn"
-                          ? "text-[#e7cd85]"
-                          : "text-[#b0aea5]"
-                }`}
-              >
-                {line.text}
-              </p>
-            ))}
-            {shownLines < LINES.length ? <p className="mt-1 text-[#b0aea5]">...</p> : null}
-          </div>
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="w-6 h-10 rounded-full border-2 border-muted-foreground/30 flex justify-center">
+          <div className="w-1 h-2 bg-primary rounded-full mt-2 animate-pulse" />
         </div>
       </div>
     </section>
   );
 }
 
-function ArrowRight() {
+function ArrowRight({ className }: { className?: string }) {
   return (
-    <svg width="14" height="14" viewBox="0 0 13 13" fill="none" aria-hidden="true">
-      <path d="M2.5 6.5h8M8 3.5l3 3-3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function CodeIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M8 8l-4 4 4 4M16 8l4 4-4 4M14 4l-4 16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 13 13"
+      fill="none"
+      className={className}
+    >
+      <path
+        d="M2.5 6.5h8M8 3.5l3 3-3 3"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
