@@ -2,7 +2,15 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Terminal, Copy, Check, Sparkles, Shield, Zap } from "lucide-react";
+import {
+  Terminal,
+  Copy,
+  Check,
+  Sparkles,
+  Shield,
+  Zap,
+  LockKeyhole,
+} from "lucide-react";
 
 const LINES = [
   { type: "cmd", text: "megent run --policy ./policy.yaml" },
@@ -34,7 +42,7 @@ export default function Hero() {
     if (shownLines >= LINES.length) return;
     const t = setTimeout(
       () => setShownLines((n) => n + 1),
-      shownLines === 0 ? 180 : 260
+      shownLines === 0 ? 180 : 260,
     );
     return () => clearTimeout(t);
   }, [shownLines]);
@@ -50,12 +58,14 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated Background Gradients */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[linear-gradient(180deg,#fff7ef_0%,#fffaf6_42%,#0a0a0f_100%)] text-[#15110f]">
+      {/* Light-screen background with animated warm glows */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(201,100,66,0.12),transparent_50%),radial-gradient(circle_at_80%_70%,rgba(201,100,66,0.08),transparent_50%)]" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-pulse delay-1000" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(255,255,255,0.98),transparent_28%),radial-gradient(circle_at_82%_22%,rgba(255,178,122,0.42),transparent_34%),radial-gradient(circle_at_50%_72%,rgba(201,100,66,0.22),transparent_42%)]" />
+        <div className="absolute left-1/2 top-24 h-72 w-72 -translate-x-1/2 rounded-full bg-white/70 blur-3xl animate-pulse" />
+        <div className="absolute -left-20 top-1/3 h-96 w-96 rounded-full bg-primary/20 blur-3xl animate-pulse" />
+        <div className="absolute -right-24 bottom-24 h-96 w-96 rounded-full bg-[#ffb27a]/25 blur-3xl animate-pulse delay-1000" />
+        <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/70 to-transparent" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
@@ -66,7 +76,7 @@ export default function Hero() {
             <div className="fade-up inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20"></div> */}
             {/* Main Heading */}
             <h1 className="fade-up stagger-item text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight">
-              <span className="bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#15110f] via-[#3a251b] to-primary bg-clip-text text-transparent">
                 One policy,
               </span>
               <br />
@@ -75,10 +85,25 @@ export default function Hero() {
               </span>
             </h1>
             {/* Description */}
-            <p className="fade-up stagger-item text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-lg">
+            <p className="fade-up stagger-item text-lg sm:text-xl text-[#4a403b] leading-relaxed max-w-xl">
               Define what your agents can do. Block what they cannot. Enforced
               at every tool call, before it executes.
             </p>
+            <div className="fade-up stagger-item flex flex-wrap gap-3">
+              {[
+                "Policy before execution",
+                "Human approval gates",
+                "PII rectification",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white/60 px-3 py-1.5 text-xs font-semibold text-[#4a2b20] shadow-sm backdrop-blur"
+                >
+                  <Sparkles className="h-3.5 w-3.5 text-primary" />
+                  {item}
+                </span>
+              ))}
+            </div>
             {/* CTA Buttons */}
             <div className="fade-up stagger-item flex flex-wrap items-center gap-4 pt-4">
               <a
@@ -92,7 +117,7 @@ export default function Hero() {
               <button
                 type="button"
                 onClick={handleCopy}
-                className="btn-secondary flex items-center gap-2 px-6 py-3 text-base group"
+                className="btn-secondary flex items-center gap-2 border-[#d9c5b8] bg-white/65 px-6 py-3 text-base text-[#15110f] shadow-sm backdrop-blur group"
               >
                 {copied ? (
                   <Check className="w-4 h-4 text-emerald-400" />
@@ -103,6 +128,33 @@ export default function Hero() {
                   {copied ? "Copied!" : "pip install megent"}
                 </span>
               </button>
+            </div>
+            {/* Trust cards */}
+            <div className="fade-up stagger-item grid max-w-xl grid-cols-1 gap-3 pt-6 sm:grid-cols-3">
+              {[
+                {
+                  icon: Shield,
+                  label: "Runtime firewall",
+                  value: "Every call",
+                },
+                {
+                  icon: LockKeyhole,
+                  label: "Safe fallback",
+                  value: "Stop tool",
+                },
+                { icon: Zap, label: "Fast checks", value: "Low latency" },
+              ].map(({ icon: Icon, label, value }) => (
+                <div
+                  key={label}
+                  className="rounded-2xl border border-white/60 bg-white/55 p-4 shadow-[0_18px_45px_rgba(73,39,24,0.08)] backdrop-blur"
+                >
+                  <Icon className="mb-3 h-4 w-4 text-primary" />
+                  <p className="text-sm font-semibold text-[#15110f]">
+                    {value}
+                  </p>
+                  <p className="text-xs text-[#6b5a50]">{label}</p>
+                </div>
+              ))}
             </div>
             {/* Stats */}
             {/* <div className="fade-up stagger-item flex gap-8 pt-8">
@@ -168,12 +220,12 @@ export default function Hero() {
                           line.type === "cmd"
                             ? "text-primary"
                             : line.type === "ok"
-                            ? "text-emerald-400"
-                            : line.type === "block"
-                            ? "text-red-400"
-                            : line.type === "warn"
-                            ? "text-amber-400"
-                            : "text-muted-foreground"
+                              ? "text-emerald-400"
+                              : line.type === "block"
+                                ? "text-red-400"
+                                : line.type === "warn"
+                                  ? "text-amber-400"
+                                  : "text-muted-foreground"
                         }`}
                       >
                         {line.type === "cmd" && (

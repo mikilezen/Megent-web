@@ -1,4 +1,20 @@
 {
-  "buildCommand": "npm run build",
-  "framework": "nextjs"
+  "version": 2,
+  "cleanUrls": true,
+  "framework": null,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
 }
