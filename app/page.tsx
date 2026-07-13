@@ -13,13 +13,13 @@ import PythonPreview from "@/components/marketing/PythonPreview";
 import UseCases from "@/components/marketing/UseCases";
 import Waitlist from "@/components/marketing/Waitlist";
 import Policy from "@/components/marketing/Policy";
+import ScrollLight from "@/components/marketing/ScrollLight";
 import { FAQS } from "@/data/faq";
 
 const siteUrl = "https://megent.dev";
 const ogImage = "/freepik__adjust__68767.png";
 const pageTitle = "Firewall for AI agents.";
-const pageDescription =
-  "Control every agent tool call from one policy layer.";
+const pageDescription = "Control every agent tool call from one policy layer.";
 const pageUrl = `${siteUrl}/`;
 
 export const metadata: Metadata = {
@@ -85,6 +85,7 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
       />
+      <ScrollLight />
       <Nav />
       <div className="pt-1">
         <Hero />
