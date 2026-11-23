@@ -1,30 +1,27 @@
 export const FAQS = [
   {
-    q: "Does Megent work with LangChain, CrewAI, and OpenAI Agents?",
-    a: "Yes - Megent works at the tool call layer, which is framework-agnostic. We have tested integrations for LangChain, LangGraph, CrewAI, OpenAI Agents SDK, and AutoGen. If your framework supports tool calling, Megent supports it. Bring your own framework.",
+    question: "What does Megent check?",
+    answer:
+      "Megent evaluates calls to the Python tool functions you guard. It applies the configured policy before the wrapped function runs. Coverage depends on which functions your agent routes through Megent.",
   },
   {
-    q: "How much latency does interception actually add?",
-    a: "Under 1ms for policy evaluation. Megent runs in-process - there's no network call, no external API, no proxy. The overhead is negligible compared to the actual LLM call, which takes hundreds of milliseconds. In production, you won't notice it.",
+    question: "Does Megent replace my agent framework?",
+    answer:
+      "No. Megent is a Python runtime layer you add around the tools or execution functions you want to protect. Check your framework's call path and make sure the relevant tool boundary is wrapped.",
   },
   {
-    q: "Is the core runtime really free? What's the business model?",
-    a: "The core - interception, policy evaluation, PII masking, audit logging - is apache 2.0 licensed and free forever. Enterprise features like a centralized dashboard, SSO, managed rulesets, and SLA-backed support will eventually be commercial. We'll be honest about what's changing and when. The core stays free.",
+    question: "Can Megent mask sensitive values?",
+    answer:
+      "The runtime supports configurable pattern-based masking for fields such as email addresses and phone numbers. Define the fields in your policy and review the behavior against your own data before using it in production.",
   },
   {
-    q: "Does Megent send any data to your servers?",
-    a: "No. The current version is entirely self-hosted. Your tool calls, your policies, your audit logs - all of it stays in your infrastructure. We have zero visibility into your agent behavior. No telemetry, no phone-home, no analytics.",
+    question: "Does Megent protect every part of an AI system?",
+    answer:
+      "No. Megent focuses on policy checks around guarded tool calls. Prompt injection, model output, secrets in prompts, and the tools themselves need their own security controls.",
   },
   {
-    q: "Can I use Megent to control agents I didn't write?",
-    a: "Yes - this is one of the core use cases. Wrap any third-party agent with Megent's guard decorator and point it at a policy file. It enforces your rules regardless of what the agent does internally. You get control without needing access to the agent's source code.",
-  },
-  {
-    q: "What Python version do you support?",
-    a: "Python 3.9 and above. We test against 3.9, 3.10, 3.11, and 3.12. Full async support (asyncio, async/await) is included from day one. TypeScript and Node.js support is on the roadmap.",
-  },
-  {
-    q: "We're an early-stage startup. Can we get help getting set up?",
-    a: "Email us at hello@megent.dev. We're a founder-stage team and we want to help early-stage companies get this right. The core is free, and we're happy to jump on a call. No sales process - just founders talking to founders.",
+    question: "Where does Megent run?",
+    answer:
+      "Megent is an open-source Python package that runs with your application. The project is Apache-2.0 licensed. See the repository for current setup instructions and implementation details.",
   },
 ];

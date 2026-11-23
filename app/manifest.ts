@@ -2,19 +2,14 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Megent",
+    name: "Megent — Runtime Policy for AI Agents",
     short_name: "Megent",
-    description: "Operations, routing, and governance for AI agents in production.",
+    description: "Open-source runtime policy for AI agent tool calls.",
     start_url: "/",
-    display: "standalone",
-    background_color: "#ffffff",
-    theme_color: "#ffffff",
+    display: "browser",
+    background_color: "#f3f0ee",
+    theme_color: "#f3f0ee",
     icons: [
-      {
-        src: "/openclaw.png",
-        sizes: "640x640",
-        type: "image/png",
-      },
       {
         src: "/icon-224x224.png",
         sizes: "224x224",

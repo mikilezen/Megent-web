@@ -6,9 +6,9 @@ import "./globals.css";
 
 const siteUrl = "https://megent.dev";
 const siteName = "Megent";
-const defaultTitle = "Megent | Firewall for AI agents";
-const defaultDescription = "Control every agent tool call from one policy layer.";
-const ogImage = "/freepik__adjust__68767.png";
+const defaultTitle = "Megent | Runtime policy for AI agent tools";
+const defaultDescription =
+  "Set tool permissions for AI agents and evaluate guarded Python functions against policy before they run.";
 
 // Structured Data for SEO
 const structuredData = {
@@ -24,15 +24,13 @@ const structuredData = {
         "url": `${siteUrl}/Group.ico`,
       },
       "description": defaultDescription,
-      "sameAs": [
-        "https://twitter.com/megentdev",
-      ],
+      "sameAs": ["https://github.com/megents/megent"],
     },
     {
       "@type": "WebSite",
       "@id": `${siteUrl}/#website`,
       "url": siteUrl,
-      "name": defaultTitle,
+      "name": siteName,
       "description": defaultDescription,
       "publisher": {
         "@id": `${siteUrl}/#organization`,
@@ -73,21 +71,13 @@ export const metadata: Metadata = {
   creator: "Megent",
   publisher: "Megent",
   keywords: [
-    "Firewall",
-    "Firewall for AI agents.",
-    "agent security",
-    "agent policy",
-    "LLM guardrails",
-    "Megent",
-    "AI agent runtime",
-    "policy enforcement",
+    "AI agent firewall",
+    "runtime policy for AI agents",
+    "Python agent security",
+    "tool call policy",
+    "AI agent tool permissions",
     "PII masking",
-    "AI agent control",
-    "LLM security",
-    "agent monitoring",
-    "AI compliance",
-    "agent framework",
-    "AI governance platform",
+    "Megent",
   ],
   openGraph: {
     title: defaultTitle,
@@ -96,22 +86,11 @@ export const metadata: Metadata = {
     siteName,
     type: "website",
     locale: "en_US",
-    images: [
-      {
-        url: ogImage,
-        width: 1200,
-        height: 630,
-        alt: "Megent AI control center",
-      },
-    ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: defaultTitle,
     description: defaultDescription,
-    images: [ogImage],
-    creator: "@megentdev",
-    site: "@megentdev",
   },
   appleWebApp: {
     title: siteName,

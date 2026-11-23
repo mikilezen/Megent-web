@@ -1,0 +1,19 @@
+# Megent
+
+> Open-source runtime policy for AI agent tool calls.
+
+Megent is a Python package that evaluates guarded tool functions against a policy before the function runs. Policies are written in YAML. The runtime supports allow and deny rules, configurable pattern-based masking, structured audit events, optional JWT identity, and rate limits.
+
+## Get started
+
+- Install: `pip install megent`
+- Source and quickstart: https://github.com/megents/megent
+- License: Apache-2.0
+
+## Enforcement boundary
+
+Megent evaluates the functions and execution paths that an application wraps. Framework compatibility depends on whether the relevant tool calls pass through those wrappers. Megent is one runtime control and does not replace prompt, model-output, infrastructure, or tool security.
+
+## Contact
+
+- Email: hello@megent.dev

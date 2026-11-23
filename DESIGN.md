@@ -1,312 +1,365 @@
-# Design System Inspiration of Claude (Anthropic)
+# Design System Inspired by Mastercard
 
 ## 1. Visual Theme & Atmosphere
 
-Claude's interface is a literary salon reimagined as a product page — warm, unhurried, and quietly intellectual. The entire experience is built on a parchment-toned canvas (`#f5f4ed`) that deliberately evokes the feeling of high-quality paper rather than a digital surface. Where most AI product pages lean into cold, futuristic aesthetics, Claude's design radiates human warmth, as if the AI itself has good taste in interior design.
+Mastercard's experience reads like a warm, editorial magazine built from soft stone and signal orange. The canvas is a muted putty-cream (`#F3F0EE`) — not white, not gray, but a color that feels like the paper of a premium annual report. On top of that canvas, everything that matters is shaped like a stadium, a pill, or a perfect circle. The dominant visual gesture is the **oversized radius**: heroes carry 40-point corners, cards go fully pill-shaped, service images are cropped into circular orbits, and buttons either complete the pill or fit snugly at 20 points. There are almost no sharp corners anywhere on the page.
 
-The signature move is the custom Anthropic Serif typeface — a medium-weight serif with generous proportions that gives every headline the gravitas of a book title. Combined with organic, hand-drawn-feeling illustrations in terracotta (`#c96442`), black, and muted green, the visual language says "thoughtful companion" rather than "powerful tool." The serif headlines breathe at tight-but-comfortable line-heights (1.10–1.30), creating a cadence that feels more like reading an essay than scanning a product page.
+The second gesture is **orbit and trajectory**. Circular image masks don't sit still — they're connected by thin, hand-drawn-feeling orange arcs that span entire viewport widths, implying a constellation of services rather than a list. Each circle has a small attached "satellite" — a white micro-CTA holding an arrow icon — docked onto its perimeter like a moon. This is the most distinctive thing about Mastercard's current design language: the circles feel like they're in motion even though the page is still.
 
-What makes Claude's design truly distinctive is its warm neutral palette. Every gray has a yellow-brown undertone (`#5e5d59`, `#87867f`, `#4d4c48`) — there are no cool blue-grays anywhere. Borders are cream-tinted (`#f0eee6`, `#e8e6dc`), shadows use warm transparent blacks, and even the darkest surfaces (`#141413`, `#30302e`) carry a barely perceptible olive warmth. This chromatic consistency creates a space that feels lived-in and trustworthy.
+Typography is rendered entirely in **MarkForMC**, Mastercard's proprietary geometric sans. Headlines are set at a medium weight (500) with tight negative letter-spacing (-2%), giving them confidence without shouting. Body copy runs at the same family in a slightly lighter weight (450) — a weight you rarely see on the web, chosen because it reads softer than regular 400 without feeling thin. The whole system — warm cream surfaces, pill shapes, circular portraits, traced-orange orbits, black CTAs — feels simultaneously institutional (a 60-year-old payments network) and editorial (a modern brand magazine), which is exactly the tension Mastercard wants to hold.
 
 **Key Characteristics:**
-- Warm parchment canvas (`#f5f4ed`) evoking premium paper, not screens
-- Custom Anthropic type family: Serif for headlines, Sans for UI, Mono for code
-- Terracotta brand accent (`#c96442`) — warm, earthy, deliberately un-tech
-- Exclusively warm-toned neutrals — every gray has a yellow-brown undertone
-- Organic, editorial illustrations replacing typical tech iconography
-- Ring-based shadow system (`0px 0px 0px 1px`) creating border-like depth without visible borders
-- Magazine-like pacing with generous section spacing and serif-driven hierarchy
+- Warm cream canvas (`#F3F0EE`) replaces traditional white — every surface is tinted, never sterile
+- Extreme border-radius as design language: 40px, 99px, 1000px dominate; anything square is a cookie-banner third-party
+- Circular image portraits with attached white satellite-CTAs and traced-orange orbital paths
+- Ghost "watermark" headlines (cream-on-cream text at heading scale) layered behind circle portraits
+- Black primary CTAs with 20px radius in the body — the cookie-banner orange is kept to consent flows
+- Floating pill-shaped navigation that docks below the viewport top with rounded shoulders
+- Eyebrow labels with a tiny accent dot + uppercase bold tracking — used as the section-category signal
+- Dark warm-black footer (`#141413`) with four-column link layout and large conversational headline
 
 ## 2. Color Palette & Roles
 
 ### Primary
-- **Anthropic Near Black** (`#141413`): The primary text color and dark-theme surface — not pure black but a warm, almost olive-tinted dark that's gentler on the eyes. The warmest "black" in any major tech brand.
-- **Terracotta Brand** (`#c96442`): The core brand color — a burnt orange-brown used for primary CTA buttons, brand moments, and the signature accent. Deliberately earthy and un-tech.
-- **Coral Accent** (`#d97757`): A lighter, warmer variant of the brand color used for text accents, links on dark surfaces, and secondary emphasis.
+- **Mastercard Red** (`#EB001B`): The left circle of the Mastercard mark — used only in the brand logo, never as a UI color.
+- **Mastercard Yellow** (`#F79E1B`): The right circle of the Mastercard mark — used only in the brand logo, never as a UI color.
+- **Ink Black** (`#141413`): The warm near-black used for primary CTAs, headline text on cream, and the footer surface. Slightly warm (the `13` blue value pulls toward the cream) so it never feels jet-black on the warm canvas.
 
 ### Secondary & Accent
-- **Error Crimson** (`#b53333`): A deep, warm red for error states — serious without being alarming.
-- **Focus Blue** (`#3898ec`): Standard blue for input focus rings — the only cool color in the entire system, used purely for accessibility.
+- **Signal Orange** (`#CF4500`): The burnt/rust CTA orange used on consent actions and eyebrow dots. Deeper than the brand yellow, brighter than ink — it's the page's single aggressive color and must be used sparingly.
+- **Light Signal Orange** (`#F37338`): A lighter carroty orange used for carousel active indicators and decorative orbital arcs. Always acts as an attention cue, never as body color.
+- **Clay Brown** (`#9A3A0A`): The deep rust used for secondary link-style buttons (e.g., cookie details). Sits between ink and signal orange.
 
 ### Surface & Background
-- **Parchment** (`#f5f4ed`): The primary page background — a warm cream with a yellow-green tint that feels like aged paper. The emotional foundation of the entire design.
-- **Ivory** (`#faf9f5`): The lightest surface — used for cards and elevated containers on the Parchment background. Barely distinguishable but creates subtle layering.
-- **Pure White** (`#ffffff`): Reserved for specific button surfaces and maximum-contrast elements.
-- **Warm Sand** (`#e8e6dc`): Button backgrounds and prominent interactive surfaces — a noticeably warm light gray.
-- **Dark Surface** (`#30302e`): Dark-theme containers, nav borders, and elevated dark elements — warm charcoal.
-- **Deep Dark** (`#141413`): Dark-theme page background and primary dark surface.
+- **Canvas Cream** (`#F3F0EE`): The page canvas. Warm, putty-toned, the default body background. All editorial sections sit on this.
+- **Lifted Cream** (`#FCFBFA`): One step lighter than canvas — used for nested "raised" sections that want to feel like paper laid on paper.
+- **White** (`#FFFFFF`): Reserved for the floating navigation pill, modal cards, secondary button fills, and small satellite-CTA circles attached to image portraits.
+- **Soft Bone** (`#F4F4F4`): A cool-gray alternative surface used inside a handful of component subregions.
 
 ### Neutrals & Text
-- **Charcoal Warm** (`#4d4c48`): Button text on light warm surfaces — the go-to dark-on-light text.
-- **Olive Gray** (`#5e5d59`): Secondary body text — a distinctly warm medium-dark gray.
-- **Stone Gray** (`#87867f`): Tertiary text, footnotes, and de-emphasized metadata.
-- **Dark Warm** (`#3d3d3a`): Dark text links and emphasized secondary text.
-- **Warm Silver** (`#b0aea5`): Text on dark surfaces — a warm, parchment-tinted light gray.
+- **Ink Black** (`#141413`): Primary headline and body text color.
+- **Charcoal** (`#262627`): A slightly softer black used for some text alternates.
+- **Slate Gray** (`#696969`): Muted secondary text — eyebrow label alternative, disabled states, "Privacy Choices" bottom-row text.
+- **Granite** (`#555555`) and **Graphite** (`#565656`): Deeper gray for inline body accents and link alternates.
+- **Dust Taupe** (`#D1CDC7`): Very muted cream-gray used for disabled or "whisper" text (e.g., placeholder-like empty state labels). Low contrast on cream; use only for subdued content.
 
 ### Semantic & Accent
-- **Border Cream** (`#f0eee6`): Standard light-theme border — barely visible warm cream, creating the gentlest possible containment.
-- **Border Warm** (`#e8e6dc`): Prominent borders, section dividers, and emphasized containment on light surfaces.
-- **Border Dark** (`#30302e`): Standard border on dark surfaces — maintains the warm tone.
-- **Ring Warm** (`#d1cfc5`): Shadow ring color for button hover/focus states.
-- **Ring Subtle** (`#dedc01`): Secondary ring variant for lighter interactive surfaces.
-- **Ring Deep** (`#c2c0b6`): Deeper ring for active/pressed states.
+- **Link Blue** (`#3860BE`): A deep, slightly dusty blue used for inline links and informational callouts. Saturated enough to read as a link without being neon.
+- **Priceless Red + Yellow**: The full-color Mastercard logo mark is the only place the brand's red and yellow appear together; they lock the identity to the page without acting as a UI palette.
 
 ### Gradient System
-- Claude's design is **gradient-free** in the traditional sense. Depth and visual richness come from the interplay of warm surface tones, organic illustrations, and light/dark section alternation. The warm palette itself creates a "gradient" effect as the eye moves through cream → sand → stone → charcoal → black sections.
+Mastercard uses no programmatic gradients in the core UI. The visual impression of "gradient" comes from two places:
+- **Circular image portraits** where a warm-orange photo subject (a card, a sunflower, a beverage) fades to the cream canvas at its edge
+- **Deep card shadows** on elevated content (`rgba(0,0,0,0.08) 0px 24px 48px`) that create a soft halo beneath pill-shaped media
 
 ## 3. Typography Rules
 
 ### Font Family
-- **Headline**: `Anthropic Serif`, with fallback: `Georgia`
-- **Body / UI**: `Anthropic Sans`, with fallback: `Arial`
-- **Code**: `Anthropic Mono`, with fallback: `Arial`
-
-*Note: These are custom typefaces. For external implementations, Georgia serves as the serif substitute and system-ui/Inter as the sans substitute.*
+- **Primary**: `MarkForMC` — Mastercard's proprietary geometric sans. Every headline, body paragraph, button, nav link, and footer link on the page.
+- **Secondary**: `MarkOffcForMC` — an "Official" cut used in a minority of contexts (legal text, some forms).
+- **Fallback stack**: `SofiaSans, Arial, sans-serif` — Sofia Sans is a reasonable open-source stand-in; Arial is the final web-safe fallback.
 
 ### Hierarchy
 
-| Role | Font | Size | Weight | Line Height | Letter Spacing | Notes |
-|------|------|------|--------|-------------|----------------|-------|
-| Display / Hero | Anthropic Serif | 64px (4rem) | 500 | 1.10 (tight) | normal | Maximum impact, book-title presence |
-| Section Heading | Anthropic Serif | 52px (3.25rem) | 500 | 1.20 (tight) | normal | Feature section anchors |
-| Sub-heading Large | Anthropic Serif | 36–36.8px (~2.3rem) | 500 | 1.30 | normal | Secondary section markers |
-| Sub-heading | Anthropic Serif | 32px (2rem) | 500 | 1.10 (tight) | normal | Card titles, feature names |
-| Sub-heading Small | Anthropic Serif | 25–25.6px (~1.6rem) | 500 | 1.20 | normal | Smaller section titles |
-| Feature Title | Anthropic Serif | 20.8px (1.3rem) | 500 | 1.20 | normal | Small feature headings |
-| Body Serif | Anthropic Serif | 17px (1.06rem) | 400 | 1.60 (relaxed) | normal | Serif body text (editorial passages) |
-| Body Large | Anthropic Sans | 20px (1.25rem) | 400 | 1.60 (relaxed) | normal | Intro paragraphs |
-| Body / Nav | Anthropic Sans | 17px (1.06rem) | 400–500 | 1.00–1.60 | normal | Navigation links, UI text |
-| Body Standard | Anthropic Sans | 16px (1rem) | 400–500 | 1.25–1.60 | normal | Standard body, button text |
-| Body Small | Anthropic Sans | 15px (0.94rem) | 400–500 | 1.00–1.60 | normal | Compact body text |
-| Caption | Anthropic Sans | 14px (0.88rem) | 400 | 1.43 | normal | Metadata, descriptions |
-| Label | Anthropic Sans | 12px (0.75rem) | 400–500 | 1.25–1.60 | 0.12px | Badges, small labels |
-| Overline | Anthropic Sans | 10px (0.63rem) | 400 | 1.60 | 0.5px | Uppercase overline labels |
-| Micro | Anthropic Sans | 9.6px (0.6rem) | 400 | 1.60 | 0.096px | Smallest text |
-| Code | Anthropic Mono | 15px (0.94rem) | 400 | 1.60 | -0.32px | Inline code, terminal |
+| Role | Size | Weight | Line Height | Letter Spacing | Notes |
+|------|------|--------|-------------|----------------|-------|
+| H1 (hero) | 64px | 500 | 64px | -1.28px (-2%) | Set to `1:1` line-height for very tight vertical rhythm on multi-line hero |
+| H2 (section) | 36px | 500 | 44px | -0.72px (-2%) | Used in ghost-watermark headline treatments and section titles |
+| H3 (card title) | 24px | 500 | 28.8px (1.2) | -0.48px (-2%) | Titles inside service/solution cards |
+| H4 (subhead) | 14px | 700 | 18.2px (1.3) | normal | Rarely used in marketing surfaces |
+| Eyebrow (H5) | 14px | 700 | 14px | 0.56px (+4%) | Uppercase, paired with a tiny accent dot (e.g., "• SERVICES") |
+| Body paragraph | 16px | 450 | 22.4px (1.4) | normal | The half-step 450 weight is MarkForMC's signature — softer than 500, firmer than 400 |
+| Nav link / Button label | 16px | 500 | 16px | -0.48px (-3%) | Tight, compact, no text-transform |
+| Footer link | 14px | 450 | ~20px | normal | Lighter weight on dark footer for airier density |
+| Footer column header | 12–14px | 700 | 14px | 0.56px (+4%) | Uppercase, muted gray, short tracking |
 
 ### Principles
-- **Serif for authority, sans for utility**: Anthropic Serif carries all headline content with medium weight (500), giving every heading the gravitas of a published title. Anthropic Sans handles all functional UI text — buttons, labels, navigation — with quiet efficiency.
-- **Single weight for serifs**: All Anthropic Serif headings use weight 500 — no bold, no light. This creates a consistent "voice" across all headline sizes, as if the same author wrote every heading.
-- **Relaxed body line-height**: Most body text uses 1.60 line-height — significantly more generous than typical tech sites (1.4–1.5). This creates a reading experience closer to a book than a dashboard.
-- **Tight-but-not-compressed headings**: Line-heights of 1.10–1.30 for headings are tight but never claustrophobic. The serif letterforms need breathing room that sans-serif fonts don't.
-- **Micro letter-spacing on labels**: Small sans text (12px and below) uses deliberate letter-spacing (0.12px–0.5px) to maintain readability at tiny sizes.
+- **Weight 450 is load-bearing**. Most brands use 400/500/700; Mastercard uses 450 for body copy, which creates an unusually soft reading tone. Replacing it with 400 flattens the identity.
+- **Tight negative tracking on headlines** (-2%) gives display text its editorial density — the words lock together rather than breathe.
+- **Uppercase tracking only on the eyebrow scale** (14px / 700 / +4% tracking). Don't use uppercase anywhere else; no shouty section titles.
+- **One-font system**. Resist the urge to add a second typeface for contrast. The contrast comes from scale, weight, and letter-spacing, not from a serif or display accent.
+- **Line-height ratio drops with size**. H1 is 1:1, H3 is 1.2, body is 1.4. Tight display, comfortable reading.
+
+### Note on Font Substitutes
+MarkForMC is proprietary and licensed. When rebuilding a matching aesthetic without access to the original:
+- **Sofia Sans** (Google Fonts) is the closest open-source match — it's already in Mastercard's declared fallback stack.
+- **Inter** at weights 450/500/700 works as a generic stand-in; expect slightly taller x-height and looser letter shapes.
+- **Neue Haas Grotesk** or **Geist** can approximate the geometric feel for commercial projects.
+- Whichever substitute is used, preserve the **-2% letter-spacing on headlines** and the **450 body weight** (use `font-weight: 450` with variable fonts, or substitute `font-weight: 400` and tighten the letter-spacing by ~-0.5% to compensate).
 
 ## 4. Component Stylings
 
 ### Buttons
 
-**Warm Sand (Secondary)**
-- Background: Warm Sand (`#e8e6dc`)
-- Text: Charcoal Warm (`#4d4c48`)
-- Padding: 0px 12px 0px 8px (asymmetric — icon-first layout)
-- Radius: comfortably rounded (8px)
-- Shadow: ring-based (`#e8e6dc 0px 0px 0px 0px, #d1cfc5 0px 0px 0px 1px`)
-- The workhorse button — warm, unassuming, clearly interactive
+**Primary — Ink Pill**
+- Background: Ink Black (`#141413`)
+- Text: Canvas Cream (`#F3F0EE`) — not pure white
+- Border: 1.5px solid Ink Black (same as bg, creates crisp edge)
+- Radius: 20px
+- Padding: 6px 24px
+- Font: MarkForMC 16px / weight 500 / letter-spacing -0.32px
+- Default: as above; solid warm-black pill on cream canvas
+- Active / pressed: subtle inward-shrink or 2px offset (not a hover variant)
+- Use for: all marketing CTAs in the page body ("Learn more", "Explore", "Discover")
 
-**White Surface**
-- Background: Pure White (`#ffffff`)
-- Text: Anthropic Near Black (`#141413`)
-- Padding: 8px 16px 8px 12px
-- Radius: generously rounded (12px)
-- Hover: shifts to secondary background color
-- Clean, elevated button for light surfaces
+**Secondary — Outlined Pill**
+- Background: White (`#FFFFFF`)
+- Text: Ink Black (`#141413`)
+- Border: 1.5px solid Ink Black
+- Radius: 20px
+- Padding: 6px 24px
+- Font: MarkForMC 16px / weight 450 / line-height 20.8px
+- Default: white-on-cream pill with crisp ink outline
+- Active / pressed: subtle compression
+- Use for: secondary actions paired with a primary, or standalone utility CTAs
 
-**Dark Charcoal**
-- Background: Dark Surface (`#30302e`)
-- Text: Ivory (`#faf9f5`)
-- Padding: 0px 12px 0px 8px
-- Radius: comfortably rounded (8px)
-- Shadow: ring-based (`#30302e 0px 0px 0px 0px, ring 0px 0px 0px 1px`)
-- The inverted variant for dark-on-light emphasis
+**Consent / Signal — Orange Pill**
+- Background: Signal Orange (`#CF4500`)
+- Text: White (`#FFFFFF`)
+- Border: 0
+- Radius: 24px
+- Padding: 1px 30px (very tight vertical, wide horizontal)
+- Font: MarkForMC 13px / weight 400 / letter-spacing 0.13px
+- Default: as above; bright rust pill with white text
+- Use for: cookie consent, privacy preference, and other legally-distinct confirmations. **Do not** use this orange for marketing CTAs — it reads as a compliance color.
 
-**Brand Terracotta**
-- Background: Terracotta Brand (`#c96442`)
-- Text: Ivory (`#faf9f5`)
-- Radius: 8–12px
-- Shadow: ring-based (`#c96442 0px 0px 0px 0px, #c96442 0px 0px 0px 1px`)
-- The primary CTA — the only button with chromatic color
+**Satellite — Circular Micro-CTA**
+- Background: White (`#FFFFFF`)
+- Icon: Ink Black arrow (`→`) at ~20px
+- Border: none
+- Radius: 50% (perfect circle)
+- Size: ~50–60px diameter
+- Shadow: none or very subtle (the portrait's shadow carries the elevation)
+- Default: docks onto the bottom-right edge of a circular portrait, protruding partway outside the portrait's circle
+- Use for: the primary entry point into service/solution cards; always paired with a circular portrait
 
-**Dark Primary**
-- Background: Anthropic Near Black (`#141413`)
-- Text: Warm Silver (`#b0aea5`)
-- Padding: 9.6px 16.8px
-- Radius: generously rounded (12px)
-- Border: thin solid Dark Surface (`1px solid #30302e`)
-- Used on dark theme surfaces
+**Icon-Only Circle Button (carousel, play/pause)**
+- Background: transparent or white
+- Icon: 10–20px centered
+- Border: 1px solid Ink Black (when on cream) or none (when over media)
+- Radius: 50%
+- Size: 40px diameter minimum for carousel controls; 80px for hero video play
+- Use for: carousel pagination/play-pause, hero video play, search toggle
 
 ### Cards & Containers
-- Background: Ivory (`#faf9f5`) or Pure White (`#ffffff`) on light surfaces; Dark Surface (`#30302e`) on dark
-- Border: thin solid Border Cream (`1px solid #f0eee6`) on light; `1px solid #30302e` on dark
-- Radius: comfortably rounded (8px) for standard cards; generously rounded (16px) for featured; very rounded (32px) for hero containers and embedded media
-- Shadow: whisper-soft (`rgba(0,0,0,0.05) 0px 4px 24px`) for elevated content
-- Ring shadow: `0px 0px 0px 1px` patterns for interactive card states
-- Section borders: `1px 0px 0px` (top-only) for list item separators
+
+**Hero Media Frame (Stadium)**
+- Background: Dark video or full-bleed imagery (typically black `#000000` or `#2B2B2B` behind video)
+- Radius: 40px all corners (creates a stadium shape on wide viewports)
+- Width: ~full viewport minus ~48px gutter on each side
+- Height: ~60–70% of viewport
+- Shadow: none (sits directly on canvas)
+- Corners: the extreme 40px radius on a media element is the most iconic Mastercard gesture — do not round less
+
+**Service / Solution Portrait Card**
+- Shape: Perfect circle (radius 50%) or ellipse (radius 999px / 1000px)
+- Diameter: 260–340px desktop; ~220px mobile
+- Image crop: square source, cropped to circle
+- Attached element: White satellite circular CTA (see above) docked bottom-right, ~40% outside the portrait
+- Eyebrow below: accent dot + uppercase label (e.g., "• SERVICES", "• SOLUTIONS")
+- Title below: H3 (24px / weight 500 / -2% tracking), 1–2 lines max
+- Decorative orbit: thin ~1px Light Signal Orange curved line spanning from this card outward to the next, implying connection
+
+**Pill Carousel Card**
+- Radius: 1000px (full pill) or 40px corners (rounded stadium)
+- Width: ~40–60% of viewport
+- Height: ~380–420px (portrait-pill orientation)
+- Content: full-bleed photography with small overlaid chip labels
+- Chip inside: White pill (~ 999px radius), Ink Black text, padding 8px 20px, used for category tags like "Story"
+- Large inline CTA inside: Ink Pill button, oversized (padding 16px 40px, radius 40px)
+
+**Ghost Watermark Text Block**
+- Font: MarkForMC 72–128px / weight 500 / tight -2% tracking
+- Color: Canvas Cream slightly darkened (`#E8E2DA` or similar — cream-on-cream)
+- Position: layered behind portrait circles, bleeding off the viewport edge
+- Purpose: sets section theme without competing with foreground copy
 
 ### Inputs & Forms
-- Text: Anthropic Near Black (`#141413`)
-- Padding: 1.6px 12px (very compact vertical)
-- Border: standard warm borders
-- Focus: ring with Focus Blue (`#3898ec`) border-color — the only cool color moment
-- Radius: generously rounded (12px)
+Minimal form surface on the marketing page. The search input in the nav header is:
+- Initial state: a 48px circular button with a magnifier icon
+- Expanded state: horizontal input field, border `1px solid` Ink Black at ~50% opacity, radius 999px, padding 12px 24px, white background
+
+**Country/language selector (footer)**
+- Background: Ink Black (same as footer)
+- Text: White
+- Border: 1px solid `rgba(255,255,255,0.4)`
+- Radius: 999px (full pill)
+- Icon: downward chevron on the right
 
 ### Navigation
-- Sticky top nav with warm background
-- Logo: Claude wordmark in Anthropic Near Black
-- Links: mix of Near Black (`#141413`), Olive Gray (`#5e5d59`), and Dark Warm (`#3d3d3a`)
-- Nav border: `1px solid #30302e` (dark) or `1px solid #f0eee6` (light)
-- CTA: Terracotta Brand button or White Surface button
-- Hover: text shifts to foreground-primary, no decoration
+
+**Floating Nav Pill (desktop)**
+- Container: white-to-translucent-white pill floating below the very top of the viewport with a ~24px top margin
+- Radius: 999px / 1000px (full pill)
+- Padding: ~16px 40px internal
+- Shadow: very soft (`rgba(0, 0, 0, 0.04) 0px 4px 24px 0px`) — just enough to lift it off the cream canvas
+- Content: Mastercard logo left, primary link group center ("For you", "For business", "For the world", "For innovators", "News and trends"), search icon right
+- Link spacing: ~48–56px gap between primary links
+- Link style: Ink Black, weight 500, 16px, no underline, no pill surround until active
+
+**Mobile Nav**
+- The same pill shape but collapsed to: logo + hamburger menu button + search icon only
+- Menu opens into a full-screen overlay with the primary links stacked vertically
 
 ### Image Treatment
-- Product screenshots showing the Claude chat interface
-- Generous border-radius on media (16–32px)
-- Embedded video players with rounded corners
-- Dark UI screenshots provide contrast against warm light canvas
-- Organic, hand-drawn illustrations for conceptual sections
 
-### Distinctive Components
+- **Aspect ratios used**: 1:1 (all service portraits — cropped to circle), ~3:4 or ~4:5 (carousel pill cards), 16:9 or wider (hero video frame)
+- **Full-bleed vs padded**: Hero is viewport-wide with gutters; service portraits are always centered in their column with generous whitespace around; footer imagery is rare
+- **Masking**: Aggressive circular masking is the defining treatment — square source images are cropped to perfect circles of matching diameter. Never use rectangular service imagery.
+- **Lazy loading**: Standard `loading="lazy"` with a soft blur-up transition from a cream-tinted placeholder, preserving the warm palette during load
 
-**Model Comparison Cards**
-- Opus 4.5, Sonnet 4.5, Haiku 4.5 presented in a clean card grid
-- Each model gets a bordered card with name, description, and capability badges
-- Border Warm (`#e8e6dc`) separation between items
+### Decorative Orbital Lines
 
-**Organic Illustrations**
-- Hand-drawn-feeling vector illustrations in terracotta, black, and muted green
-- Abstract, conceptual rather than literal product diagrams
-- The primary visual personality — no other AI company uses this style
+A signature motif: thin (~1–1.5px) single-weight curved lines in Light Signal Orange (`#F37338`) tracing arcs between circular portraits. These lines:
+- Imply connection between service cards without literal arrows
+- Span widths from ~200px up to full-viewport arcs
+- Feel hand-drawn (subtle irregularity) rather than perfect CSS curves
+- Appear only in sections with circular portrait content — never on pill sections, never in the footer
 
-**Dark/Light Section Alternation**
-- The page alternates between Parchment light and Near Black dark sections
-- Creates a reading rhythm like chapters in a book
-- Each section feels like a distinct environment
+### Footer
+
+- Background: Ink Black (`#141413`)
+- Text: White
+- Padding: 48px horizontal 100px / bottom 148px (very tall bottom space)
+- Structure: large conversational H2 ("We're always here when you need us") left-aligned, then a 4-column link grid below
+- Column headers: uppercase, muted, weight 700, letter-spacing +4%
+- Link rows: white, weight 450, 14px; entries prefixed with a small icon (support bubble, card, map pin, question mark) for the "NEED HELP?" column
+- External link marker: a small upper-right arrow (`↗`) after link text
+- Bottom row (below a 1px white-at-opacity divider): copyright + privacy small-print + country-language pill dropdown + four social icons (LinkedIn, Facebook, X, YouTube)
 
 ## 5. Layout Principles
 
 ### Spacing System
-- Base unit: 8px
-- Scale: 3px, 4px, 6px, 8px, 10px, 12px, 16px, 20px, 24px, 30px
-- Button padding: asymmetric (0px 12px 0px 8px) or balanced (8px 16px)
-- Card internal padding: approximately 24–32px
-- Section vertical spacing: generous (estimated 80–120px between major sections)
+- **Base unit**: 8px (confirmed by dembrandt extraction and computed styles)
+- **Scale**: 8 / 16 / 24 / 32 / 48 / 64 / 96 / 128 (powers of 8)
+- **Section vertical padding**: ~96–128px between major sections on desktop; ~48–64px on mobile
+- **Card internal padding**: 32–40px on desktop, ~24px on mobile
+- **Nav top margin**: ~24px from viewport top (the pill floats, doesn't touch)
 
 ### Grid & Container
-- Max container width: approximately 1200px, centered
-- Hero: centered with editorial layout
-- Feature sections: single-column or 2–3 column card grids
-- Model comparison: clean 3-column grid
-- Full-width dark sections breaking the container for emphasis
+- **Max content width**: ~1200–1280px centered, with ~48–100px horizontal gutter
+- **Column pattern**: 12-column implied, but practical layouts use 2-up asymmetric (large headline left, supporting text right), 1-up full-bleed (hero, video), or staggered single-portrait placement (service cards sit in varying grid positions creating the "constellation" feel)
+- **Footer grid**: 4 equal columns on desktop, collapses to single column accordion on mobile
 
 ### Whitespace Philosophy
-- **Editorial pacing**: Each section breathes like a magazine spread — generous top/bottom margins create natural reading pauses.
-- **Serif-driven rhythm**: The serif headings establish a literary cadence that demands more whitespace than sans-serif designs.
-- **Content island approach**: Sections alternate between light and dark environments, creating distinct "rooms" for each message.
+Mastercard treats whitespace as structure, not absence. A typical service section has:
+- A ghost headline occupying the top ~40% of the section (mostly empty cream)
+- A single circular portrait positioned ~60% down, asymmetric to left or right
+- ~300–500px of blank canvas between the portrait and the next section
+This deliberate emptiness tells the eye "slow down, read one thing at a time" — the opposite of dense dashboard UIs.
 
 ### Border Radius Scale
-- Sharp (4px): Minimal inline elements
-- Subtly rounded (6–7.5px): Small buttons, secondary interactive elements
-- Comfortably rounded (8–8.5px): Standard buttons, cards, containers
-- Generously rounded (12px): Primary buttons, input fields, nav elements
-- Very rounded (16px): Featured containers, video players, tab lists
-- Highly rounded (24px): Tag-like elements, highlighted containers
-- Maximum rounded (32px): Hero containers, embedded media, large cards
+
+| Radius | Use |
+|--------|-----|
+| 3–6px | Tiny decorative elements, cookie banner micro-chips |
+| 20px | Primary and secondary body CTAs (the signature button radius) |
+| 24px | Consent/orange pill buttons, modal inner chips |
+| 40px | Hero media frames, large section container corners, H2 pill labels |
+| 50% | Circular portraits, icon-only buttons, satellite CTAs |
+| 99px / 999px / 1000px | Full pill shapes — navigation, carousel cards, footer country selector, primary inline chips |
+
+The scale is unusual: most systems use 4/8/12/16. Mastercard skips those and commits to **either small (≤6), medium-large (20–40), or full-pill (99+)**. The middle ground of 8–12 is absent, which is why the UI feels either "precise and utility" or "soft and editorial" with no in-between.
 
 ## 6. Depth & Elevation
 
 | Level | Treatment | Use |
 |-------|-----------|-----|
-| Flat (Level 0) | No shadow, no border | Parchment background, inline text |
-| Contained (Level 1) | `1px solid #f0eee6` (light) or `1px solid #30302e` (dark) | Standard cards, sections |
-| Ring (Level 2) | `0px 0px 0px 1px` ring shadows using warm grays | Interactive cards, buttons, hover states |
-| Whisper (Level 3) | `rgba(0,0,0,0.05) 0px 4px 24px` | Elevated feature cards, product screenshots |
-| Inset (Level 4) | `inset 0px 0px 0px 1px` at 15% opacity | Active/pressed button states |
+| 0 | No shadow | The default — 95% of surfaces sit directly on cream canvas |
+| 1 | `rgba(0, 0, 0, 0.04) 0px 4px 24px 0px` | Floating nav pill — barely-there lift |
+| 2 | `rgba(0, 0, 0, 0.08) 0px 24px 48px 0px` | Hero media frames, elevated cards — a soft large-radius halo rather than a hard drop |
+| 3 | `rgba(0, 0, 0, 0.25) 0px 70px 110px 0px` | Rare; dramatic elevation on a feature tile |
 
-**Shadow Philosophy**: Claude communicates depth through **warm-toned ring shadows** rather than traditional drop shadows. The signature `0px 0px 0px 1px` pattern creates a border-like halo that's softer than an actual border — it's a shadow pretending to be a border, or a border that's technically a shadow. When drop shadows do appear, they're extremely soft (0.05 opacity, 24px blur) — barely visible lifts that suggest floating rather than casting.
+### Shadow Philosophy
+Mastercard uses shadows as **atmospheric cushioning**, not directional light. The Level 2 shadow has a 48px spread and only 8% opacity — it barely exists as dark pixels but creates a "the card is breathing above the canvas" feel. There are almost no hard-edged, tight shadows anywhere in the system. Border lines are preferred over shadows for functional delineation (form inputs, footer divider).
 
 ### Decorative Depth
-- **Light/Dark alternation**: The most dramatic depth effect comes from alternating between Parchment (`#f5f4ed`) and Near Black (`#141413`) sections — entire sections shift elevation by changing the ambient light level.
-- **Warm ring halos**: Button and card interactions use ring shadows that match the warm palette — never cool-toned or generic gray.
+- **Orbital arcs** (Light Signal Orange, ~1px): trace connective paths across sections
+- **Ghost watermark headlines**: cream-on-cream text gives sections an almost-pressed-paper quality
+- **Circle-image fade**: warm-toned photography at the edge of circular portraits dissolves into the canvas, implying soft atmospheric depth
 
 ## 7. Do's and Don'ts
 
 ### Do
-- Use Parchment (`#f5f4ed`) as the primary light background — the warm cream tone IS the Claude personality
-- Use Anthropic Serif at weight 500 for all headlines — the single-weight consistency is intentional
-- Use Terracotta Brand (`#c96442`) only for primary CTAs and the highest-signal brand moments
-- Keep all neutrals warm-toned — every gray should have a yellow-brown undertone
-- Use ring shadows (`0px 0px 0px 1px`) for interactive element states instead of drop shadows
-- Maintain the editorial serif/sans hierarchy — serif for content headlines, sans for UI
-- Use generous body line-height (1.60) for a literary reading experience
-- Alternate between light and dark sections to create chapter-like page rhythm
-- Apply generous border-radius (12–32px) for a soft, approachable feel
+- Use Canvas Cream (`#F3F0EE`) as the default body background — never pure white
+- Mask service/feature imagery as perfect circles, not rectangles or rounded rectangles
+- Attach a white satellite CTA to the bottom-right of each circular portrait
+- Set headlines in MarkForMC weight 500 with -2% letter-spacing
+- Use weight 450 (not 400) for body paragraphs
+- Keep primary CTAs as Ink Black pills (20px radius) with cream text
+- Use Signal Orange only on consent, legal, or compliance actions
+- Float the nav as a rounded white pill below the viewport top, not flush at y=0
+- Build page rhythm from three surface tones: canvas cream → lifted cream → ink footer
+- Use thin Light Signal Orange arcs between service cards to imply connection
 
 ### Don't
-- Don't use cool blue-grays anywhere — the palette is exclusively warm-toned
-- Don't use bold (700+) weight on Anthropic Serif — weight 500 is the ceiling for serifs
-- Don't introduce saturated colors beyond Terracotta — the palette is deliberately muted
-- Don't use sharp corners (< 6px radius) on buttons or cards — softness is core to the identity
-- Don't apply heavy drop shadows — depth comes from ring shadows and background color shifts
-- Don't use pure white (`#ffffff`) as a page background — Parchment (`#f5f4ed`) or Ivory (`#faf9f5`) are always warmer
-- Don't use geometric/tech-style illustrations — Claude's illustrations are organic and hand-drawn-feeling
-- Don't reduce body line-height below 1.40 — the generous spacing supports the editorial personality
-- Don't use monospace fonts for non-code content — Anthropic Mono is strictly for code
-- Don't mix in sans-serif for headlines — the serif/sans split is the typographic identity
+- Don't use pure white as a page background — it breaks the warm editorial tone
+- Don't round image frames at 8–16px — Mastercard either uses full-pill, 40px, or full-circle. In-between radii look generic
+- Don't use Signal Orange for marketing CTAs — it reads as cookie-consent orange and dilutes the legal color signal
+- Don't mix typefaces — no serif accent, no script, no secondary display font
+- Don't crowd the nav with more than six top-level links — the pill is meant to feel airy
+- Don't drop hard shadows — all elevation should use 48px+ spread and ≤10% opacity
+- Don't use uppercase for anything larger than the 14px eyebrow label
+- Don't omit the tiny accent dot before eyebrow labels — it's the identity
+- Don't place circular portraits on a grid — their magic comes from asymmetric placement
 
 ## 8. Responsive Behavior
 
 ### Breakpoints
+
 | Name | Width | Key Changes |
 |------|-------|-------------|
-| Small Mobile | <479px | Minimum layout, stacked everything, compact typography |
-| Mobile | 479–640px | Single column, hamburger nav, reduced heading sizes |
-| Large Mobile | 640–767px | Slightly wider content area |
-| Tablet | 768–991px | 2-column grids begin, condensed nav |
-| Desktop | 992px+ | Full multi-column layout, expanded nav, maximum hero typography (64px) |
+| Mobile | ≤ 767px | Nav pill shows logo + menu + search only; primary links hide behind hamburger; service portraits stack single-column centered; hero headline drops from 64px to ~40px; footer columns collapse into a vertical accordion |
+| Tablet | 768–1023px | Nav pill shows 2–3 primary links truncated; service portraits arrange 2-up; hero headline ~48px |
+| Desktop | ≥ 1024px | Full nav with 5 primary links centered; service portraits asymmetrically placed with decorative orbital lines; hero headline 64px |
+| Wide | ≥ 1440px | Content max-width caps at ~1280px; gutters grow symmetrically; orbital lines extend further |
 
 ### Touch Targets
-- Buttons use generous padding (8–16px vertical minimum)
-- Navigation links adequately spaced for thumb navigation
-- Card surfaces serve as large touch targets
-- Minimum recommended: 44x44px
+All interactive elements comfortably exceed 44×44px. The satellite CTA (circle + arrow) is ~50–60px. The nav pill buttons are ~48px tall. Mobile hamburger and search are 48×48px. No link or button drops below 40px in any breakpoint.
 
 ### Collapsing Strategy
-- **Navigation**: Full horizontal nav collapses to hamburger on mobile
-- **Feature sections**: Multi-column → stacked single column
-- **Hero text**: 64px → 36px → ~25px progressive scaling
-- **Model cards**: 3-column → stacked vertical
-- **Section padding**: Reduces proportionally but maintains editorial rhythm
-- **Illustrations**: Scale proportionally, maintain aspect ratios
+- **Nav**: full pill → compact pill with hamburger. Pill shape is preserved across breakpoints — always rounded, always floating.
+- **Service grid**: asymmetric constellation → 2-up → 1-up stack. Orbital arcs are removed on mobile (they only work with asymmetric placement).
+- **Spacing**: section vertical padding compresses from 128px to 48px on mobile.
+- **Content**: two-column hero (headline left / supporting text right) becomes stacked (headline on top, supporting text below).
+- **Footer**: 4 columns → 1 column accordion with chevron toggles per section.
 
 ### Image Behavior
-- Product screenshots scale proportionally within rounded containers
-- Illustrations maintain quality at all sizes
-- Video embeds maintain 16:9 aspect ratio with rounded corners
-- No art direction changes between breakpoints
+Circular portraits scale proportionally (maintaining the perfect circle at every size). Hero video frames maintain their 40px radius at every breakpoint, but the frame itself shrinks with the viewport. Lazy loading is standard with a cream-tinted blur-up placeholder, preserving the palette during load.
 
 ## 9. Agent Prompt Guide
 
 ### Quick Color Reference
-- Brand CTA: "Terracotta Brand (#c96442)"
-- Page Background: "Parchment (#f5f4ed)"
-- Card Surface: "Ivory (#faf9f5)"
-- Primary Text: "Anthropic Near Black (#141413)"
-- Secondary Text: "Olive Gray (#5e5d59)"
-- Tertiary Text: "Stone Gray (#87867f)"
-- Borders (light): "Border Cream (#f0eee6)"
-- Dark Surface: "Dark Surface (#30302e)"
+- Primary CTA: "Ink Black (`#141413`) — the warm near-black used for primary pill buttons and footer"
+- Background: "Canvas Cream (`#F3F0EE`) — warm putty body canvas, never pure white"
+- Lifted surface: "Lifted Cream (`#FCFBFA`) — one step lighter than canvas for nested sections"
+- Heading text: "Ink Black (`#141413`)"
+- Body text: "Ink Black (`#141413`) at weight 450"
+- Muted text: "Slate Gray (`#696969`)"
+- Signal / Consent: "Signal Orange (`#CF4500`) — reserve for cookie consent and legal actions"
+- Accent arc: "Light Signal Orange (`#F37338`) — orbital decorative lines only"
+- Border / Outline: "Ink Black at 1.5px for pill buttons; 1px at low opacity elsewhere"
+- Footer: "Ink Black (`#141413`) with White text"
 
 ### Example Component Prompts
-- "Create a hero section on Parchment (#f5f4ed) with a headline at 64px Anthropic Serif weight 500, line-height 1.10. Use Anthropic Near Black (#141413) text. Add a subtitle in Olive Gray (#5e5d59) at 20px Anthropic Sans with 1.60 line-height. Place a Terracotta Brand (#c96442) CTA button with Ivory text, 12px radius."
-- "Design a feature card on Ivory (#faf9f5) with a 1px solid Border Cream (#f0eee6) border and comfortably rounded corners (8px). Title in Anthropic Serif at 25px weight 500, description in Olive Gray (#5e5d59) at 16px Anthropic Sans. Add a whisper shadow (rgba(0,0,0,0.05) 0px 4px 24px)."
-- "Build a dark section on Anthropic Near Black (#141413) with Ivory (#faf9f5) headline text in Anthropic Serif at 52px weight 500. Use Warm Silver (#b0aea5) for body text. Borders in Dark Surface (#30302e)."
-- "Create a button in Warm Sand (#e8e6dc) with Charcoal Warm (#4d4c48) text, 8px radius, and a ring shadow (0px 0px 0px 1px #d1cfc5). Padding: 0px 12px 0px 8px."
-- "Design a model comparison grid with three cards on Ivory surfaces. Each card gets a Border Warm (#e8e6dc) top border, model name in Anthropic Serif at 25px, and description in Olive Gray at 15px Anthropic Sans."
+- "Create a circular portrait card 300px in diameter, with a square photograph cropped to a perfect circle. Attach a 56px white satellite button with a dark arrow icon at the bottom-right, so it protrudes ~40% outside the portrait. Below the portrait, add an eyebrow label with a Light Signal Orange dot and uppercase 'SERVICES' text in MarkForMC weight 700 at 14px. Below the eyebrow, set a 24px / weight 500 title in Ink Black."
+- "Design a primary CTA button: Ink Black (`#141413`) background, Canvas Cream (`#F3F0EE`) text, 20px border-radius, 6px vertical and 24px horizontal padding, MarkForMC font at 16px weight 500 with -2% letter-spacing."
+- "Build a floating navigation pill: white background with `rgba(0, 0, 0, 0.04) 0px 4px 24px 0px` shadow, 999px border-radius, ~16px vertical and 40px horizontal internal padding. Position it 24px below the viewport top, centered, with the Mastercard logo at the left, five primary links centered with 48px gap, and a circular 48px search button at the right."
+- "Create a hero media frame: 40px border-radius on all corners, full viewport width minus 48px gutters, ~60% viewport height, dark background for video content. Place it directly on the cream canvas with no shadow."
+- "Design a footer: Ink Black (`#141413`) background, white text, 4-column link grid with uppercase muted column headers at 14px weight 700 +4% tracking. Include a large conversational H2 above the grid, a 1px white-at-30%-opacity horizontal divider below, and a bottom row with copyright, legal small-print links, a pill-shaped country selector, and four social icons."
 
 ### Iteration Guide
-1. Focus on ONE component at a time
-2. Reference specific color names — "use Olive Gray (#5e5d59)" not "make it gray"
-3. Always specify warm-toned variants — no cool grays
-4. Describe serif vs sans usage explicitly — "Anthropic Serif for the heading, Anthropic Sans for the label"
-5. For shadows, use "ring shadow (0px 0px 0px 1px)" or "whisper shadow" — never generic "drop shadow"
-6. Specify the warm background — "on Parchment (#f5f4ed)" or "on Near Black (#141413)"
-7. Keep illustrations organic and conceptual — describe "hand-drawn-feeling" style
+When refining existing screens generated with this design system:
+1. Focus on ONE component at a time — don't redesign multiple surfaces in parallel
+2. Reference specific color names AND hex codes from this document
+3. Use natural language ("warm putty cream", "stadium pill", "circular portrait with satellite CTA") alongside technical values
+4. Describe the desired "feel" (editorial, soft, institutional) alongside specific measurements
+5. When in doubt, reach for one of three radii: 20px (buttons), 40px (hero/stadium), or 999px (pill/nav)
+6. Default backgrounds to Canvas Cream (`#F3F0EE`), not white — this single change shifts the entire mood toward Mastercard
+
+### Known Gaps
+- The live page uses MarkForMC, a proprietary licensed typeface. Sofia Sans is the closest open-source substitute and is listed in Mastercard's own fallback stack.
+- Tablet breakpoint specifics (768–1023px) were inferred from desktop and mobile captures; intermediate layouts may vary per section.
+- The exact "whisper" cream tone used for ghost-watermark headlines behind circular portraits reads between `#E8E2DA` and `#D1CDC7` in captures; the precise value varies per section.
+- Third-party consent orange (`#CF4500`) is Mastercard's documented consent signal and should not be confused with any marketing CTA color.
+- The Mastercard logo mark (red `#EB001B` + yellow `#F79E1B`) is a brand asset, not a UI palette entry.

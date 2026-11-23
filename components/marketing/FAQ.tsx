@@ -82,7 +82,7 @@ export default function FAQ() {
           <div className="reveal reveal-d1 rounded-2xl border border-[var(--border)] bg-[var(--background)] px-5 sm:px-7">
             {FAQS.map((item, i) => (
               <div
-                key={item.q}
+                key={item.question}
                 className="border-b border-[var(--border)]"
               >
                 <button
@@ -91,9 +91,9 @@ export default function FAQ() {
                   aria-expanded={open === i}
                 >
                   <div>
-                    <p className="text-[15px] sm:text-[16px] font-semibold text-[var(--text)]">{item.q}</p>
+                    <p className="text-[15px] sm:text-[16px] font-semibold text-[var(--text)]">{item.question}</p>
                     <p className={`mt-2 text-[14px] text-[var(--text2)] leading-[1.7] transition-all duration-200 ${open === i ? "opacity-100" : "opacity-0 max-h-0 overflow-hidden"}`}>
-                      {item.a}
+                      {item.answer}
                     </p>
                   </div>
                   <span className="mt-1 text-[var(--text3)] font-mono text-[11px]">

@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "../components/marketing/homepage.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -53,25 +54,24 @@
   --font-mono-ui: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
     Consolas, monospace;
 
-  /* Premium Dark Theme Colors */
-  --background: #0a0a0f;
-  --foreground: #ededee;
-  --card: #111115;
-  --card-foreground: #ededee;
-  --popover: #111115;
-  --popover-foreground: #ededee;
+  --background: #f3f0ee;
+  --foreground: #141413;
+  --card: #fcfbfa;
+  --card-foreground: #141413;
+  --popover: #fcfbfa;
+  --popover-foreground: #141413;
   --primary: #c96442;
   --primary-foreground: #faf9f5;
-  --secondary: #1a1a20;
-  --secondary-foreground: #b0aea5;
-  --muted: #1a1a20;
-  --muted-foreground: #a0a0ab;
+  --secondary: #e8e2da;
+  --secondary-foreground: #141413;
+  --muted: #e8e2da;
+  --muted-foreground: #565656;
   --accent: #c96442;
   --accent-foreground: #faf9f5;
   --destructive: #b53333;
-  --border: #25252d;
-  --border2: #2a2a33;
-  --input: #1a1a20;
+  --border: #d8d2cc;
+  --border2: #c7c0b9;
+  --input: #fcfbfa;
   --ring: #c96442;
   --chart-1: #c96442;
   --chart-2: #d97757;
@@ -79,18 +79,18 @@
   --chart-4: #87867f;
   --chart-5: #e8e6dc;
   --radius: 0.625rem;
-  --sidebar: #111115;
-  --sidebar-foreground: #ededee;
+  --sidebar: #fcfbfa;
+  --sidebar-foreground: #141413;
   --sidebar-primary: #c96442;
   --sidebar-primary-foreground: #faf9f5;
-  --sidebar-accent: #1a1a20;
-  --sidebar-accent-foreground: #b0aea5;
-  --sidebar-border: #25252d;
+  --sidebar-accent: #e8e2da;
+  --sidebar-accent-foreground: #141413;
+  --sidebar-border: #d8d2cc;
   --sidebar-ring: #c96442;
 
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #c96442 0%, #d97757 100%);
-  --gradient-dark: linear-gradient(135deg, #111115 0%, #0a0a0f 100%);
+  --gradient-primary: linear-gradient(135deg, #cf4500 0%, #f37338 100%);
+  --gradient-dark: linear-gradient(135deg, #141413 0%, #30302e 100%);
   --gradient-glow: radial-gradient(
     circle at 50% 50%,
     rgba(201, 100, 66, 0.15),
