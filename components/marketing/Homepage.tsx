@@ -37,6 +37,55 @@ send_email(
 )`,
 };
 
+function renderCodeLine(line: string, file: keyof typeof EXAMPLES) {
+  if (file === "megent.yaml") {
+    const match = line.match(/^(\s*)([\w-]+)(:)(.*)$/);
+    if (!match) return line || "\u00a0";
+    const [, indent, key, colon, rest] = match;
+    const valueTokens = rest.match(/"[^\"]*"|'[^']*'|\b(?:true|false|null|deny|allow)\b|[\[\],]|[^\s\[\],]+|\s+/g) ?? [];
+    return <>{indent}<span className="syntax-key">{key}</span><span className="syntax-punctuation">{colon}</span>{valueTokens.map((token, index) => {
+      const className = /^['\"]/.test(token)
+        ? "syntax-string"
+        : /^(true|false|null)$/.test(token)
+          ? "syntax-boolean"
+          : /^(deny|allow)$/.test(token)
+            ? "syntax-value"
+            : /^[\[\],]$/.test(token)
+              ? "syntax-punctuation"
+              : undefined;
+      return <span className={className} key={`${index}-${token}`}>{token}</span>;
+    })}</>;
+  }
+
+  const tokens = line.match(/#.*|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|@\w+|\b(?:import|as|def|return)\b|\b(?:True|False|None)\b|\b(?:mg|configure|guard|send_email)\b|\b\d+\b|[{}()[\].,:=]|\s+|[^\s{}()[\].,:=]+/g) ?? [];
+  return <>{tokens.map((token, index) => {
+    const className = token.startsWith("#")
+      ? "syntax-comment"
+      : /^['\"]/.test(token)
+        ? "syntax-string"
+        : token.startsWith("@")
+          ? "syntax-decorator"
+          : /^(import|as|def|return)$/.test(token)
+            ? "syntax-keyword"
+            : /^(True|False|None|\d+)$/.test(token)
+              ? "syntax-value"
+              : /^(mg|configure|guard|send_email)$/.test(token)
+                ? "syntax-function"
+                : /^[{}()[\].,:=]$/.test(token)
+                  ? "syntax-punctuation"
+                  : undefined;
+    return <span className={className} key={`${index}-${token}`}>{token}</span>;
+  })}</>;
+}
+
+function renderCode(value: string, file: keyof typeof EXAMPLES) {
+  return value.split("\n").map((line, index) => (
+    <span className="code-line" key={`${index}-${line}`}>
+      {renderCodeLine(line, file)}
+    </span>
+  ));
+}
+
 export default function Homepage() {
   const [activeFile, setActiveFile] = useState<keyof typeof EXAMPLES>("megent.yaml");
   const [copied, setCopied] = useState<string | null>(null);
@@ -102,10 +151,10 @@ export default function Homepage() {
 
       <section className="hero site-container" id="top">
         <div className="hero-copy">
-          <p className="eyebrow"><span aria-hidden="true" /> Open-source runtime policy for AI agents</p>
-          <h1>Your agent proposes the call.<br /><span>Megent checks the policy.</span></h1>
+          <p className="eyebrow"><span aria-hidden="true" /> Open-source firewall for AI agent tools</p>
+          <h1>A firewall for AI agent tool calls.</h1>
           <p className="hero-description">
-            Decide which tools an agent may run. Megent checks guarded Python functions against your policy before they execute.
+            Megent checks each Python tool you guard against your policy before it runs—allowing approved calls and blocking the rest.
           </p>
           <div className="hero-actions">
             <a className="button button-dark" href="#quickstart">
@@ -151,10 +200,12 @@ export default function Homepage() {
             </button>
           </div>
           <pre className="code-content" id="quickstart-code" role="tabpanel" aria-labelledby={`tab-${activeFile}`}>
-            <code>{EXAMPLES[activeFile]}</code>
+            <code>{renderCode(EXAMPLES[activeFile], activeFile)}</code>
           </pre>
           <div className="code-panel-bottom">
-            <span>Example from the Megent quickstart</span>
+            <a className="code-source-link" href="https://github.com/megents/megent#quickstart" target="_blank" rel="noreferrer">
+              Open the quickstart <ArrowRight aria-hidden="true" size={14} />
+            </a>
             <span className="code-language">{activeFile.endsWith("yaml") ? "YAML" : "PYTHON"}</span>
           </div>
           <span className="sr-only" aria-live="polite">{copied}</span>
@@ -167,8 +218,8 @@ export default function Homepage() {
       <section className="intro-band">
         <div className="site-container intro-band-inner">
           <p className="eyebrow"><span aria-hidden="true" /> The execution boundary</p>
-          <h2>A model can suggest an action.<br /><span>Your policy decides if the tool runs.</span></h2>
-          <p>Megent is an open-source Python runtime you run with your own application—not a hosted dashboard or web service. Guard the functions that matter, keep policy in your project, and inspect the code on GitHub.</p>
+          <h2>Put a policy check between your agent and its tools.</h2>
+          <p>Megent is an open-source Python firewall you run with your application. It checks the tool functions you guard; there is no hosted dashboard or web service. Keep the policy in your project and inspect the implementation on GitHub.</p>
         </div>
       </section>
 
@@ -267,7 +318,7 @@ export default function Homepage() {
             </button>
           </div>
           <p className="install-status" aria-live="polite">{copied === "install" ? "Command copied to clipboard." : copied?.startsWith("Copy unavailable") ? copied : ""}</p>
-          <a className="button button-cream" href={`${GITHUB_URL}#quickstart`} target="_blank" rel="noreferrer">
+          <a className="button button-cream" href="https://github.com/megents/megent#quickstart" target="_blank" rel="noreferrer">
             Open the quickstart <ArrowRight aria-hidden="true" size={16} />
           </a>
         </div>

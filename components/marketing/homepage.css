@@ -333,14 +333,14 @@ body::before {
 
 .file-tabs {
   display: flex;
-  gap: 18px;
+  gap: 4px;
   min-width: 0;
 }
 
 .file-tab {
   position: relative;
   min-height: 58px;
-  padding: 0;
+  padding: 0 10px;
   border: 0;
   background: transparent;
   color: #aaa6a0;
@@ -397,14 +397,69 @@ body::before {
   font: inherit;
 }
 
+.code-line {
+  display: block;
+  min-height: 1.85em;
+}
+
+.syntax-key {
+  color: #83c6c2;
+}
+
+.syntax-string {
+  color: #e6ad83;
+}
+
+.syntax-boolean {
+  color: #d9bd75;
+}
+
+.syntax-value {
+  color: #d9bd75;
+}
+
+.syntax-function {
+  color: #b7c7e8;
+}
+
+.syntax-keyword,
+.syntax-decorator {
+  color: #c8a9dc;
+}
+
+.syntax-comment {
+  color: #97938d;
+  font-style: italic;
+}
+
+.syntax-punctuation {
+  color: #c2beb8;
+}
+
 .code-panel-bottom {
   min-height: 48px;
-  border-top: 1px solid rgb(243 240 238 / 12%);
-  color: #aaa6a0;
+  border-top: 1px solid #d9d2ca;
+  background: var(--mc-paper);
+  color: var(--mc-ink);
   font-size: 11px;
 }
 
+.code-source-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #141413 !important;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.code-source-link:hover {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+}
+
 .code-language {
+  color: #625f5a;
   letter-spacing: 0.1em;
 }
 
@@ -1106,11 +1161,8 @@ body::before {
   }
 
   .file-tab {
+    padding-inline: 7px;
     font-size: 10px;
-  }
-
-  .copy-button span {
-    display: none;
   }
 }
 
